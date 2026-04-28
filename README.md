@@ -1,16 +1,12 @@
-# movies_app
+​🚀 Getting Started
 
-A new Flutter project.
+​This project is initialized with a robust foundation focusing on performance, localization, and maintainable code.
 
-## Getting Started
+​🛠️ Core Features Implemented
 
-This project is a starting point for a Flutter application.
+​Feature-Based Architecture: Organized UI by features (auth, home, on-boarding) for better scalability.
 
-A few resources to get you started if this is your first Flutter project:
+​Multi-Language Support (l10n): Full support for English and Arabic using .arb files and Flutter's l10n package.
+​Asset Management: Optimized handling of SVGs and multi-density PNGs (2.0x, 3.0x, 4.0x) for high-quality visuals on all screens.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+​Centralized Styling: Unified theme management through dedicated utility classes for colors, text styles, and routes.
