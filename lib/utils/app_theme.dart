@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/utils/app_color.dart';
-import 'package:movies_app/utils/app_style.dart';
+import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_styles.dart';
 
 class AppTheme {
   static final ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: AppColor.black,
+    scaffoldBackgroundColor: AppColors.black,
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColor.lightBlack,
-      selectedItemColor: AppColor.yellow,
-      unselectedItemColor: AppColor.white,
+      backgroundColor: AppColors.darkGrey,
+      selectedItemColor: AppColors.yellow,
+      unselectedItemColor: AppColors.white,
       type: BottomNavigationBarType.fixed,
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColor.yellow,
-        foregroundColor: AppColor.black,
+        backgroundColor: AppColors.yellow,
+        foregroundColor: AppColors.black,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       ),
     ),
-    dividerTheme: DividerThemeData(thickness: 2, color: AppColor.yellow),
+    dividerTheme: DividerThemeData(thickness: 2, color: AppColors.yellow),
 
     appBarTheme: AppBarThemeData(
       centerTitle: true,
-      backgroundColor: AppColor.black,
-      foregroundColor: AppColor.yellow,
+      backgroundColor: AppColors.black,
+      foregroundColor: AppColors.yellow,
       titleTextStyle: AppStyle.reg16Yellow,
     ),
 
@@ -34,17 +34,17 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       hintStyle: AppStyle.reg16White,
       filled: true,
-      fillColor: AppColor.lightBlack,
+      fillColor: AppColors.darkGrey,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
-        borderSide: const BorderSide(color: AppColor.white, width: 1),
+        borderSide:  BorderSide(color: AppColors.white, width: 1),
       ),
-      prefixIconColor: AppColor.white,
-      suffixIconColor: AppColor.white,
+      prefixIconColor: AppColors.white,
+      suffixIconColor: AppColors.white,
     ),
   );
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-extension AppSize on BuildContext {
+extension AppContext on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
 
   double get screenWidth => mediaQuery.size.width;
