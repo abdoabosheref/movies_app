@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:movies_app/utils/app_icon.dart';
-import 'package:movies_app/utils/app_image.dart';
-import 'package:movies_app/utils/app_style.dart';
+import 'package:movies_app/utils/app_theme.dart';
 import 'l10n/app_localizations.dart';
 
 void main() {
@@ -16,6 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
       debugShowCheckedModeBanner: false,
       locale: const Locale('en'),
       localizationsDelegates: [
@@ -28,28 +28,12 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('ar'), // Spanish
       ],
-      home: Scaffold(
-        body: Builder(
-          builder: (context) {
-            return Scaffold(
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.name,
-                      style: AppStyle.reg20Black,
-                    ),
 
-                    IconButton(onPressed: () {}, icon: AppIcon.homeTabSel),
-                    IconButton(onPressed: () {}, icon: AppImage.ma1),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
+      // initialRoute: ,
+      // routes: {
+      //
+      // },
+
     );
   }
 }
