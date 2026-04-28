@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/utils/app_style.dart';
+import 'package:movies_app/utils/app_styles.dart';
 
 class CustomInput extends StatelessWidget {
   CustomInput({

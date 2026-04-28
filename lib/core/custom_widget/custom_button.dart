@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/utils/app_colors.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton({
@@ -6,7 +7,7 @@ class CustomButton extends StatelessWidget {
     this.color,
     required this.onPressed,
     required this.child,
-    this.borderColor = Colors.transparent,
+    this.borderColor = AppColors.transparent,
   });
 
   Color? color;
