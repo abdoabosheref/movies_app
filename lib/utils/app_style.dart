@@ -95,7 +95,7 @@ abstract class AppStyle {
 
   static final TextStyle smb20Black = GoogleFonts.roboto(
     textStyle: const TextStyle(
-      color: AppColor.white,
+      color: AppColor.black,
       fontSize: 20,
       fontWeight: FontWeight.w600,
     ),
