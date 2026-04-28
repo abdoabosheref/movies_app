@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/utils/app_color.dart';
+import 'package:movies_app/utils/app_colors.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   CustomElevatedButton({
@@ -8,7 +8,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.textColor,
     required this.onPressed,
     required this.child,
-    this.borderColor = Colors.transparent,
+    this.borderColor = AppColors.transparent,
   });
 
   Color? color;
@@ -21,8 +21,8 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor:color ?? AppColor.yellow,
-        foregroundColor:textColor ?? AppColor.black,
+        backgroundColor:color ?? AppColors.yellow,
+        foregroundColor:textColor ?? AppColors.black,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         side: BorderSide(color: borderColor, width: 2),

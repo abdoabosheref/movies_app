@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/utils/app_color.dart';
+import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_styles.dart';
 
 class AppTheme {
   static  final ThemeData darkTheme = ThemeData(
-    scaffoldBackgroundColor: AppColor.black,
+    scaffoldBackgroundColor: AppColors.black,
 
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: AppColor.lightBlack,
-      selectedItemColor: AppColor.yellow,
-      unselectedItemColor: AppColor.white,
+      backgroundColor: AppColors.darkGrey,
+      selectedItemColor: AppColors.yellow,
+      unselectedItemColor: AppColors.white,
       type: BottomNavigationBarType.fixed,
     ),
 
-    dividerTheme: DividerThemeData(thickness: 2, color: AppColor.yellow),
+    dividerTheme: DividerThemeData(thickness: 2, color: AppColors.yellow),
 
     );
 }

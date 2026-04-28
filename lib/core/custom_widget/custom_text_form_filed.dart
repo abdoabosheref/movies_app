@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/utils/app_color.dart';
-import 'package:movies_app/utils/app_style.dart';
+import 'package:movies_app/utils/app_colors.dart';
+import 'package:movies_app/utils/app_styles.dart';
 
 class CustomTextFormFiled extends StatelessWidget {
   CustomTextFormFiled({
@@ -27,20 +27,20 @@ class CustomTextFormFiled extends StatelessWidget {
       controller: controller,
       validator: validator,
       keyboardType: keyboardType,
-      style:AppStyle.reg16White,
+      style:AppStyles.white16RegularRoboto,
       decoration: InputDecoration(
-        hintStyle: AppStyle.reg16White,
+        hintStyle: AppStyles.white16RegularRoboto,
         filled: true,
-        fillColor: AppColor.lightBlack,
+        fillColor: AppColors.darkGrey,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide.none,
         ),
-        prefixIconColor: AppColor.white,
-        suffixIconColor: AppColor.white,
-        focusedBorder: buildBorder(borderColor: AppColor.yellow, ),
-        errorBorder: buildBorder( borderColor: AppColor.red),
-        focusedErrorBorder:buildBorder(borderColor: AppColor.red) ,
+        prefixIconColor: AppColors.white,
+        suffixIconColor: AppColors.white,
+        focusedBorder: buildBorder(borderColor: AppColors.yellow, ),
+        errorBorder: buildBorder( borderColor: AppColors.red),
+        focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon ,
