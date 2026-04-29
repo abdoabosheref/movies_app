@@ -1,0 +1,26 @@
+import 'package:flutter/material.dart';
+import 'package:movies_app/ui/tabs/profile_tab/profile_header/user_profile_header.dart';
+import 'package:movies_app/ui/tabs/profile_tab/row_of_buttons/profile_row_of_buttons.dart';
+
+import '../../../core/utils/app_context.dart';
+
+class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = context.screenWidth;
+    double screenHeight = context.screenHeight;
+
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: screenWidth* 0.05,vertical: screenHeight*0.02),
+          child: Column(
+            spacing: screenHeight*0.02,
+              children: [UserProfileHeader(), ProfileRowOfButtons()]),
+        ),
+      ),
+    );
+  }
+}
