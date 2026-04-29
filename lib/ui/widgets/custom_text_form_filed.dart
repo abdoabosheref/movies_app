@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../core/utils/app_colors.dart';
 import '../../core/utils/app_styles.dart';
 
 class CustomTextFormFiled extends StatelessWidget {
-  CustomTextFormFiled({
+ const CustomTextFormFiled({
     super.key,
-    required this.controller,
-    required this.keyboardType,
-    required this.validator,
-    required this.hintText,
-    this.prefixIcon,
+     this.controller,
+     this.keyboardType,
+     this.validator,
+     this.hintText,
+   required this.prefixIcon,
     this.suffixIcon,
   });
-  TextEditingController controller;
-  String? Function(String?)? validator;
-  TextInputType? keyboardType;
-   String hintText ;
-  Widget? prefixIcon ;
-  Widget? suffixIcon ;
+ final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final String? hintText ;
+  final String prefixIcon ;
+  final Widget? suffixIcon ;
 
 
   @override
@@ -43,8 +44,9 @@ class CustomTextFormFiled extends StatelessWidget {
         errorBorder: buildBorder( borderColor: AppColors.red),
         focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
-        prefixIcon: prefixIcon,
+        prefixIcon: SvgPicture.asset(prefixIcon,),
         suffixIcon: suffixIcon ,
+
       ),
 
 

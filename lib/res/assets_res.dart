@@ -8,6 +8,4 @@ class AssetsRes {
 
   static const String PROJECT_NAME = 'movies_app';
   static const String PROJECT_VERSION = '1.0.0+1';
-  static const String AR = 'assets/translations/ar.json';
-  static const String EN = 'assets/translations/en.json';
 }
