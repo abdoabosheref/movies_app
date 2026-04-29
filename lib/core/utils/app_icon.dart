@@ -69,7 +69,7 @@ abstract class AppIcon {
     fit: .scaleDown,
   );
   static var phone = SvgPicture.asset(
-    'assets/icons/phone.svg',
+    'assets/icons/phone_icon.svg',
     width: 24,
     height: 24,
     fit: .scaleDown,
@@ -87,7 +87,7 @@ abstract class AppIcon {
     fit: .scaleDown,
   );
   static var userProfileIcon = SvgPicture.asset(
-    'assets/icons/userProfileIcon.svg',
+    'assets/icons/profile_icon.svg',
     width: 24,
     height: 24,
     fit: .scaleDown,
@@ -99,7 +99,7 @@ abstract class AppIcon {
     fit: .scaleDown,
   );
   static var exitIcon = SvgPicture.asset(
-    'assets/icons/exitIcon.svg',
+    'assets/icons/exit_icon.svg',
     width: 24,
     height: 24,
     fit: .scaleDown,
