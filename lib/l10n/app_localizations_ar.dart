@@ -50,6 +50,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get finish => 'إنهاء';
 
   @override
+  String get explore_now => 'استكشف الان';
+
+  @override
   String get next => 'التالي';
 
   @override

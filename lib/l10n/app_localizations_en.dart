@@ -50,6 +50,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get finish => 'Finish';
 
   @override
+  String get explore_now => 'Explore Now';
+
+  @override
   String get next => 'Next';
 
   @override

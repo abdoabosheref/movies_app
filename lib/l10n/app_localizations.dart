@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'Finish'**
   String get finish;
 
+  /// No description provided for @explore_now.
+  ///
+  /// In en, this message translates to:
+  /// **'Explore Now'**
+  String get explore_now;
+
   /// No description provided for @next.
   ///
   /// In en, this message translates to:

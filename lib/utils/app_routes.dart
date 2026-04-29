@@ -1,5 +1,6 @@
 abstract class AppRoutes {
-// example  static const String homeScreen = 'home_screen ';
+  static const String homeScreen = 'home_screen';
+  static const String onboarding = 'OnboardingScreen';
 
 
 }

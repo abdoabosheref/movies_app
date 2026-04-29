@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:movies_app/ui/home_screen/home_screen.dart';
+import 'package:movies_app/ui/on_boarding_screen/OnboardingScreen.dart';
+import 'package:movies_app/utils/app_routes.dart';
 import 'package:movies_app/utils/app_theme.dart';
 import 'l10n/app_localizations.dart';
 
@@ -29,10 +32,12 @@ class MyApp extends StatelessWidget {
         Locale('ar'), // Spanish
       ],
 
-      // initialRoute: ,
-      // routes: {
-      //
-      // },
+       initialRoute: AppRoutes.onboarding,
+       routes: {
+         AppRoutes.homeScreen : (context) => HomeScreen(),
+         AppRoutes.onboarding: (context) => OnboardingScreen(),
+
+       },
 
     );
   }
