@@ -1,49 +1,46 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_theme.dart';
-import 'l10n/app_localizations.dart';
+import 'package:movies_app/ui/tabs/profile_tab/profile_tab.dart';
+import 'package:movies_app/ui/screens/on_boarding_screen.dart';
+import 'package:movies_app/ui/screens/update_profile_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'core/utils/app_routes.dart';
+import 'core/utils/app_theme.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  runApp(
+    EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en'),
+      startLocale: Locale('en'),
+      child: MovieApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MovieApp extends StatelessWidget {
+  const MovieApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:Scaffold(
-        body: Column(
-          children: [
-            Image.asset(AppIcons.avatarIcon1),
-          SvgPicture.asset(AppIcons.password),
-          ],
-        ),
-      ) ,
-      theme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      title: 'Movie App',
       debugShowCheckedModeBanner: false,
-      locale: const Locale('en'),
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: [
-        Locale('en'), // English
-        Locale('ar'), // Spanish
-      ],
-
-      // initialRoute: ,
-      // routes: {
-      //
-      // },
-
+      initialRoute: AppRoutes.updateProfileScreen,
+      routes: {
+        AppRoutes.onBoardingScreen: (context) => OnBoardingScreen(),
+        AppRoutes.profileTab: (context) => ProfileTab(),
+        AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
+      },
+      themeMode: ThemeMode.dark,
+      darkTheme: AppTheme.darkTheme,
     );
   }
 }
