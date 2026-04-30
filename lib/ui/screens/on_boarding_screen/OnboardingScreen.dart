@@ -15,7 +15,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController controller = PageController();
   int currentIndex = 0;
-  late var neverScrollable ;
 
 
   @override
@@ -27,7 +26,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           /// PAGES
           PageView.builder(
-            physics: neverScrollable,
             controller: controller,
             itemCount: data.length,
             onPageChanged: (i) => setState(() => currentIndex = i),
