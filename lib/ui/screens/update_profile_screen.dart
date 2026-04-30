@@ -8,6 +8,7 @@ import '../../core/utils/app_context.dart';
 import '../../core/utils/app_styles.dart';
 import '../widgets/buttons/custom_elevated_button.dart';
 import '../widgets/buttons/custom_text_button.dart';
+import '../widgets/custom_header.dart';
 import '../widgets/custom_text_form_filed.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
@@ -20,10 +21,11 @@ class UpdateProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.05),
+          padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.04),
           child: Column(
             spacing: screenHeight*0.02,
             children: [
+              CustomHeader(title: 'pick_avatar'.tr(),),
               CircleAvatar(
                 backgroundImage: AssetImage(AppAssets.avatarImage8),
                 radius: 50,
@@ -42,7 +44,7 @@ class UpdateProfileScreen extends StatelessWidget {
                 onPressed: () {},
               ),
               CustomElevatedButton(
-                child: Text('update_data'.tr()),
+                child: Text('update_data'.tr(), style: AppStyles.black20RegularRoboto,),
                 onPressed: () {},
               ),
             ],

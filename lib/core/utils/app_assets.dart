@@ -43,6 +43,7 @@ abstract class AppAssets {
   static const String rating = 'assets/icons/rating.svg';
   static const String time = 'assets/icons/time.svg';
   static const String watchList = 'assets/icons/watch_list.svg';
+  static const String goldenArrowBack = 'assets/icons/golden_arrow_back.svg';
 
 // ------------ Bottom Navigation Section --------------
   static const String homeTab = 'assets/icons/home_tab.svg';
