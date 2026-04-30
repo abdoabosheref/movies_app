@@ -24,6 +24,12 @@ abstract class AppAssets {
   static const String onBoarding5 = 'assets/images/onboarding_5.png';
   static const String onBoarding6 = 'assets/images/onboarding_6.png';
 
+// ------------ Bottom Navigation Section --------------
+  static const String homeTabIcon = 'assets/images/home_tab_icon.png';
+  static const String searchTabIcon = 'assets/images/search_tab_icon.png';
+  static const String browseTabIcon = 'assets/images/browse_tab_icon.png';
+  static const String profileTabIcon = 'assets/images/profile_tab_icon.png';
+
 // ------------ SVGs Section --------------
   static final String exitIcon = 'assets/icons/exit_icon.svg';
   static final String profileIcon = 'assets/icons/profile_icon.svg';
@@ -45,9 +51,4 @@ abstract class AppAssets {
   static const String watchList = 'assets/icons/watch_list.svg';
   static const String goldenArrowBack = 'assets/icons/golden_arrow_back.svg';
 
-// ------------ Bottom Navigation Section --------------
-  static const String homeTab = 'assets/icons/home_tab.svg';
-  static const String movieTab = 'assets/icons/movie_tab.svg';
-  static const String profileTab = 'assets/icons/profile_tab.svg';
-  static const String searchTab = 'assets/icons/search_tab.svg';
 }

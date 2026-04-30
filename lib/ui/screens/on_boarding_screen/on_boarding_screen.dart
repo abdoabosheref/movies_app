@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/data/onboarding_data..dart';
-import 'package:movies_app/ui/screens/home_screen/home_screen.dart';
 import 'onboarding_widget/onboarding_bottom_card.dart';
 
 
-class OnboardingScreen extends StatefulWidget {
-  const OnboardingScreen({super.key});
+class OnBoardingScreen extends StatefulWidget {
+  const OnBoardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnBoardingScreenState();
+  State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnBoardingScreenState extends State<OnboardingScreen> {
+class _OnBoardingScreenState extends State<OnBoardingScreen> {
   final PageController pageController = PageController();
   int currentIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +22,7 @@ class _OnBoardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Stack(
         children: [
+          /// PAGES
           PageView.builder(
             controller: pageController,
             itemCount: data.length,
@@ -33,6 +33,7 @@ class _OnBoardingScreenState extends State<OnboardingScreen> {
             },
           ),
 
+          /// BOTTOM
           Align(
             alignment: Alignment.bottomCenter,
             child: OnboardingBottomCard(
@@ -42,11 +43,8 @@ class _OnBoardingScreenState extends State<OnboardingScreen> {
 
               onNext: () {
                 if (currentIndex == data.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const HomeScreen(),
-                    ),
+                  Navigator.of(context).pushReplacementNamed(
+                    AppRoutes.mainScreen,
                   );
                 } else {
                   pageController.nextPage(

@@ -21,19 +21,17 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenHeight = context.screenHeight;
-    return SizedBox(height: screenHeight*0.06,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: backgroundColor ?? AppColors.yellow,
-          foregroundColor: textColor ?? AppColors.black,
-          minimumSize: const Size(double.infinity, 0),
-          elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          side: BorderSide(color: borderColor ?? AppColors.transparent, width: 2),
-        ),
-        onPressed: onPressed,
-        child: child,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: backgroundColor ?? AppColors.yellow,
+        foregroundColor: textColor ?? AppColors.black,
+        minimumSize: Size(double.infinity, screenHeight*0.07 ),
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        side: BorderSide(color: borderColor ?? AppColors.transparent, width: 2),
       ),
+      onPressed: onPressed,
+      child: child,
     );
   }
 }
