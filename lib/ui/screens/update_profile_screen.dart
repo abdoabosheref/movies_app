@@ -1,7 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../core/utils/app_assets.dart';
 import '../../core/utils/app_colors.dart';
 import '../../core/utils/app_context.dart';
@@ -21,18 +19,31 @@ class UpdateProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: screenWidth*0.04),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
           child: Column(
-            spacing: screenHeight*0.02,
+            spacing: screenHeight * 0.02,
             children: [
-              CustomHeader(title: 'pick_avatar'.tr(),),
+              CustomHeader(title: 'pick_avatar'.tr()),
               CircleAvatar(
                 backgroundImage: AssetImage(AppAssets.avatarImage8),
                 radius: 50,
               ),
-              CustomTextFormFiled(prefixIcon: AppAssets.profileIcon,hintText: 'John Safwat',),
-              CustomTextFormFiled(prefixIcon:AppAssets.phoneIcon,hintText: '01200000000',),
-              Align(alignment:AlignmentGeometry.centerLeft,child: CustomTextButton(text:'reset_password'.tr(),textStyle:AppStyles.white20RegularRoboto,onPressed: (){},)),
+              CustomTextFormFiled(
+                prefixIcon: AppAssets.profileIcon,
+                hintText: 'John Safwat',
+              ),
+              CustomTextFormFiled(
+                prefixIcon: AppAssets.phoneIcon,
+                hintText: '01200000000',
+              ),
+              Align(
+                alignment: AlignmentGeometry.centerLeft,
+                child: CustomTextButton(
+                  text: 'reset_password'.tr(),
+                  textStyle: AppStyles.white20RegularRoboto,
+                  onPressed: () {},
+                ),
+              ),
               Spacer(),
               CustomElevatedButton(
                 backgroundColor: AppColors.red,
@@ -44,7 +55,10 @@ class UpdateProfileScreen extends StatelessWidget {
                 onPressed: () {},
               ),
               CustomElevatedButton(
-                child: Text('update_data'.tr(), style: AppStyles.black20RegularRoboto,),
+                child: Text(
+                  'update_data'.tr(),
+                  style: AppStyles.black20RegularRoboto,
+                ),
                 onPressed: () {},
               ),
             ],
