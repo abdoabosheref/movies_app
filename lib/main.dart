@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/ui/screens/on_boarding_screen/OnboardingScreen.dart';
+import 'package:movies_app/ui/screens/main_screen.dart';
 import 'package:movies_app/ui/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/ui/screens/update_profile_screen.dart';
 
@@ -33,10 +34,10 @@ class MovieApp extends StatelessWidget {
       locale: context.locale,
       title: 'Movie App',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.updateProfileScreen,
+      initialRoute: AppRoutes.onBoardingScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnboardingScreen(),
-        AppRoutes.profileTab: (context) => ProfileTab(),
+        AppRoutes.mainScreen: (context) => MainScreen(),
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
       },
       themeMode: ThemeMode.dark,

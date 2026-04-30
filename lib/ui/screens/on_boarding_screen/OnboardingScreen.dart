@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/data/onboarding_data..dart';
-import 'package:movies_app/ui/screens/home_screen/home_screen.dart';
 import 'onboarding_widget/onboarding_background.dart';
 import 'onboarding_widget/onboarding_bottom_card.dart';
 
@@ -43,11 +43,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
               onNext: () {
                 if (currentIndex == data.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const HomeScreen(),
-                    ),
+                  Navigator.of(context).pushReplacementNamed(
+                    AppRoutes.mainScreen,
                   );
                 } else {
                   controller.nextPage(
