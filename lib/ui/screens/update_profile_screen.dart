@@ -25,7 +25,7 @@ class UpdateProfileScreen extends StatelessWidget {
           child: Column(
             spacing: screenHeight*0.02,
             children: [
-              CustomHeader(),
+              CustomHeader(title: 'pick_avatar'.tr(),),
               CircleAvatar(
                 backgroundImage: AssetImage(AppAssets.avatarImage8),
                 radius: 50,
