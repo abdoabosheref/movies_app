@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/data/onboarding_data..dart';
 import 'package:movies_app/ui/screens/home_screen/home_screen.dart';
-import 'onboarding_widget/onboarding_background.dart';
 import 'onboarding_widget/onboarding_bottom_card.dart';
 
 
@@ -9,11 +8,11 @@ class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  State<OnboardingScreen> createState() => _OnBoardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
-  final PageController controller = PageController();
+class _OnBoardingScreenState extends State<OnboardingScreen> {
+  final PageController pageController = PageController();
   int currentIndex = 0;
 
 
@@ -24,17 +23,16 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          /// PAGES
           PageView.builder(
-            controller: controller,
+            controller: pageController,
             itemCount: data.length,
             onPageChanged: (i) => setState(() => currentIndex = i),
             itemBuilder: (context, index) {
-              return OnboardingBackground(item: data[index]);
+              return Image.asset(data[index].image,width: double.infinity,fit: BoxFit.cover,
+              height: double.infinity,);
             },
           ),
 
-          /// BOTTOM
           Align(
             alignment: Alignment.bottomCenter,
             child: OnboardingBottomCard(
@@ -51,7 +49,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     ),
                   );
                 } else {
-                  controller.nextPage(
+                  pageController.nextPage(
                     duration: const Duration(milliseconds: 400),
                     curve: Curves.easeInOut,
                   );
@@ -59,7 +57,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
 
               onBack: () {
-                controller.previousPage(
+                pageController.previousPage(
                   duration: const Duration(milliseconds: 400),
                   curve: Curves.easeInOut,
                 );
