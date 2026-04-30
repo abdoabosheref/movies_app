@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:movies_app/ui/screens/on_boarding_screen/OnboardingScreen.dart';
+import 'package:movies_app/ui/screens/on_boarding_screen/on_boarding_screen.dart';
 import 'package:movies_app/ui/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/ui/screens/update_profile_screen.dart';
 
