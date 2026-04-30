@@ -16,6 +16,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController controller = PageController();
   int currentIndex = 0;
 
+
   @override
   Widget build(BuildContext context) {
     final data = getOnboardingData(context);

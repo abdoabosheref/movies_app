@@ -56,9 +56,7 @@ class OnboardingBottomCard extends StatelessWidget {
             Text(
               item.desc,
               textAlign: TextAlign.center,
-              style: index == 0
-                  ? AppStyles.black20RegularRoboto
-                  : AppStyles.white20RegularRoboto,
+              style: AppStyles.white20RegularRoboto,
             ),
 
           SizedBox(height: height * 0.02),
@@ -66,12 +64,7 @@ class OnboardingBottomCard extends StatelessWidget {
           /// NEXT
           SizedBox(
             width: double.infinity,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.yellow,
-                padding: EdgeInsets.symmetric(vertical: height * 0.02),
-              ),
-              onPressed: onNext,
+            child: CustomElevatedButton(onPressed: onNext,
               child: Text(
                 index == length - 1 ?
                 'finish'.tr() :
@@ -79,8 +72,8 @@ class OnboardingBottomCard extends StatelessWidget {
                 'explore_now'.tr() :
                 'next'.tr(),
                 style: AppStyles.black20SemiBoldInter,
-              ),
-            ),
+              ),)
+
           ),
 
           SizedBox(height: height * 0.01),
@@ -93,16 +86,14 @@ class OnboardingBottomCard extends StatelessWidget {
               width: double.infinity,
               height: context.screenHeight*0.08,
               child: CustomElevatedButton(
-                onPressed: () {  },
+                borderColor: AppColors.yellow,
+                backgroundColor: AppColors.black,
+                onPressed: () {
+                  onBack();
+                },
                 child: Text('back'.tr(),
                     style: AppStyles.yellow20SemiBoldInter),)
-              /*OutlinedButton(
-                onPressed: onBack,
-                child: Text(
-                  AppLocalizations.of(context)!.back,
-                  style: AppStyle.smb20Yellow,
-                ),
-              ),*/
+
             ),
         ],
       ),
