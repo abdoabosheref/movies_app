@@ -19,7 +19,7 @@ class CustomTextFormFiled extends StatelessWidget {
   final TextInputType? keyboardType;
   final String? hintText ;
   final String prefixIcon ;
-  final Widget? suffixIcon ;
+  final String? suffixIcon ;
 
 
   @override
@@ -44,8 +44,8 @@ class CustomTextFormFiled extends StatelessWidget {
         errorBorder: buildBorder( borderColor: AppColors.red),
         focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
-        prefixIcon: SvgPicture.asset(prefixIcon,),
-        suffixIcon: suffixIcon ,
+        prefixIcon: SvgPicture.asset(prefixIcon,width: 30,height: 30,fit: .scaleDown,),
+        suffixIcon: suffixIcon != null? SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: .scaleDown,): null ,
 
       ),
 

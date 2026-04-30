@@ -33,7 +33,7 @@ class MovieApp extends StatelessWidget {
       locale: context.locale,
       title: 'Movie App',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.onBoardingScreen,
+      initialRoute: AppRoutes.updateProfileScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnboardingScreen(),
         AppRoutes.profileTab: (context) => ProfileTab(),
