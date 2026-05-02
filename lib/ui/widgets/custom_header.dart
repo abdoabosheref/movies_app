@@ -20,7 +20,7 @@ class CustomHeader extends StatelessWidget {
           IconButton(
             onPressed: () {
               Navigator.pop(context);
-            },
+              },
             icon: SvgPicture.asset(
               AppAssets.goldenArrowBack,
               width: 25,fit: .scaleDown,

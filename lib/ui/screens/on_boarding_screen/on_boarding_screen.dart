@@ -43,8 +43,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
               onNext: () {
                 if (currentIndex == data.length - 1) {
+                  //todo: Navigate to login screen
                   Navigator.of(context).pushReplacementNamed(
-                    AppRoutes.mainScreen,
+                    AppRoutes.loginScreen,
                   );
                 } else {
                   pageController.nextPage(

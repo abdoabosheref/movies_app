@@ -4,14 +4,14 @@ import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/app_validator.dart';
-import 'package:movies_app/data/text_form_filed_controller_model.dart';
 import 'package:movies_app/ui/widgets/buttons/custom_elevated_button.dart';
 import 'package:movies_app/ui/widgets/custom_header.dart';
 import 'package:movies_app/ui/widgets/custom_text_form_filed.dart';
 
 class ForgetPasswordScreen extends StatelessWidget {
   ForgetPasswordScreen({super.key});
-
+    TextEditingController emailController = TextEditingController();
+    GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     double screenWidth = context.screenWidth;
@@ -21,7 +21,7 @@ class ForgetPasswordScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
           child: SingleChildScrollView(
             child: Form(
-              key: TextFormFiledControllerModel.formKey,
+              key: formKey,
               child: Column(
                 children: [
                   CustomHeader(title: 'forget_password'.tr(),),
@@ -30,7 +30,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                     prefixIcon: AppAssets.email,
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'email'.tr(),
-                    controller: TextFormFiledControllerModel.emailController,
+                    controller: emailController,
                     validator: (text) {
                       return AppValidator.validateEmail(text);
                     },
@@ -39,7 +39,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   CustomElevatedButton(
                     onPressed: () {
                       //todo : Auth password reset via email
-                      if(TextFormFiledControllerModel.formKey.currentState!.validate()){
+                      if(formKey.currentState!.validate()){
 
                       }
 

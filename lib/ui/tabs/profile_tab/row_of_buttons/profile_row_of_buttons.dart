@@ -24,6 +24,7 @@ class ProfileRowOfButtons extends StatelessWidget {
           child: CustomElevatedButton(
             child: Text('edit_profile'.tr()),
             onPressed: () {
+              //todo: Navigate to update profile screen
               Navigator.of(context).pushNamed(AppRoutes.updateProfileScreen);
             },
           ),
@@ -39,7 +40,10 @@ class ProfileRowOfButtons extends StatelessWidget {
                 SvgPicture.asset(AppAssets.exitIcon),
               ],
             ),
-            onPressed: () {},
+            onPressed: () {
+              //todo: logout using firebase auth
+              Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+            },
           ),
         ),
       ],
