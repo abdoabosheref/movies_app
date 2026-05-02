@@ -9,6 +9,13 @@ class CustomTextButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(onPressed: onPressed, child: Text(text,style:textStyle?? AppStyles.yellow14RegularRoboto,));
+    return TextButton(
+        style: TextButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.zero,
+    ),
+        onPressed: onPressed,
+        child: Text(text,style:textStyle?? AppStyles.yellow14RegularRoboto,
+        ));
   }
 }

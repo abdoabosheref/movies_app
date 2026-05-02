@@ -13,6 +13,8 @@ class CustomTextFormFiled extends StatelessWidget {
      this.hintText,
    required this.prefixIcon,
     this.suffixIcon,
+    this.showPassword,
+    this.obscureText = false,
   });
  final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -20,11 +22,15 @@ class CustomTextFormFiled extends StatelessWidget {
   final String? hintText ;
   final String prefixIcon ;
   final String? suffixIcon ;
+  final VoidCallback? showPassword;
+  final bool obscureText;
 
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText,
+      obscuringCharacter: "*",
 
       controller: controller,
       validator: validator,
@@ -45,7 +51,9 @@ class CustomTextFormFiled extends StatelessWidget {
         focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
         prefixIcon: SvgPicture.asset(prefixIcon,width: 30,height: 30,fit: .scaleDown,),
-        suffixIcon: suffixIcon != null? SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: .scaleDown,): null ,
+        suffixIcon: suffixIcon != null? InkWell(
+            onTap:showPassword,
+            child: SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: .scaleDown,)): null ,
 
       ),
 
