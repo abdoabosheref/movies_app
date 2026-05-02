@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/ui/screens/Login_screen/login_screen.dart';
 import 'package:movies_app/ui/screens/forget_password_screen/forget_password_screen.dart';
 import 'package:movies_app/ui/screens/main_screen.dart';
 import 'package:movies_app/ui/screens/on_boarding_screen/on_boarding_screen.dart';
@@ -34,13 +35,14 @@ class MovieApp extends StatelessWidget {
       locale: context.locale,
       title: 'Movie App',
       debugShowCheckedModeBanner: false,
-      initialRoute: AppRoutes.registerScreen,
+      initialRoute: AppRoutes.loginScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnBoardingScreen(),
         AppRoutes.mainScreen: (context) => MainScreen(),
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
         AppRoutes.forgetPasswordScreen: (context) => ForgetPasswordScreen(),
         AppRoutes.registerScreen: (context) => RegisterScreen(),
+        AppRoutes.loginScreen: (context) => LoginScreen(),
 
       },
       themeMode: ThemeMode.dark,
