@@ -8,11 +8,17 @@ import 'package:movies_app/mvvm/views/ui/screens/register_screen/register_screen
 import 'package:movies_app/mvvm/views/ui/screens/update_profile_screen/update_profile_screen.dart';
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
