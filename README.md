@@ -1,4 +1,7 @@
-https://github.com/user-attachments/assets/dc3a2638-2baf-480e-b60e-6c1b1b9c8e4d
+
+https://github.com/user-attachments/assets/0926c518-8bcb-43c6-a0a1-a948a36870a6
+
+
 
 The video phase1_ ui.mp4 showcases the foundational user interface for the Movies App project. It demonstrates a smooth and professional flow that aligns with modern Flutter development standards.
 
