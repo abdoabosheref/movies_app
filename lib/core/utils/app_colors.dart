@@ -12,4 +12,8 @@ class AppColors {
   static Color grey = Color(0XFFADADAD);
   static Color darkBlack = Color(0XFF000000);
   static Color whiteOpacity60 = Colors.white60;
+  static Color green = Color(0xFF57AA53);
+
+
+
 }
