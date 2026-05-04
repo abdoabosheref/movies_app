@@ -11,6 +11,7 @@ import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart
 import 'package:movies_app/mvvm/views/ui/widgets/custom_language_selector.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_or_divider.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
 
 
 class LoginScreen extends StatelessWidget {
@@ -74,6 +75,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       //todo: login with email+ adding validation
                       // if(formKey.currentState!.validate()){}
+
                       Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
                     },
                     child: Text(
