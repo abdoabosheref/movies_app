@@ -51,4 +51,6 @@ abstract class AppAssets {
   static const String watchList = 'assets/icons/watch_list.svg';
   static const String goldenArrowBack = 'assets/icons/golden_arrow_back.svg';
 
+// ------------ hom tab background --------------
+static final String homeTabBackGround = 'assets/images/homeTabBackground.png';
 }

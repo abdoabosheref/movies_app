@@ -76,6 +76,7 @@ class LoginScreen extends StatelessWidget {
                       //todo: login with email+ adding validation
                       // if(formKey.currentState!.validate()){}
 
+
                       Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
                     },
                     child: Text(

@@ -41,18 +41,23 @@ class _MainScreenState extends State<MainScreen> {
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
     return Scaffold(
+      extendBody: true,
       body: tabs[currentIndex],
       bottomNavigationBar: Container(
+        height: screenHeight * 0.07,
         margin: EdgeInsets.only(
           left: screenWidth * 0.02,
           right: screenWidth * 0.02,
-          bottom: screenHeight * 0.01,
+          bottom: screenHeight * 0.009,
         ),
         decoration: BoxDecoration(
           color: AppColors.darkGrey,
           borderRadius: BorderRadius.circular(16),
         ),
         child: BottomNavigationBar(
+          elevation: 0,
+          unselectedFontSize: 0,
+          selectedFontSize: 0,
           type: BottomNavigationBarType.fixed,
           backgroundColor: AppColors.transparent,
           showUnselectedLabels: false,
