@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/mvvm/view_models/login_auth_bloc/login_bloc.dart';
 import 'package:movies_app/mvvm/views/ui/screens/Login_screen/login_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/forget_password_screen/forget_password_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/main_screen/main_screen.dart';
@@ -41,14 +43,17 @@ class MovieApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Movie App',
-      initialRoute: AppRoutes.mainScreen,
+      initialRoute: AppRoutes.loginScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnBoardingScreen(),
         AppRoutes.mainScreen: (context) => MainScreen(),
         AppRoutes.updateProfileScreen: (context) => UpdateProfileScreen(),
         AppRoutes.forgetPasswordScreen: (context) => ForgetPasswordScreen(),
         AppRoutes.registerScreen: (context) => RegisterScreen(),
-        AppRoutes.loginScreen: (context) => LoginScreen(),
+        AppRoutes.loginScreen: (context) => BlocProvider(
+            create: (context) => LoginBloc(),
+            child: LoginScreen()),
+
       },
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,

@@ -50,7 +50,7 @@ class CustomTextFormFiled extends StatelessWidget {
         focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
         prefixIcon: SvgPicture.asset(prefixIcon,width: 30,height: 30,fit: .scaleDown,),
-        suffixIcon: suffixIcon != null? InkWell(
+        suffixIcon: suffixIcon != null? GestureDetector(
             onTap:showPassword,
             child: SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: .scaleDown,)): null ,
 
