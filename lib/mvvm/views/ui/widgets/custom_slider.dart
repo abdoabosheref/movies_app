@@ -8,19 +8,20 @@ import 'package:movies_app/core/utils/app_styles.dart';
 class CustomSlider extends StatelessWidget {
 
  final double viewportFraction ;
- final bool enableInfiniteScroll ;
  final bool enlargeCenterPage ;
  final double enlargeFactor ;
  final List<Widget>? list ;
  final double height ;
+ final String? underSliderText ;
 
   const CustomSlider({super.key,
     required this.viewportFraction,
-    required this.enableInfiniteScroll,
     required this.enlargeCenterPage,
-    required this.enlargeFactor,
+    this.enlargeFactor = 0,
     required this.height,
-    required this.list});
+    required this.list,
+    this.underSliderText ,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +35,17 @@ class CustomSlider extends StatelessWidget {
             height: height,
             aspectRatio: 16 / 9,
             viewportFraction: viewportFraction,
-            initialPage:4,
-            enableInfiniteScroll: enableInfiniteScroll,
-            reverse: false,
-            autoPlay: false,
+            enableInfiniteScroll: true,
+            reverse: true,
             enlargeCenterPage: enlargeCenterPage,
-            enlargeFactor:enlargeFactor,
+            enlargeFactor: enlargeFactor ,
             scrollDirection: Axis.horizontal,
           ),
           items: list
         ),
-        // Text('Avatar'.tr(),style: AppStyles.white14RegularRoboto,),
+
+         underSliderText == null ? SizedBox() :
+             Text(underSliderText!.tr(),style: AppStyles.white16RegularRoboto,) ,
       ],
     );
   }

@@ -36,8 +36,8 @@ class RegisterScreen extends StatelessWidget {
               children: [
                 CustomHeader(title: 'register'.tr()),
                 CustomSlider( viewportFraction:0.33 ,
+                    underSliderText: 'Avatar',
                     height: screenHeight*0.15,
-                    enableInfiniteScroll:true ,
                     enlargeCenterPage: true,
                     enlargeFactor: 0.4,
                     list: avatarList.map((avatar) {
@@ -59,7 +59,7 @@ class RegisterScreen extends StatelessWidget {
                     CustomTextButton(onPressed: (){
                       //todo: Navigate to login screen
                       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
-                    }, text:'login'.tr(),
+                    }, text:Text('login'.tr(),style: AppStyles.black20RegularRoboto,),
                     textStyle: AppStyles.yellow14BlackRoboto,),
                   ],
                 ),

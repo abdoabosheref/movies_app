@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                       CustomTextButton(onPressed: (){
                         //todo: Navigate to forget password screen
                         Navigator.pushNamed(context,AppRoutes.forgetPasswordScreen);
-                      }, text: "forget_password".tr(),
+                      }, text: Text("forget_password".tr(),style: AppStyles.yellow14RegularRoboto,),
                         textStyle: AppStyles.yellow14BlackRoboto,),
                     ],
                   ),
@@ -92,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                         //todo: Navigate to signup screen
                         Navigator.pushNamed(context,AppRoutes.registerScreen);
 
-                      }, text:"create_one".tr(),
+                      }, text:Text("create_one".tr(),style: AppStyles.yellow14RegularRoboto,),
                         textStyle: AppStyles.yellow14BlackRoboto,),
                     ],
                   ),
