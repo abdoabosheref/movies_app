@@ -26,7 +26,7 @@ class RegisterScreen extends StatelessWidget {
                 CustomHeader(title: 'register'.tr()),
                 CustomAvatarSlider(),
                 CustomRegisterForm(),
-                Row(mainAxisAlignment: .center,
+                Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                    Text('already_have_account'.tr(),style:AppStyles.white14RegularRoboto ,),
                     CustomTextButton(onPressed: (){

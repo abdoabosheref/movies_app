@@ -49,10 +49,10 @@ class CustomTextFormFiled extends StatelessWidget {
         errorBorder: buildBorder( borderColor: AppColors.red),
         focusedErrorBorder:buildBorder(borderColor: AppColors.red) ,
         hintText: hintText,
-        prefixIcon: SvgPicture.asset(prefixIcon,width: 30,height: 30,fit: .scaleDown,),
+        prefixIcon: SvgPicture.asset(prefixIcon,width: 30,height: 30,fit: BoxFit.scaleDown,),
         suffixIcon: suffixIcon != null? InkWell(
             onTap:showPassword,
-            child: SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: .scaleDown,)): null ,
+            child: SvgPicture.asset(suffixIcon!,width: 30,height: 30,fit: BoxFit.scaleDown,)): null ,
 
       ),
 

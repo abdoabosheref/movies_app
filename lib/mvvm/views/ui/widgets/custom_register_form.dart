@@ -32,7 +32,7 @@ class _CustomRegisterFormState extends State<CustomRegisterForm> {
       // key:   TextFormFiledControllerModel.formKey ,
       child: Form(
         key: registerFormKey,
-        child: Column(spacing: screenHeight *0.025 ,mainAxisSize: .min,
+        child: Column(spacing: screenHeight *0.025 ,mainAxisSize: MainAxisSize.min,
           children: [
             CustomTextFormFiled(prefixIcon: AppAssets.name,
               hintText: 'name'.tr(),

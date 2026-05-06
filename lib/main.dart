@@ -7,6 +7,7 @@ import 'package:movies_app/mvvm/views/ui/screens/on_boarding_screen/on_boarding_
 import 'package:movies_app/mvvm/views/ui/screens/register_screen/register_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/update_profile_screen/update_profile_screen.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -20,19 +21,23 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  final prefs = await SharedPreferences.getInstance();
+  final bool showOnboarding = prefs.getBool('showOnboarding') ?? true;
+
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: Locale('en'),
       startLocale: Locale('en'),
-      child: MovieApp(),
+      child: MovieApp(showOnboarding: showOnboarding),
     ),
   );
 }
 
 class MovieApp extends StatelessWidget {
-  const MovieApp({super.key});
+  final bool showOnboarding;
+  const MovieApp({super.key, required this.showOnboarding});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +47,7 @@ class MovieApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Movie App',
-      initialRoute: AppRoutes.onBoardingScreen,
+      initialRoute: showOnboarding ? AppRoutes.onBoardingScreen : AppRoutes.loginScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnBoardingScreen(),
         AppRoutes.mainScreen: (context) => MainScreen(),

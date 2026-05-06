@@ -15,7 +15,7 @@ class CustomHeader extends StatelessWidget {
     double screenHeight = context.screenHeight;
     return SizedBox(height: screenHeight*0.06,
       child: Row(
-        mainAxisAlignment: .spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
             onPressed: () {
@@ -23,7 +23,7 @@ class CustomHeader extends StatelessWidget {
               },
             icon: SvgPicture.asset(
               AppAssets.goldenArrowBack,
-              width: 25,fit: .scaleDown,
+              width: 25,fit: BoxFit.scaleDown,
             ),
           ),
           Text(title, style: AppStyles.yellow16RegularRoboto),

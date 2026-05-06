@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/mvvm/models/onboarding_data..dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'onboarding_widget/onboarding_bottom_card.dart';
 
 
@@ -41,12 +42,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               index: currentIndex,
               length: data.length,
 
-              onNext: () {
+              onNext: () async {
                 if (currentIndex == data.length - 1) {
-                  //todo: Navigate to login screen
-                  Navigator.of(context).pushReplacementNamed(
-                    AppRoutes.loginScreen,
-                  );
+                  // Set onboarding as finished
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('showOnboarding', false);
+
+                  if (mounted) {
+                    Navigator.of(context).pushReplacementNamed(
+                      AppRoutes.loginScreen,
+                    );
+                  }
                 } else {
                   pageController.nextPage(
                     duration: const Duration(milliseconds: 400),

@@ -23,9 +23,9 @@ class CustomAvatarSlider extends StatelessWidget {
     ];
     double screenHeight = context.screenHeight;
     return Column(
-      mainAxisSize: .min,
+      mainAxisSize: MainAxisSize.min,
       spacing: screenHeight * 0.003,
-      children: [
+      children: [/*
         CarouselSlider(
           options: CarouselOptions(
             height: screenHeight * 0.15,
@@ -53,7 +53,7 @@ class CustomAvatarSlider extends StatelessWidget {
           }).toList(),
         ),
         Text('avatar'.tr(), style: AppStyles.white16RegularRoboto),
-      ],
+      */],
     );
   }
 }

@@ -10,8 +10,8 @@ class CustomFlagButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(onPressed: (){}, icon: SvgPicture.asset(flagName),style: IconButton.styleFrom(
-        tapTargetSize:.shrinkWrap ,
-        padding: .zero,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap ,
+        padding: EdgeInsets.zero,
         side: BorderSide(
             color: isSelected ? AppColors.yellow : AppColors.black,
             width:  isSelected? 10 : 0

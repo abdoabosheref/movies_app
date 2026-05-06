@@ -16,7 +16,7 @@ class CustomLanguageSelector extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: AppColors.yellow,width: 2)
     ),child: Row(
-      mainAxisAlignment: .spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CustomFlagButton(flagName: AppAssets.usaFlagIcon,isSelected: true,),
         CustomFlagButton(flagName: AppAssets.egyptFlagIcon,),
