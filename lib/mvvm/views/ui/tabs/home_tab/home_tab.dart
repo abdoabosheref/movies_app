@@ -107,7 +107,6 @@ class HomeTab extends StatelessWidget {
                                 Icon(Icons.arrow_forward_sharp,color: AppColors.yellow,size: 18,)
                               ],
                             ),
-                            textStyle: AppStyles.yellow16RegularRoboto,
                           ),
                         ],
                       ),

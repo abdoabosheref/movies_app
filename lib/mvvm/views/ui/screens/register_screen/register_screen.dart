@@ -60,7 +60,7 @@ class RegisterScreen extends StatelessWidget {
                       //todo: Navigate to login screen
                       Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
                     }, text:Text('login'.tr(),style: AppStyles.black20RegularRoboto,),
-                    textStyle: AppStyles.yellow14BlackRoboto,),
+                    ),
                   ],
                 ),
                CustomLanguageSelector(),
