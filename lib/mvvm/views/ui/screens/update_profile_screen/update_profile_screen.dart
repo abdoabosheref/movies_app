@@ -39,7 +39,7 @@ class UpdateProfileScreen extends StatelessWidget {
               Align(
                 alignment: AlignmentGeometry.centerLeft,
                 child: CustomTextButton(
-                  text: 'reset_password'.tr(),
+                  text: Text('reset_password'.tr(),style: AppStyles.white20RegularRoboto,),
                   textStyle: AppStyles.white20RegularRoboto,
                   onPressed: () {},
                 ),

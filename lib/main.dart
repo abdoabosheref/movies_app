@@ -6,7 +6,6 @@ import 'package:movies_app/mvvm/views/ui/screens/main_screen/main_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/on_boarding_screen/on_boarding_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/register_screen/register_screen.dart';
 import 'package:movies_app/mvvm/views/ui/screens/update_profile_screen/update_profile_screen.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,7 +41,7 @@ class MovieApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Movie App',
-      initialRoute: AppRoutes.onBoardingScreen,
+      initialRoute: AppRoutes.mainScreen,
       routes: {
         AppRoutes.onBoardingScreen: (context) => OnBoardingScreen(),
         AppRoutes.mainScreen: (context) => MainScreen(),
@@ -50,7 +49,6 @@ class MovieApp extends StatelessWidget {
         AppRoutes.forgetPasswordScreen: (context) => ForgetPasswordScreen(),
         AppRoutes.registerScreen: (context) => RegisterScreen(),
         AppRoutes.loginScreen: (context) => LoginScreen(),
-
       },
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,

@@ -13,7 +13,8 @@ class AppColors {
   static Color darkBlack = Color(0XFF000000);
   static Color whiteOpacity60 = Colors.white60;
   static Color green = Color(0xFF57AA53);
-
-
+  static Color blackOpacity71 = Color(0xFF121312).withValues(alpha: 0.71);
+  static Color blackOpacity50 = Color(0xFF121312).withValues(alpha: 0.5);
+  static Color blackOpacity70 = Color(0xFF121312).withValues(alpha: 0.7);
 
 }
