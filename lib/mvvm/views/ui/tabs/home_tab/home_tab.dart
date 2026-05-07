@@ -154,9 +154,9 @@ class HomeTab extends StatelessWidget {
         end: Alignment.bottomCenter,
         stops: const [0.0, 0.48, 0.6],
         colors: [
-          AppColors.blackOpacity05,
-          AppColors.blackOpacity07,
-          AppColors.blackOpacity1,
+          AppColors.blackOpacity50,
+          AppColors.blackOpacity70,
+          AppColors.black,
         ],
       ),
     );
