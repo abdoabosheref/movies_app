@@ -1,8 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'features/localization/presentation/cubit/local_cubit.dart';
 import 'firebase_options.dart';
 
 
@@ -19,7 +22,10 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: Locale('en'),
       startLocale: Locale('en'),
-      child: MovieApp(),
+      child: BlocProvider(
+        create: (context) => LocalCubit(),
+        child: MovieApp(),
+      ),
     ),
   );
 }
