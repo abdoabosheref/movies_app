@@ -14,7 +14,6 @@ class CustomHeader extends StatelessWidget {
     double screenHeight = context.screenHeight;
     return SizedBox(height: screenHeight*0.06,
       child: Row(
-        textDirection: TextDirection.ltr,
         mainAxisAlignment: .spaceBetween,
         children: [
           IconButton(
