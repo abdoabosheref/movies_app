@@ -1,6 +1,6 @@
 class MyUser {
 
-  static const String collectionName = "my_user";
+   final String collectionName = "my_user";
 
   String id ;
   String name ;

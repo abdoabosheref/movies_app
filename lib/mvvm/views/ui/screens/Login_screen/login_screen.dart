@@ -6,6 +6,7 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/app_validator.dart';
+import 'package:movies_app/firebase_utils.dart';
 import 'package:movies_app/mvvm/view_models/login_auth_bloc/login_bloc.dart';
 import 'package:movies_app/mvvm/view_models/login_auth_bloc/login_event.dart';
 import 'package:movies_app/mvvm/view_models/login_auth_bloc/login_state.dart';
@@ -18,11 +19,22 @@ import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class LoginScreen extends StatelessWidget {
-   LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+   const LoginScreen({super.key});
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+class _LoginScreenState extends State<LoginScreen> {
   final  TextEditingController emailController = TextEditingController(text: 'abdoabosheref@gmail.com');
   final  TextEditingController passwordController = TextEditingController(text: '371998442540aA*');
   final  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                           if(loginFormKey.currentState!.validate()){
 
                             context.read<LoginBloc>().add(
-                                LoginSubmit(emailController.text.trim(),
+                                EmailPasswordLogIn(emailController.text.trim(),
                                     passwordController.text.trim()));
 
                           }
@@ -120,6 +132,8 @@ class LoginScreen extends StatelessWidget {
                       CustomElevatedButton(
                         onPressed: () {
                           //todo: login with google
+                          context.read<LoginBloc>().add(GoogleLogIn());
+
                         },
                         child: Row(
                           spacing: screenWidth * 0.02,

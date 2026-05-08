@@ -1,11 +1,13 @@
-abstract class LoginEvent {}
+abstract class LogInEvent {}
 
- class LoginSubmit extends LoginEvent {
+ class EmailPasswordLogIn extends LogInEvent {
    final String email;
    final String password;
-   LoginSubmit(this.email, this.password);
+   EmailPasswordLogIn(this.email, this.password);
 
  }
 
+class GoogleLogIn extends LogInEvent {}
 
+class SignOut extends LogInEvent {}
 
