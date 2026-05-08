@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:movies_app/features/auth/data/models/user_model.dart';
-import 'package:movies_app/mvvm/models/my_user.dart';
 
 class FirebaseUtils {
 
