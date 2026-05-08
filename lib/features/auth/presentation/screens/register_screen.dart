@@ -5,6 +5,7 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/snack_bar_utils.dart';
+
 import '../../../../core/utils/app_lists.dart';
 import '../../../../mvvm/views/ui/widgets/buttons/custom_text_button.dart';
 import '../../../../mvvm/views/ui/widgets/custom_header.dart';
@@ -22,11 +23,13 @@ class RegisterScreen extends StatelessWidget {
     AuthCubit authCubit = context.read<AuthCubit>();
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
-    return BlocConsumer<AuthCubit, AuthState>(
-
+    return BlocListener<AuthCubit, AuthState>(
       bloc: authCubit,
-        buildWhen: (previous, current) => current is! ChangePasswordVisibilityState,
-      listenWhen: (previous, current) => current is AuthSuccess || current is AuthFailure || current is AuthLoading,      listener: (context, state) {
+      listenWhen: (previous, current) =>
+          current is AuthSuccess ||
+          current is AuthFailure ||
+          current is AuthLoading,
+      listener: (context, state) {
         if (state is! AuthLoading) {
           SnackBarUtils.hideLoading(context: context);
         }
@@ -53,7 +56,7 @@ class RegisterScreen extends StatelessWidget {
             break;
         }
       },
-      builder: (context, state) => Scaffold(
+      child: Scaffold(
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
@@ -78,7 +81,7 @@ class RegisterScreen extends StatelessWidget {
                                 AppLists.avatarList.indexOf(avatar),
                               );
                             },
-                            child: Image.asset(avatar, fit: BoxFit.cover,),
+                            child: Image.asset(avatar, fit: BoxFit.cover),
                           );
                         },
                       );

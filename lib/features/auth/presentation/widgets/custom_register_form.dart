@@ -1,13 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/core/utils/app_context.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/app_validator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
+
 import '../cubit/auth_cubit.dart';
 
 class CustomRegisterForm extends StatelessWidget {
@@ -19,7 +20,8 @@ class CustomRegisterForm extends StatelessWidget {
     final double screenHeight = context.screenHeight;
 
     return BlocBuilder<AuthCubit, AuthState>(
-      buildWhen: (previous, current) => current is ChangePasswordVisibilityState || current is AuthInitial,
+      buildWhen: (previous,
+          current) => current is ChangePasswordVisibilityState,
       builder: (context, state) {
         var authCubit = context.read<AuthCubit>();
         return Form(
@@ -55,12 +57,12 @@ class CustomRegisterForm extends StatelessWidget {
               ),
               CustomTextFormFiled(
                 prefixIcon: AppAssets.password,
-                obscureText: authCubit.isPasswordHidden,
+                obscureText: authCubit.isConfirmPasswordHidden,
                 isPassword: true,
                 hintText: 'confirm_password'.tr(),
                 keyboardType: TextInputType.visiblePassword,
                 controller: authCubit.confirmPasswordController,
-                showPassword: () => authCubit.togglePasswordVisibility(),
+                showPassword: () => authCubit.toggleConfirmPasswordVisibility(),
                 validator: (confirmPassword) =>
                     AppValidator.validateConfirmPassword(
                       password: authCubit.passwordController.text,

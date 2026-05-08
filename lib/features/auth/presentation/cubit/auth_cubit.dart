@@ -16,6 +16,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController phoneController = TextEditingController();
   int selectedIndex = 0;
   bool isPasswordHidden = true;
+  bool isConfirmPasswordHidden = true;
   late AuthRepository authRepository;
   late AuthRemoteDataSource authRemoteDataSource;
   AuthCubit() : super(AuthInitial()) {
@@ -53,6 +54,11 @@ class AuthCubit extends Cubit<AuthState> {
   }
   void togglePasswordVisibility() {
     isPasswordHidden = !isPasswordHidden;
+    emit(ChangePasswordVisibilityState());
+  }
+
+  void toggleConfirmPasswordVisibility() {
+    isConfirmPasswordHidden = !isConfirmPasswordHidden;
     emit(ChangePasswordVisibilityState());
   }
   @override
