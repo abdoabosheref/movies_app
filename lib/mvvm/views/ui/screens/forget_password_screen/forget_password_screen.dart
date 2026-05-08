@@ -34,8 +34,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     hintText: 'email'.tr(),
                     controller: emailController,
-                    validator: (text) {
-                      return AppValidator.validateEmail(text);
+                    validator: (email) {
+                      return AppValidator.validateEmail(email: email);
                     },
                   ),
                   SizedBox(height: context.screenWidth * 0.04),

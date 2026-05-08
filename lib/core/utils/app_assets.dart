@@ -40,7 +40,6 @@ abstract class AppAssets {
   static const String email = 'assets/icons/email.svg';
   static const String usaFlagIcon = 'assets/icons/english_icon.svg';
   static const String googleAuthIcon = 'assets/icons/google_icon.svg';
-  static const String invisibilityIcon = 'assets/icons/hide_password.svg';
   static const String history = 'assets/icons/history.svg';
   static const String likes = 'assets/icons/likes.svg';
   static const String name = 'assets/icons/name.svg';
