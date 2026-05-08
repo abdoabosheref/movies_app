@@ -1,25 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../models/user_model.dart';
 import 'auth_remote_data_source.dart';
 
-class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
-  Future<void> registerWithEmailAndPassword({required String email,required String password}) async{
+  Future<void> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+    required UserModel userModel,
+  }) async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await UserModel.collection()
+          .doc(credential.user!.uid)
+          .set(userModel.copyWith(uId: credential.user!.uid));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-       throw'The password provided is too weak.';
+        throw 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-       throw 'The account already exists for that email.';
+        throw 'The account already exists for that email.';
       }
     } catch (e) {
       throw e.toString();
     }
-
   }
-
 }
