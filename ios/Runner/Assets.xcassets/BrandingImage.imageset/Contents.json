@@ -1,41 +1,41 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "LaunchImage.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "appearances": [
-        {
-          "appearance": "luminosity",
-          "value": "dark"
-        }
-      ],
-      "filename": "LaunchImageDark.png",
+      "filename": "BrandingImage.png",
       "idiom": "universal",
       "scale": "1x"
     },
     {
-      "filename" : "LaunchImage@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
       "appearances": [
         {
           "appearance": "luminosity",
           "value": "dark"
         }
       ],
-      "filename": "LaunchImageDark@2x.png",
+      "filename": "BrandingImageDark.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "BrandingImage@2x.png",
       "idiom": "universal",
       "scale": "2x"
     },
     {
-      "filename" : "LaunchImage@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "appearances": [
+        {
+          "appearance": "luminosity",
+          "value": "dark"
+        }
+      ],
+      "filename": "BrandingImageDark@2x.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "BrandingImage@3x.png",
+      "idiom": "universal",
+      "scale": "3x"
     },
     {
       "appearances": [
@@ -44,13 +44,13 @@
           "value": "dark"
         }
       ],
-      "filename": "LaunchImageDark@3x.png",
+      "filename": "BrandingImageDark@3x.png",
       "idiom": "universal",
       "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }
