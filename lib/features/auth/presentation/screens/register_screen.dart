@@ -62,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
             child: SingleChildScrollView(
               child: Column(
-                spacing: screenHeight * 0.005,
+                spacing: screenHeight * 0.0035,
                 children: [
                   CustomHeader(title: 'register'.tr()),
                   CustomSlider(
