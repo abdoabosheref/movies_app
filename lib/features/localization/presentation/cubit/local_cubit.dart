@@ -5,17 +5,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'local_states.dart';
 
 class LocalCubit extends Cubit<LocalStates> {
-  String currentLanguageCode = 'en';
+  String currentLanguageCode;
 
-  LocalCubit() : super(LocaleInitial());
+  LocalCubit({required this.currentLanguageCode}) : super(LocaleInitial());
 
   void changeLanguage({
     required BuildContext context,
     required String newLanguageCode,
   }) {
+    if (currentLanguageCode == newLanguageCode) return;
     currentLanguageCode = newLanguageCode;
-    Locale newLocale = Locale(newLanguageCode);
-    context.setLocale(newLocale);
+    context.setLocale(Locale(newLanguageCode));
     emit(ChangeLocaleState());
   }
 

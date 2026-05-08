@@ -38,7 +38,7 @@ class CustomTextFormFiled extends StatelessWidget {
       style: AppStyles.white16RegularRoboto,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: AppStyles.white16RegularRoboto,
+        hintStyle: AppStyles.white16RegularRoboto.copyWith(height: 1.2),
         filled: true,
         fillColor: AppColors.darkGrey,
         prefixIconColor: AppColors.white,

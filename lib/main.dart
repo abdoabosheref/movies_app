@@ -8,23 +8,26 @@ import 'core/utils/app_theme.dart';
 import 'features/localization/presentation/cubit/local_cubit.dart';
 import 'firebase_options.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(
     EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: 'assets/translations',
       fallbackLocale: Locale('en'),
-      startLocale: Locale('en'),
-      child: BlocProvider(
-        create: (context) => LocalCubit(),
-        child: MovieApp(),
+      child: Builder(
+        builder: (context) {
+          final initialLanguage = EasyLocalization.of(
+            context,
+          )!.locale.languageCode;
+          return BlocProvider(
+            create: (_) => LocalCubit(currentLanguageCode: initialLanguage),
+            child: MovieApp(),
+          );
+        },
       ),
     ),
   );
