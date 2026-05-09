@@ -33,7 +33,8 @@ class ProfileTab extends StatelessWidget {
                     children: [
                       Center(child: Image.asset(
                         AppAssets.popCorn, height: screenHeight * 0.15,)),
-                      Center(child: Image.asset(AppAssets.popCorn)),
+                      Center(child: Image.asset(
+                        AppAssets.popCorn, height: screenHeight * 0.15,)),
                     ],
                   ),
                 ),
