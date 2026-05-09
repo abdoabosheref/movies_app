@@ -66,4 +66,5 @@ class DefaultFirebaseOptions {
     iosClientId: '524756747932-87714gipjnddaq8dsovjurpi9urt4j1p.apps.googleusercontent.com',
     iosBundleId: 'com.example.moviesApp',
   );
+
 }
