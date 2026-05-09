@@ -32,7 +32,7 @@ class ProfileRowOfButtons extends StatelessWidget {
           child: CustomElevatedButton(
             backgroundColor: AppColors.red,
             child: Row(
-              mainAxisAlignment: .center,
+              mainAxisAlignment: MainAxisAlignment.center,
               spacing: screenWidth * 0.02,
               children: [
                 Text('exit'.tr(), style: AppStyles.white20RegularRoboto),

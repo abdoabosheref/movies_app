@@ -40,7 +40,6 @@ abstract class AppAssets {
   static const String email = 'assets/icons/email.svg';
   static const String usaFlagIcon = 'assets/icons/english_icon.svg';
   static const String googleAuthIcon = 'assets/icons/google_icon.svg';
-  static const String invisibilityIcon = 'assets/icons/hide_password.svg';
   static const String history = 'assets/icons/history.svg';
   static const String likes = 'assets/icons/likes.svg';
   static const String name = 'assets/icons/name.svg';
@@ -50,6 +49,8 @@ abstract class AppAssets {
   static const String time = 'assets/icons/time.svg';
   static const String watchList = 'assets/icons/watch_list.svg';
   static const String goldenArrowBack = 'assets/icons/golden_arrow_back.svg';
+  static const String searchIconSvg = 'assets/icons/searchIconSvg.svg';
+
 
 // ------------ hom tab test background image --------------
 static final String homeTabBackGround = 'assets/images/homeTabBackground.png';

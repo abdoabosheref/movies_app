@@ -3,7 +3,7 @@ import 'package:movies_app/core/utils/app_styles.dart';
 
 class CustomTextButton extends StatelessWidget {
   final VoidCallback onPressed;
-  final Widget text;
+  final String text;
   final TextStyle? textStyle;
   const CustomTextButton({
     super.key,
@@ -20,7 +20,7 @@ class CustomTextButton extends StatelessWidget {
         padding: EdgeInsets.zero,
       ),
       onPressed: onPressed,
-      child:text,
+      child: Text(text, style: textStyle ?? AppStyles.yellow14RegularRoboto),
     );
   }
 }

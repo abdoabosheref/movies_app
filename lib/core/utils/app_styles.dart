@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppStyles {
-  static TextStyle white36MediumInter = GoogleFonts.inter(
+  static TextStyle white32MediumInter = GoogleFonts.inter(
     color: AppColors.white,
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: .w500,
   );
   static TextStyle white24BoldInter = GoogleFonts.inter(
@@ -14,15 +14,21 @@ class AppStyles {
     fontSize: 24,
     fontWeight: .bold,
   );
-  static TextStyle white20RegularInter = GoogleFonts.inter(
+  static TextStyle white20BoldInter = GoogleFonts.inter(
     color: AppColors.white,
-    fontSize: 16,
+    fontSize: 24,
+    fontWeight: .bold,
+  );
+  static TextStyle white17RegularInter = GoogleFonts.inter(
+    color: AppColors.white,
+    fontSize: 17,
     fontWeight: .w400,
   );
-  static TextStyle white60Opacity20RegularInter = GoogleFonts.inter(
-    color: AppColors.white,
-    fontSize: 20,
+  static TextStyle white60Opacity17RegularInter = GoogleFonts.inter(
+    color: AppColors.whiteOpacity60,
+    fontSize: 17,
     fontWeight: .w400,
+
   );
   static TextStyle black20SemiBoldInter = GoogleFonts.inter(
     color: AppColors.black,

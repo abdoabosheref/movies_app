@@ -8,7 +8,7 @@ class UserProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: .spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
       UserAvatarWithUserName(),
       ProfileInfoColumn(counter: 12,labelText: 'wish_list'.tr(),),
