@@ -57,7 +57,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> loginWithGoogle() async {
+  Future<UserCredential> loginWithGoogle() async {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn.instance;
       await googleSignIn.initialize(
@@ -74,15 +74,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       User? firebaseUser = userCredential.user;
 
       if (firebaseUser != null) {
-        UserModel user = UserModel(
-          uId: firebaseUser.uid,
-          name: firebaseUser.displayName ?? 'User',
-          email: firebaseUser.email ?? '',
-          phone: firebaseUser.phoneNumber ?? '',
-          avatarIndex: 0,
-        );
-        await UserModel.collection().doc(user.uId).set(user);
+        final userDoc = await getUserData(uId: firebaseUser.uid);
+        if (userDoc == null) {
+          UserModel user = UserModel(
+            uId: firebaseUser.uid,
+            name: firebaseUser.displayName ?? 'User',
+            email: firebaseUser.email ?? '',
+            phone: firebaseUser.phoneNumber ?? '',
+            avatarIndex: 0,
+          );
+          await UserModel.collection().doc(user.uId).set(user);
+        }
       }
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'An error occurred';
       if (e.code == 'user-not-found') {

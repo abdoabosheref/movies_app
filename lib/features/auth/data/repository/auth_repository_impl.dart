@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
-  Future<void> loginWithGoogle() {
+  Future<UserCredential> loginWithGoogle() {
     return authRemoteDataSource.loginWithGoogle();
   }
 

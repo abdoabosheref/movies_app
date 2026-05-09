@@ -9,7 +9,7 @@ abstract class AuthRepository {
   Future<UserCredential> loginWithEmailAndPassword(
       {required String email, required String password,});
 
-  Future<void> loginWithGoogle();
+  Future<UserCredential> loginWithGoogle();
 
   Future<UserModel?> getUserData({required String uId});
 }

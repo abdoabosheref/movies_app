@@ -86,8 +86,13 @@ class AuthCubit extends Cubit<AuthState> {
     // await Future.delayed(Duration(seconds: 3));
     try {
       emit(AuthLoading());
-      await authRepository.loginWithGoogle();
-      emit(AuthSuccess());
+      final credential = await authRepository.loginWithGoogle();
+      currentUser = await authRepository.getUserData(uId: credential.user!.uid);
+      if (currentUser != null) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure(errorMessage: "User data not found"));
+      }
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }
