@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
 import 'features/localization/presentation/cubit/local_cubit.dart';
 import 'firebase_options.dart';
 
@@ -26,9 +27,17 @@ void main() async {
           final initialLanguage = EasyLocalization.of(
             context,
           )!.locale.languageCode;
-          return BlocProvider(
-            create: (_) => LocalCubit(currentLanguageCode: initialLanguage),
-            child: MovieApp(showOnBoarding: showOnBoarding,),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => LocalCubit(currentLanguageCode: initialLanguage),
+              ),
+              BlocProvider(create: (context) => AuthCubit()),
+              // BlocProvider(
+              //   create: (context) => SubjectBloc(),
+              // ),
+            ],
+            child: MovieApp(showOnBoarding: showOnBoarding),
           );
         },
       ),
@@ -37,7 +46,6 @@ void main() async {
 }
 
 class MovieApp extends StatelessWidget {
-
   final bool showOnBoarding;
 
   const MovieApp({super.key, required this.showOnBoarding});
@@ -50,8 +58,9 @@ class MovieApp extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       title: 'Movie App',
-      initialRoute: showOnBoarding ? AppRoutes.onBoardingScreen : AppRoutes
-          .loginScreen,
+      initialRoute: showOnBoarding
+          ? AppRoutes.onBoardingScreen
+          : AppRoutes.loginScreen,
       routes: AppRoutes.routes,
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,

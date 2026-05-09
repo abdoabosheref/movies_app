@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
-import '../../mvvm/views/ui/screens/Login_screen/login_screen.dart';
 import '../../mvvm/views/ui/screens/forget_password_screen/forget_password_screen.dart';
 import '../../mvvm/views/ui/screens/main_screen/main_screen.dart';
 import '../../mvvm/views/ui/screens/on_boarding_screen/on_boarding_screen.dart';
@@ -22,8 +20,8 @@ class AppRoutes {
     AppRoutes.mainScreen: (_) => MainScreen(),
     AppRoutes.updateProfileScreen: (_) => UpdateProfileScreen(),
     AppRoutes.forgetPasswordScreen: (_) => ForgetPasswordScreen(),
-    AppRoutes.registerScreen: (context) => BlocProvider(create: (context) => AuthCubit(),child: RegisterScreen()),
-    AppRoutes.loginScreen: (_) => LoginScreen(),
+    AppRoutes.registerScreen: (context) => RegisterScreen(),
+    AppRoutes.loginScreen: (context) => LoginScreen(),
   };
 
 

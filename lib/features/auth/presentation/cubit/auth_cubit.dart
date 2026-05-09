@@ -9,29 +9,54 @@ import '../../data/repository/auth_repository_impl.dart';
 import 'auth_states.dart';
 
 class AuthCubit extends Cubit<AuthState> {
+  // ------------ Login Controllers Section --------------
+  final loginEmailController = TextEditingController();
+  final loginPasswordController = TextEditingController();
+  final loginFormKey = GlobalKey<FormState>();
+  UserModel? currentUser;
+
+  // ------------ Register Controllers Section --------------
   final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
+  TextEditingController registerEmailController = TextEditingController();
+  TextEditingController registerNameController = TextEditingController();
+  TextEditingController registerPasswordController = TextEditingController();
+  TextEditingController registerConfirmPasswordController =
+      TextEditingController();
+  TextEditingController registerPhoneController = TextEditingController();
+
+  // ------------ General Variables Section --------------
+
   int selectedAvatarIndex = 0;
   bool isPasswordHidden = true;
   bool isConfirmPasswordHidden = true;
   late AuthRepository authRepository;
   late AuthRemoteDataSource authRemoteDataSource;
+
+  // ------------ Constructor Section --------------
+
   AuthCubit() : super(AuthInitial()) {
     authRemoteDataSource = AuthRemoteDataSourceImpl();
     authRepository = AuthRepositoryImpl(
       authRemoteDataSource: authRemoteDataSource,
     );
   }
-  void clearControllers() {
-    emailController.clear();
-    nameController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    phoneController.clear();
+
+  // ------------ Functions Section --------------
+
+  void registerClearControllers() {
+    // registerFormKey.currentState?.reset();
+
+    registerNameController.clear();
+    registerEmailController.clear();
+    registerPasswordController.clear();
+    registerConfirmPasswordController.clear();
+    registerPhoneController.clear();
+  }
+
+  void loginClearControllers() {
+    // loginFormKey.currentState?.reset();
+    loginEmailController.clear();
+    loginPasswordController.clear();
   }
 
   void selectAvatar(int currentAvatarIndex) {
@@ -39,26 +64,35 @@ class AuthCubit extends Cubit<AuthState> {
     emit(AvatarChangedState());
   }
 
-  Future<void> registerWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       emit(AuthLoading());
-      UserModel userModel = UserModel(
-        uId: '',
-        name: nameController.text,
-        email: emailController.text,
-        phone: phoneController.text,
-        avatarIndex: selectedAvatarIndex,
-      );
-
-      await authRepository.registerWithEmailAndPassword(
+      final credential = await authRepository.loginWithEmailAndPassword(
         email: email,
         password: password,
-        userModel: userModel,
       );
-      emit(AuthSuccess());
+      currentUser = await authRepository.getUserData(uId: credential.user!.uid);
+      if (currentUser != null) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure(errorMessage: "User data not found"));
+      }
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    // await Future.delayed(Duration(seconds: 3));
+    try {
+      emit(AuthLoading());
+      final credential = await authRepository.loginWithGoogle();
+      currentUser = await authRepository.getUserData(uId: credential.user!.uid);
+      if (currentUser != null) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure(errorMessage: "User data not found"));
+      }
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }
@@ -74,13 +108,42 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ChangePasswordVisibilityState());
   }
 
+  Future<void> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      emit(AuthLoading());
+      UserModel userModel = UserModel(
+        uId: '',
+        name: registerNameController.text,
+        email: registerEmailController.text,
+        phone: registerPhoneController.text,
+        avatarIndex: selectedAvatarIndex,
+      );
+
+      await authRepository.registerWithEmailAndPassword(
+        email: email,
+        password: password,
+        userModel: userModel,
+      );
+      emit(AuthSuccess());
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
   @override
   Future<void> close() {
-    emailController.dispose();
-    nameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    phoneController.dispose();
+    // ------------ Register Controllers Section --------------
+    registerNameController.dispose();
+    registerEmailController.dispose();
+    registerPasswordController.dispose();
+    registerConfirmPasswordController.dispose();
+    registerPhoneController.dispose();
+    // ------------ Login Controllers Section --------------
+    loginPasswordController.dispose();
+    loginEmailController.dispose();
     return super.close();
   }
 }
