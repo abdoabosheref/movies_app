@@ -5,7 +5,6 @@ import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/app_validator.dart';
-import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
@@ -26,7 +25,7 @@ class CustomRegisterForm extends StatelessWidget {
       builder: (context, state) {
         var authCubit = context.read<AuthCubit>();
         return Form(
-          key: authCubit.authFormKey,
+          key: authCubit.registerFormKey,
           child: Column(
             spacing: screenHeight * 0.018,
             children: [
@@ -34,14 +33,14 @@ class CustomRegisterForm extends StatelessWidget {
                 prefixIcon: AppAssets.name,
                 hintText: 'name'.tr(),
                 keyboardType: TextInputType.name,
-                controller: authCubit.nameController,
+                controller: authCubit.registerNameController,
                 validator: (name) => AppValidator.validateName(name: name),
               ),
               CustomTextFormFiled(
                 prefixIcon: AppAssets.email,
                 hintText: 'email'.tr(),
                 keyboardType: TextInputType.emailAddress,
-                controller: authCubit.emailController,
+                controller: authCubit.registerEmailController,
                 validator: (email) => AppValidator.validateEmail(email: email),
               ),
               CustomTextFormFiled(
@@ -50,7 +49,7 @@ class CustomRegisterForm extends StatelessWidget {
                   isPassword: true,
                   hintText: 'password'.tr(),
                   keyboardType: TextInputType.visiblePassword,
-                  controller: authCubit.passwordController,
+                  controller: authCubit.registerPasswordController,
                   validator: (password) =>
                       AppValidator.validatePassword(password: password),
 
@@ -62,11 +61,11 @@ class CustomRegisterForm extends StatelessWidget {
                 isPassword: true,
                 hintText: 'confirm_password'.tr(),
                 keyboardType: TextInputType.visiblePassword,
-                controller: authCubit.confirmPasswordController,
+                controller: authCubit.registerConfirmPasswordController,
                 showPassword: () => authCubit.toggleConfirmPasswordVisibility(),
                 validator: (confirmPassword) =>
                     AppValidator.validateConfirmPassword(
-                      password: authCubit.passwordController.text,
+                      password: authCubit.registerPasswordController.text,
                       confirmPassword: confirmPassword,
                     ),
               ),
@@ -74,17 +73,17 @@ class CustomRegisterForm extends StatelessWidget {
                 prefixIcon: AppAssets.phoneIcon,
                 hintText: 'phone_number'.tr(),
                 keyboardType: TextInputType.phone,
-                controller: authCubit.phoneController,
+                controller: authCubit.registerPhoneController,
                 validator: (phoneNumber) =>
                     AppValidator.validatePhone(phoneNumber: phoneNumber),
               ),
               CustomElevatedButton(
                 onPressed: () {
                   //todo: create account auth
-                  if (authCubit.authFormKey.currentState!.validate()) {
+                  if (authCubit.registerFormKey.currentState!.validate()) {
                     authCubit.registerWithEmailAndPassword(
-                      email: authCubit.emailController.text,
-                      password: authCubit.passwordController.text,
+                      email: authCubit.registerEmailController.text,
+                      password: authCubit.registerPasswordController.text,
                     );
                   }
                 },

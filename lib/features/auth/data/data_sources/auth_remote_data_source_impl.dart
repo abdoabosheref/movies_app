@@ -1,25 +1,102 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
+import '../models/user_model.dart';
 import 'auth_remote_data_source.dart';
 
-class AuthRemoteDataSourceImpl implements AuthRemoteDataSource{
+class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
-  Future<void> registerWithEmailAndPassword({required String email,required String password}) async{
+  Future<void> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+    required UserModel userModel,
+  }) async {
     try {
-      final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      final credential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      await UserModel.collection()
+          .doc(credential.user!.uid)
+          .set(userModel.copyWith(uId: credential.user!.uid));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-       throw'The password provided is too weak.';
+        throw 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-       throw 'The account already exists for that email.';
+        throw 'The account already exists for that email.';
       }
     } catch (e) {
       throw e.toString();
     }
-
   }
 
+  @override
+  Future<void> loginWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      // User? firebaseUser = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'wrong-password') {
+        errorMessage = 'Wrong password provided.';
+      } else if (e.code == 'network-request-failed') {
+        errorMessage = 'Check your internet connection.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is badly formatted.';
+      } else {
+        errorMessage = e.message ?? 'Authentication failed';
+      }
+      throw errorMessage;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<void> loginWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+      await googleSignIn.initialize(
+        serverClientId:
+            "524756747932-emeqnu0sh3i54omlf75pkk7tuaom5jv2.apps.googleusercontent.com",
+      );
+      final GoogleSignInAccount googleUser = await googleSignIn.authenticate();
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        idToken: googleAuth.idToken,
+      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(credential);
+      User? firebaseUser = userCredential.user;
+
+      if (firebaseUser != null) {
+        UserModel user = UserModel(
+          uId: firebaseUser.uid,
+          name: firebaseUser.displayName ?? 'User',
+          email: firebaseUser.email ?? '',
+          phone: firebaseUser.phoneNumber ?? '',
+          avatarIndex: 0,
+        );
+        await UserModel.collection().doc(user.uId).set(user);
+      }
+    } on FirebaseAuthException catch (e) {
+      String errorMessage = 'An error occurred';
+      if (e.code == 'user-not-found') {
+        errorMessage = 'No user found for that email.';
+      } else if (e.code == 'network-request-failed') {
+        errorMessage = 'Check your internet connection.';
+      } else if (e.code == 'invalid-email') {
+        errorMessage = 'The email address is badly formatted.';
+      } else {
+        errorMessage = e.message ?? 'Authentication failed';
+      }
+      throw errorMessage;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

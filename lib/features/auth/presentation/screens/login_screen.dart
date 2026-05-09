@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
@@ -13,17 +14,11 @@ import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_or_divider.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../../../../core/utils/snack_bar_utils.dart';
+
+class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +30,27 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
-            CustomToast.showSuccessToast(context, 'Loading...');
+            SnackBarUtils.showLoading(context: context);
           } else if (state is AuthSuccess) {
-            CustomToast.showSuccessToast(context, 'login success');
+            SnackBarUtils.hideLoading(context: context);
+            SnackBarUtils.showSuccessMessage(
+              context: context,
+              message: 'Registered successfully',
+            );
+
             Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
           } else if (state is AuthFailure) {
-            CustomToast.showErrorToast(context, 'login error');
+            SnackBarUtils.hideLoading(context: context);
+            SnackBarUtils.showErrorMessage(
+              context: context,
+              errorMessage: state.errorMessage,
+            );
           }
         },
         builder: (context, state) {
           return SafeArea(
             child: Form(
-              key: authCubit.authFormKey,
+              key: authCubit.loginFormKey,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -56,47 +60,51 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Column(
                     children: [
-                      Image.asset(AppAssets.appLogo),
+                      Image.asset(AppAssets.appLogo, width: screenWidth * 0.35),
                       SizedBox(height: screenHeight * 0.074),
                       CustomTextFormFiled(
                         keyboardType: TextInputType.emailAddress,
                         validator: (email) =>
                             AppValidator.validateEmail(email: email),
-                        controller: authCubit.emailController,
+                        controller: authCubit.loginEmailController,
                         prefixIcon: AppAssets.email,
                         hintText: "email".tr(),
                       ),
                       SizedBox(height: screenHeight * 0.02),
                       CustomTextFormFiled(
-                        obscureText:  authCubit.isConfirmPasswordHidden,
+                        obscureText: authCubit.isPasswordHidden,
                         //todo: show password
                         validator: (password) =>
                             AppValidator.validatePassword(password: password),
-                        controller: authCubit.passwordController,
+                        controller: authCubit.loginPasswordController,
                         prefixIcon: AppAssets.password,
                         hintText: "password".tr(),
                         isPassword: true,
-                        showPassword: () => authCubit.toggleConfirmPasswordVisibility(),
+                        showPassword: () =>
+                            authCubit.togglePasswordVisibility(),
                       ),
-                      SizedBox(height: screenHeight * 0.018),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          CustomTextButton(onPressed: () {
+                      SizedBox(height: screenHeight * 0.01),
+                      Align(
+                        alignment: .centerRight,
+                        child: CustomTextButton(
+                          onPressed: () {
                             //todo: Navigate to forget password screen
                             Navigator.pushNamed(
-                                context, AppRoutes.forgetPasswordScreen);
-                          }, text: "forget_password".tr()),
-                        ],
+                              context,
+                              AppRoutes.forgetPasswordScreen,
+                            );
+                          },
+                          text: "forget_password".tr(),
+                        ),
                       ),
                       SizedBox(height: screenHeight * 0.035),
                       CustomElevatedButton(
                         //todo:login
                         onPressed: () {
-                          if (authCubit.authFormKey.currentState!.validate()) {
+                          if (authCubit.loginFormKey.currentState!.validate()) {
                             context.read<AuthCubit>().loginWithEmailAndPassword(
-                              authCubit.emailController.text,
-                              authCubit.passwordController.text,
+                              authCubit.loginEmailController.text,
+                              authCubit.loginPasswordController.text,
                             );
                           }
                         },
@@ -105,21 +113,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: AppStyles.black20RegularRoboto,
                         ),
                       ),
-                      SizedBox(height: context.screenHeight * 0.024),
-                      Row(mainAxisAlignment: .center,
+                      SizedBox(height: context.screenHeight * 0.01),
+                      Row(
+                        mainAxisAlignment: .center,
                         spacing: screenWidth * 0.004,
                         children: [
-                          Text("dont_have_account".tr(),
-                            style: AppStyles.white14RegularRoboto,),
-                          CustomTextButton(onPressed: () {
-                            //todo: Navigate to signup screen
-                            Navigator.pushNamed(
-                                context, AppRoutes.registerScreen);
-                          }, text: "create_one".tr(),
+                          Text(
+                            "dont_have_account".tr(),
+                            style: AppStyles.white14RegularRoboto,
+                          ),
+                          CustomTextButton(
+                            onPressed: () {
+                              //todo: Navigate to signup screen
+                              authCubit.loginClearControllers();
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.registerScreen,
+                              );
+                            },
+                            text: "create_one".tr(),
                           ),
                         ],
                       ),
-                      SizedBox(height: context.screenHeight * 0.03),
+                      SizedBox(height: context.screenHeight * 0.02),
                       CustomOrDivider(),
                       SizedBox(height: context.screenHeight * 0.03),
                       CustomElevatedButton(
@@ -141,7 +157,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(height: context.screenHeight * 0.035),
                       CustomLanguageSelector(),
-
                     ],
                   ),
                 ),
@@ -149,7 +164,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           );
         },
-
       ),
     );
   }

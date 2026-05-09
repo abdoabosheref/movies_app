@@ -75,12 +75,9 @@ class RegisterScreen extends StatelessWidget {
                       return Builder(
                         builder: (BuildContext context) {
                           return InkWell(
-                            onTap: () {
-                              //Todo: pick Avatar
-                              authCubit.selectAvatar(
-                                AppLists.avatarList.indexOf(avatar),
-                              );
-                            },
+                            onTap: () => authCubit.selectAvatar(
+                              AppLists.avatarList.indexOf(avatar),
+                            ),
                             child: Image.asset(avatar, fit: BoxFit.cover),
                           );
                         },
@@ -97,7 +94,7 @@ class RegisterScreen extends StatelessWidget {
                       ),
                       CustomTextButton(
                         onPressed: () {
-                          //todo: Navigate to login screen
+                          authCubit.registerClearControllers();
                           Navigator.of(
                             context,
                           ).pushReplacementNamed(AppRoutes.loginScreen);

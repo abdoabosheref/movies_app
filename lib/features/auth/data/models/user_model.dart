@@ -1,34 +1,58 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
+  static const String collectionName = "user";
 
-  final String collectionName = "my_user";
-
-  String id ;
-  String name ;
-  String email ;
-  String phone ;
+  final String uId;
+  final String name;
+  final String email;
+  final String phone;
+  final int avatarIndex;
 
   UserModel({
-    required this.id,
+    required this.uId,
     required this.name,
     required this.email,
     required this.phone,
+    required this.avatarIndex,
   });
 
-
-  UserModel.fromFireStore(Map<String,dynamic> data):this(
-    id: data['id'],
-    name: data['name'],
-    email: data['email'],
-    phone: data['phone'],
-  );
-
-  Map<String,dynamic> toFireStore (){
-    return {
-      'id' : id,
-      'name' : name,
-      'email' : email,
-      'phone' : phone,
-    };
+  static CollectionReference<UserModel> collection() {
+    return FirebaseFirestore.instance
+        .collection(collectionName)
+        .withConverter<UserModel>(
+          fromFirestore: (snapshot, _) =>
+              UserModel.fromFireStore(snapshot.data()!),
+          toFirestore: (user, _) => user.toFireStore(),
+        );
   }
 
+  UserModel copyWith({String? uId}) {
+    return UserModel(
+      uId: uId ?? this.uId,
+      name: name,
+      email: email,
+      phone: phone,
+      avatarIndex: avatarIndex,
+    );
+  }
+
+  UserModel.fromFireStore(Map<String, dynamic> data)
+    : this(
+        uId: data['uId'],
+        name: data['name'],
+        email: data['email'],
+        phone: data['phone'],
+        avatarIndex: data['avatarIndex'],
+      );
+
+  Map<String, dynamic> toFireStore() {
+    return {
+      'uId': uId,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'avatarIndex': avatarIndex,
+    };
+  }
 }

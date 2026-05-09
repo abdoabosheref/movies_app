@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app/features/auth/data/models/user_model.dart';
-import 'package:movies_app/firebase_utils.dart';
-import 'package:movies_app/mvvm/models/my_user.dart';
+
 import '../../data/data_sources/auth_remote_data_source.dart';
 import '../../data/data_sources/auth_remote_data_source_impl.dart';
 import '../../data/repository/auth_repository.dart';
@@ -12,17 +9,29 @@ import '../../data/repository/auth_repository_impl.dart';
 import 'auth_states.dart';
 
 class AuthCubit extends Cubit<AuthState> {
-  final GlobalKey<FormState> authFormKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  int selectedIndex = 0;
+  // ------------ Login Controllers Section --------------
+  final loginEmailController = TextEditingController();
+  final loginPasswordController = TextEditingController();
+  final loginFormKey = GlobalKey<FormState>();
+
+  // ------------ Register Controllers Section --------------
+  final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
+  TextEditingController registerEmailController = TextEditingController();
+  TextEditingController registerNameController = TextEditingController();
+  TextEditingController registerPasswordController = TextEditingController();
+  TextEditingController registerConfirmPasswordController =
+      TextEditingController();
+  TextEditingController registerPhoneController = TextEditingController();
+
+  // ------------ General Variables Section --------------
+
+  int selectedAvatarIndex = 0;
   bool isPasswordHidden = true;
   bool isConfirmPasswordHidden = true;
   late AuthRepository authRepository;
   late AuthRemoteDataSource authRemoteDataSource;
+
+  // ------------ Constructor Section --------------
 
   AuthCubit() : super(AuthInitial()) {
     authRemoteDataSource = AuthRemoteDataSourceImpl();
@@ -31,116 +40,47 @@ class AuthCubit extends Cubit<AuthState> {
     );
   }
 
-  void clearControllers() {
-    emailController.clear();
-    nameController.clear();
-    passwordController.clear();
-    confirmPasswordController.clear();
-    phoneController.clear();
+  // ------------ Functions Section --------------
+
+  void registerClearControllers() {
+    // registerFormKey.currentState?.reset();
+
+    registerNameController.clear();
+    registerEmailController.clear();
+    registerPasswordController.clear();
+    registerConfirmPasswordController.clear();
+    registerPhoneController.clear();
   }
 
-  void selectAvatar(int index) {
-    selectedIndex = index;
+  void loginClearControllers() {
+    // loginFormKey.currentState?.reset();
+    loginEmailController.clear();
+    loginPasswordController.clear();
+  }
+
+  void selectAvatar(int currentAvatarIndex) {
+    selectedAvatarIndex = currentAvatarIndex;
     emit(AvatarChangedState());
   }
 
-  Future<void> loginWithEmailAndPassword(String email, String password)async {
-
-    emit(AuthLoading());
-
+  Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      emit(AuthLoading());
+      await authRepository.loginWithEmailAndPassword(
         email: email,
-        password:password,
+        password: password,
       );
-      User? firebaseUser = userCredential.user;
-
-      if (firebaseUser != null) {
-        UserModel user = UserModel(
-            id: firebaseUser.uid,
-            name: firebaseUser.displayName ?? '',
-            email: firebaseUser.email ?? '',
-            phone: firebaseUser.phoneNumber ?? '');
-        await FirebaseUtils().saveUserToFireStore(user);
-      }
-
-      emit(AuthSuccess(successMessage :'Login Success'));
-
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = 'An error occurred';
-      if (e.code == 'user-not-found') {
-        errorMessage = 'No user found for that email.';
-      } else if (e.code == 'wrong-password') {
-        errorMessage = 'Wrong password provided.';
-      } else if (e.code == 'network-request-failed') {
-        errorMessage = 'Check your internet connection.';
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'The email address is badly formatted.';
-      } else {
-        errorMessage = e.message ?? 'Authentication failed';
-      }
-      emit(AuthFailure(errorMessage: errorMessage));
+      emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }
   }
 
- Future<void>loginWithGoogle()async {
-   emit(AuthLoading());
-   await Future.delayed(Duration(seconds: 3));
-
-   try{
-     final GoogleSignIn googleSignIn = GoogleSignIn.instance;
-     await googleSignIn.initialize(
-       serverClientId:
-       "524756747932-emeqnu0sh3i54omlf75pkk7tuaom5jv2.apps.googleusercontent.com" ,
-     );
-     final GoogleSignInAccount? googleUser = await googleSignIn.authenticate();
-     final GoogleSignInAuthentication googleAuth = googleUser!.authentication;
-     final credential = GoogleAuthProvider.credential(idToken: googleAuth.idToken);
-     UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-     User? firebaseUser = userCredential.user;
-
-     if (firebaseUser != null) {
-       UserModel user = UserModel(
-           id: firebaseUser.uid,
-           name: firebaseUser.displayName ?? '',
-           email: firebaseUser.email ?? '',
-           phone: firebaseUser.phoneNumber ?? '');
-       await FirebaseUtils().saveUserToFireStore(user);
-
-     }
-     emit(AuthSuccess(successMessage:  'Login Success'));
-
-   } on FirebaseAuthException catch (e) {
-     String errorMessage = 'An error occurred';
-     if (e.code == 'user-not-found') {
-       errorMessage = 'No user found for that email.';
-     } else if (e.code == 'network-request-failed') {
-       errorMessage = 'Check your internet connection.';
-     } else if (e.code == 'invalid-email') {
-       errorMessage = 'The email address is badly formatted.';
-     } else {
-       errorMessage = e.message ?? 'Authentication failed';
-     }
-     emit(AuthFailure(errorMessage: errorMessage));
-   }catch (e){
-     emit(AuthFailure(errorMessage: e.toString()));
-     print(e.toString());
-   }
- }
-
-
-  Future<void> registerWithEmailAndPassword({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> loginWithGoogle() async {
+    // await Future.delayed(Duration(seconds: 3));
     try {
       emit(AuthLoading());
-      await authRepository.registerWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      await authRepository.loginWithGoogle();
       emit(AuthSuccess());
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
@@ -157,14 +97,42 @@ class AuthCubit extends Cubit<AuthState> {
     emit(ChangePasswordVisibilityState());
   }
 
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    nameController.dispose();
-    passwordController.dispose();
-    confirmPasswordController.dispose();
-    phoneController.dispose();
-    return super.close();
+  Future<void> registerWithEmailAndPassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      emit(AuthLoading());
+      UserModel userModel = UserModel(
+        uId: '',
+        name: registerNameController.text,
+        email: registerEmailController.text,
+        phone: registerPhoneController.text,
+        avatarIndex: selectedAvatarIndex,
+      );
+
+      await authRepository.registerWithEmailAndPassword(
+        email: email,
+        password: password,
+        userModel: userModel,
+      );
+      emit(AuthSuccess());
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
   }
 
+  @override
+  Future<void> close() {
+    // ------------ Register Controllers Section --------------
+    registerNameController.dispose();
+    registerEmailController.dispose();
+    registerPasswordController.dispose();
+    registerConfirmPasswordController.dispose();
+    registerPhoneController.dispose();
+    // ------------ Login Controllers Section --------------
+    loginPasswordController.dispose();
+    loginEmailController.dispose();
+    return super.close();
+  }
 }

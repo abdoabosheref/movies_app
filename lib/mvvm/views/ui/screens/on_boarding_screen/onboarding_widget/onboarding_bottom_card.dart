@@ -3,83 +3,87 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-import 'package:movies_app/mvvm/models/OnboardingModel.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
 
-class OnboardingBottomCard extends StatelessWidget {
-  final OnboardingModel item;
-  final int index;
-  final int length;
+import '../../../../../models/on_boarding_model.dart';
+import '../../../widgets/buttons/custom_elevated_button.dart';
+
+class OnBoardingBottomCard extends StatelessWidget {
+  final int currentIndex;
   final VoidCallback onNext;
   final VoidCallback onBack;
 
-  const OnboardingBottomCard({
+  const OnBoardingBottomCard({
     super.key,
-    required this.item,
-    required this.index,
-    required this.length,
+    required this.currentIndex,
     required this.onNext,
     required this.onBack,
   });
 
   @override
   Widget build(BuildContext context) {
-double screenWidth = context.screenWidth ;
-double screenHeight = context.screenHeight ;
+    final currentItem = onBoardingData[currentIndex];
+    final int onBoardingDataListLength = onBoardingData.length;
+    double screenWidth = context.screenWidth;
+    double screenHeight = context.screenHeight;
 
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: screenHeight * 0.025,
-        horizontal: screenWidth * 0.03,
+        horizontal: screenWidth * 0.038,
       ),
       decoration: BoxDecoration(
-        color:index==0? AppColors.transparent : AppColors.black,
+        color: currentIndex == 0 ? AppColors.transparent : AppColors.black,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),
       ),
-      child: Column(spacing: screenHeight*0.01,
+      child: Column(
+        spacing: screenHeight * 0.01,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            item.title,
+            currentItem.title.tr(),
             textAlign: TextAlign.center,
-            style: index == 0 ?
-            AppStyles.white36MediumInter :
-            AppStyles.white24BoldInter,
+            style: currentIndex == 0
+                ? AppStyles.white32MediumInter
+                : AppStyles.white20BoldInter,
           ),
 
-          if (index != length - 1)
+          if (currentIndex != onBoardingDataListLength - 1)
             Text(
-              item.desc,
+              currentItem.desc.tr(),
               textAlign: TextAlign.center,
-              style: AppStyles.white20RegularRoboto,
+              style: currentIndex == 0
+                  ? AppStyles.white60Opacity17RegularInter
+                  : AppStyles.white17RegularInter,
             ),
 
           SizedBox(height: screenHeight * 0.01),
 
-           CustomElevatedButton(onPressed: onNext,
-              child: Text(
-                index == length - 1 ?
-                'finish'.tr() :
-                index == 0 ?
-                'explore_now'.tr() :
-                'next'.tr(),
-                style: AppStyles.black20SemiBoldInter,
-              ),),
+          CustomElevatedButton(
+            onPressed: onNext,
+            child: Text(
+              currentIndex == onBoardingDataListLength - 1
+                  ? 'finish'.tr()
+                  : currentIndex == 0
+                  ? 'explore_now'.tr()
+                  : 'next'.tr(),
+              style: AppStyles.black20SemiBoldInter,
+            ),
+          ),
 
-          if (index > 1)
+          if (currentIndex > 1)
             CustomElevatedButton(
               borderColor: AppColors.yellow,
               backgroundColor: AppColors.black,
               onPressed: () {
                 onBack();
               },
-              child: Text('back'.tr(),
-                  style: AppStyles.yellow20SemiBoldInter),),
+              child: Text('back'.tr(), style: AppStyles.yellow20SemiBoldInter),
+            ),
         ],
-      ));
-
+      ),
+    );
   }
 }
