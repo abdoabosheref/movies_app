@@ -29,14 +29,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<void> loginWithEmailAndPassword({
+  Future<UserCredential> loginWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
-      // User? firebaseUser = userCredential.user;
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       String errorMessage = 'An error occurred';
       if (e.code == 'user-not-found') {
@@ -95,6 +95,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         errorMessage = e.message ?? 'Authentication failed';
       }
       throw errorMessage;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<UserModel?> getUserData({required String uId}) async {
+    try {
+      var doc = await UserModel.collection().doc(uId).get();
+      return doc.data();
     } catch (e) {
       throw e.toString();
     }

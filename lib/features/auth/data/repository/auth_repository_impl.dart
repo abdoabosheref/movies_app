@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../data_sources/auth_remote_data_source.dart';
 import '../models/user_model.dart';
 import 'auth_repository.dart';
@@ -13,7 +15,7 @@ class AuthRepositoryImpl implements AuthRepository{
   }
 
   @override
-  Future<void> loginWithEmailAndPassword(
+  Future<UserCredential> loginWithEmailAndPassword(
       {required String email, required String password}) {
     return authRemoteDataSource.loginWithEmailAndPassword(
         email: email, password: password);
@@ -22,6 +24,11 @@ class AuthRepositoryImpl implements AuthRepository{
   @override
   Future<void> loginWithGoogle() {
     return authRemoteDataSource.loginWithGoogle();
+  }
+
+  @override
+  Future<UserModel?> getUserData({required String uId}) {
+    return authRemoteDataSource.getUserData(uId: uId);
   }
 
 

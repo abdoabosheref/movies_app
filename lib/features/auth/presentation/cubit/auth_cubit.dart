@@ -13,6 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   final loginEmailController = TextEditingController();
   final loginPasswordController = TextEditingController();
   final loginFormKey = GlobalKey<FormState>();
+  UserModel? currentUser;
 
   // ------------ Register Controllers Section --------------
   final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
@@ -66,11 +67,16 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> loginWithEmailAndPassword(String email, String password) async {
     try {
       emit(AuthLoading());
-      await authRepository.loginWithEmailAndPassword(
+      final credential = await authRepository.loginWithEmailAndPassword(
         email: email,
         password: password,
       );
-      emit(AuthSuccess());
+      currentUser = await authRepository.getUserData(uId: credential.user!.uid);
+      if (currentUser != null) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure(errorMessage: "User data not found"));
+      }
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }
