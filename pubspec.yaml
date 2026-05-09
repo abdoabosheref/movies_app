@@ -48,6 +48,7 @@ dependencies:
   easy_localization: ^3.0.8
   flutter_bloc: ^9.1.1
   fluttertoast: ^9.0.0
+  flutter_bloc: ^9.1.1
   carousel_slider: ^5.1.2
 
 dev_dependencies:
