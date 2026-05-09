@@ -29,13 +29,6 @@ class MyUser {
      'email' : email,
      'phone' : phone,
    };
-
-
-
-
-
   }
-
-
 
 }

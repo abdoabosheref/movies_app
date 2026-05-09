@@ -30,7 +30,7 @@ class MovieGridItem extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: context.screenWidth *0.018, vertical: context.screenHeight *0.004),
             decoration: BoxDecoration(
-              color: AppColors.blackAlfa07,
+              color: AppColors.blackOpacity70,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(

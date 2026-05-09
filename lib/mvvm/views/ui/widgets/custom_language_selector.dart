@@ -3,7 +3,6 @@ import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 
-import 'buttons/custom_flag_button.dart';
 
 class CustomLanguageSelector extends StatelessWidget {
   const CustomLanguageSelector({super.key});
@@ -16,7 +15,7 @@ class CustomLanguageSelector extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
         border: Border.all(color: AppColors.yellow,width: 2)
     ),child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: .spaceBetween,
       children: [
         CustomFlagButton(flagName: AppAssets.usaFlagIcon,isSelected: true,),
         CustomFlagButton(flagName: AppAssets.egyptFlagIcon,),
