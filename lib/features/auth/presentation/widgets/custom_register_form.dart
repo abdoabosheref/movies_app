@@ -33,14 +33,14 @@ class CustomRegisterForm extends StatelessWidget {
                 prefixIcon: AppAssets.name,
                 hintText: 'name'.tr(),
                 keyboardType: TextInputType.name,
-                controller: authCubit.nameController,
+                controller: authCubit.registerNameController,
                 validator: (name) => AppValidator.validateName(name: name),
               ),
               CustomTextFormFiled(
                 prefixIcon: AppAssets.email,
                 hintText: 'email'.tr(),
                 keyboardType: TextInputType.emailAddress,
-                controller: authCubit.emailController,
+                controller: authCubit.registerEmailController,
                 validator: (email) => AppValidator.validateEmail(email: email),
               ),
               CustomTextFormFiled(
@@ -49,7 +49,7 @@ class CustomRegisterForm extends StatelessWidget {
                   isPassword: true,
                   hintText: 'password'.tr(),
                   keyboardType: TextInputType.visiblePassword,
-                  controller: authCubit.passwordController,
+                  controller: authCubit.registerPasswordController,
                   validator: (password) =>
                       AppValidator.validatePassword(password: password),
 
@@ -61,11 +61,11 @@ class CustomRegisterForm extends StatelessWidget {
                 isPassword: true,
                 hintText: 'confirm_password'.tr(),
                 keyboardType: TextInputType.visiblePassword,
-                controller: authCubit.confirmPasswordController,
+                controller: authCubit.registerConfirmPasswordController,
                 showPassword: () => authCubit.toggleConfirmPasswordVisibility(),
                 validator: (confirmPassword) =>
                     AppValidator.validateConfirmPassword(
-                      password: authCubit.passwordController.text,
+                      password: authCubit.registerPasswordController.text,
                       confirmPassword: confirmPassword,
                     ),
               ),
@@ -73,7 +73,7 @@ class CustomRegisterForm extends StatelessWidget {
                 prefixIcon: AppAssets.phoneIcon,
                 hintText: 'phone_number'.tr(),
                 keyboardType: TextInputType.phone,
-                controller: authCubit.phoneController,
+                controller: authCubit.registerPhoneController,
                 validator: (phoneNumber) =>
                     AppValidator.validatePhone(phoneNumber: phoneNumber),
               ),
@@ -82,8 +82,8 @@ class CustomRegisterForm extends StatelessWidget {
                   //todo: create account auth
                   if (authCubit.registerFormKey.currentState!.validate()) {
                     authCubit.registerWithEmailAndPassword(
-                      email: authCubit.emailController.text,
-                      password: authCubit.passwordController.text,
+                      email: authCubit.registerEmailController.text,
+                      password: authCubit.registerPasswordController.text,
                     );
                   }
                 },

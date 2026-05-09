@@ -84,7 +84,7 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.024),
-                  Row(mainAxisAlignment: MainAxisAlignment.center,spacing: screenWidth*0.004,
+                  Row(mainAxisAlignment: .center,spacing: screenWidth*0.004,
                     children: [
                       Text("dont_have_account".tr(),style:AppStyles.white14RegularRoboto ,),
                       CustomTextButton(onPressed: (){

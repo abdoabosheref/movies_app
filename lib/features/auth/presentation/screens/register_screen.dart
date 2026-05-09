@@ -93,9 +93,12 @@ class RegisterScreen extends StatelessWidget {
                         style: AppStyles.white14RegularRoboto,
                       ),
                       CustomTextButton(
-                        onPressed: () => Navigator.of(
-                          context,
-                        ).pushReplacementNamed(AppRoutes.loginScreen),
+                        onPressed: () {
+                          authCubit.registerClearControllers();
+                          Navigator.of(
+                            context,
+                          ).pushReplacementNamed(AppRoutes.loginScreen);
+                        },
                         text: 'login'.tr(),
                         textStyle: AppStyles.yellow14BlackRoboto,
                       ),
