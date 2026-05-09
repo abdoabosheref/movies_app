@@ -14,11 +14,12 @@ class UserAvatarWithUserName extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = context.screenHeight;
     AuthCubit authCubit = context.read<AuthCubit>();
-    final user = authCubit.currentUser!;
-    String avatarImageName =
-        'assets/images/avatar_image_${user.avatarIndex + 1}.png';
+
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
+        final user = authCubit.currentUser!;
+        String avatarImageName =
+            'assets/images/avatar_image_${user.avatarIndex + 1}.png';
         return Column(
           spacing: screenHeight * 0.005,
           children: [
