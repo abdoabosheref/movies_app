@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../models/on_boarding_model.dart';
 import 'onboarding_widget/onboarding_bottom_card.dart';
 
+
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 

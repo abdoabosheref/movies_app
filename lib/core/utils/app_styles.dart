@@ -28,6 +28,7 @@ class AppStyles {
     color: AppColors.whiteOpacity60,
     fontSize: 17,
     fontWeight: .w400,
+
   );
   static TextStyle black20SemiBoldInter = GoogleFonts.inter(
     color: AppColors.black,
@@ -115,4 +116,5 @@ class AppStyles {
     fontSize: 20,
     fontWeight: .bold,
   );
+
 }
