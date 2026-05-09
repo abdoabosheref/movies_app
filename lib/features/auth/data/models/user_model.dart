@@ -27,13 +27,18 @@ class UserModel {
         );
   }
 
-  UserModel copyWith({String? uId}) {
+  UserModel copyWith({
+    String? uId,
+    String? name,
+    String? phone,
+    int? avatarIndex,
+  }) {
     return UserModel(
       uId: uId ?? this.uId,
-      name: name,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      avatarIndex: avatarIndex ?? this.avatarIndex,
       email: email,
-      phone: phone,
-      avatarIndex: avatarIndex,
     );
   }
 

@@ -31,5 +31,9 @@ class AuthRepositoryImpl implements AuthRepository{
     return authRemoteDataSource.getUserData(uId: uId);
   }
 
+  @override
+  Future<void> updateUserData({required UserModel userModel}) {
+    return authRemoteDataSource.updateUserData(userModel: userModel);
+  }
 
 }

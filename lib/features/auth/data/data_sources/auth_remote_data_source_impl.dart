@@ -113,4 +113,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       throw e.toString();
     }
   }
+
+  @override
+  Future<void> updateUserData({required UserModel userModel}) async {
+    try {
+      await UserModel.collection()
+          .doc(userModel.uId)
+          .update(userModel.toFireStore());
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

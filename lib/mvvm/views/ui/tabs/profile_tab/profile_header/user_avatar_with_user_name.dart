@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
 
@@ -10,6 +12,7 @@ class UserAvatarWithUserName extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = context.screenHeight;
     AuthCubit authCubit = context.read<AuthCubit>();
     final user = authCubit.currentUser!;
     String avatarImageName =
@@ -17,10 +20,12 @@ class UserAvatarWithUserName extends StatelessWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         return Column(
+          spacing: screenHeight * 0.005,
           children: [
             CircleAvatar(
               backgroundImage: AssetImage(avatarImageName),
               radius: 50,
+              backgroundColor: AppColors.transparent,
             ),
             Text(user.name, style: AppStyles.white20BoldRoboto),
           ],
