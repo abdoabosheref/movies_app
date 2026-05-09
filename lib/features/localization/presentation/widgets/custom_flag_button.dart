@@ -5,11 +5,16 @@ import 'package:movies_app/core/utils/app_colors.dart';
 class CustomFlagButton extends StatelessWidget {
   final String flagName;
   final bool isSelected;
-  const CustomFlagButton({super.key,required this.flagName,this.isSelected = false});
+  final VoidCallback onPressed;
+
+  const CustomFlagButton(
+      {super.key, required this.flagName, required this.isSelected, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: (){}, icon: SvgPicture.asset(flagName),style: IconButton.styleFrom(
+    return IconButton(onPressed: onPressed,
+      icon: SvgPicture.asset(flagName),
+      style: IconButton.styleFrom(
         tapTargetSize:.shrinkWrap ,
         padding: .zero,
         side: BorderSide(

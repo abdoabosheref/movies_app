@@ -8,6 +8,8 @@ import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_slider.dart';
 
+import '../../widgets/buttons/see_more_text_button.dart';
+
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
   final List<String> currentAvailableNowItem = [
@@ -97,18 +99,7 @@ class HomeTab extends StatelessWidget {
                             //Todo: user go to any screen and back to home tab
                             style: AppStyles.white20RegularRoboto,
                           ),
-                          CustomTextButton(
-                            onPressed: () {
-                              //todo: navigate to browse tab using bloc by changing the index
-                            },
-                            text: Row(spacing: screenWidth * 0.01,
-                              children: [
-                                Text('see_more'.tr(),style: AppStyles.yellow16RegularRoboto,),
-                                Icon(Icons.arrow_forward_sharp,color: AppColors.yellow,size: 18,)
-                              ],
-                            ),
-                            textStyle: AppStyles.yellow16RegularRoboto,
-                          ),
+                          SeeMoreTextButton(onPressed: (){},)
                         ],
                       ),
                       CustomSlider(

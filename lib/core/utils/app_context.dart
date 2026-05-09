@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 extension AppContext on BuildContext {
   MediaQueryData get mediaQuery => MediaQuery.of(this);
