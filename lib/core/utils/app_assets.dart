@@ -51,7 +51,6 @@ abstract class AppAssets {
   static const String goldenArrowBack = 'assets/icons/golden_arrow_back.svg';
   static const String searchIconSvg = 'assets/icons/searchIconSvg.svg';
 
-
-// ------------ hom tab test background image --------------
+  // ------------ hom tab test background image --------------
 static final String homeTabBackGround = 'assets/images/homeTabBackground.png';
 }

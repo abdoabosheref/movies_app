@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 
-import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_context.dart';
 
@@ -9,7 +8,13 @@ class MovieGridItem extends StatelessWidget {
   final double rate;
   final String image;
 
-  const MovieGridItem({super.key,required this.rate ,required this.image ,required});
+  const MovieGridItem({
+    super.key,
+    required this.rate,
+    required this.image,
+
+    required,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +22,8 @@ class MovieGridItem extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.asset(image,
+          child: Image.asset(
+            image,
             //fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
@@ -28,7 +34,10 @@ class MovieGridItem extends StatelessWidget {
           top: 10,
           left: 10,
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: context.screenWidth *0.018, vertical: context.screenHeight *0.004),
+            padding: EdgeInsets.symmetric(
+              horizontal: context.screenWidth * 0.018,
+              vertical: context.screenHeight * 0.004,
+            ),
             decoration: BoxDecoration(
               color: AppColors.blackOpacity70,
               borderRadius: BorderRadius.circular(10),
@@ -36,16 +45,9 @@ class MovieGridItem extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  "$rate",
-                  style: AppStyles.white16RegularRoboto
-                ),
+                Text("$rate", style: AppStyles.white16RegularRoboto),
                 const SizedBox(width: 4),
-                Icon(
-                  Icons.star,
-                  color: AppColors.yellow,
-                  size: 14,
-                ),
+                Icon(Icons.star, color: AppColors.yellow, size: 14),
               ],
             ),
           ),

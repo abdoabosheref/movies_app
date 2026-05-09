@@ -28,7 +28,6 @@ class AppStyles {
     color: AppColors.whiteOpacity60,
     fontSize: 17,
     fontWeight: .w400,
-
   );
   static TextStyle black20SemiBoldInter = GoogleFonts.inter(
     color: AppColors.black,
@@ -71,14 +70,14 @@ class AppStyles {
     fontSize: 20,
     fontWeight: .bold,
   );
-  static TextStyle white24BoldRoboto = GoogleFonts.roboto(
+  static TextStyle white22BoldRoboto = GoogleFonts.roboto(
     color: AppColors.white,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: .bold,
   );
-  static TextStyle white36BoldRoboto = GoogleFonts.roboto(
+  static TextStyle white30BoldRoboto = GoogleFonts.roboto(
     color: AppColors.white,
-    fontSize: 36,
+    fontSize: 30,
     fontWeight: .bold,
   );
   static TextStyle yellow14RegularRoboto = GoogleFonts.roboto(
@@ -116,5 +115,4 @@ class AppStyles {
     fontSize: 20,
     fontWeight: .bold,
   );
-
 }

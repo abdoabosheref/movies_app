@@ -17,4 +17,6 @@ abstract class AuthRemoteDataSource {
   Future<UserCredential> loginWithGoogle();
 
   Future<UserModel?> getUserData({required String uId});
+
+  Future<void> updateUserData({required UserModel userModel});
 }

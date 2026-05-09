@@ -94,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                               AppRoutes.forgetPasswordScreen,
                             );
                           },
-                          text: "forget_password".tr(),
+                          text: "${"forget_password".tr()} ?",
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.035),

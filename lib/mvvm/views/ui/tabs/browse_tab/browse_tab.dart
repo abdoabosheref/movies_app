@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
@@ -7,7 +6,7 @@ import '../../../../../core/utils/app_assets.dart';
 import '../../../../../core/utils/app_colors.dart';
 
 
-class BrowseTab extends StatelessWidget{
+class BrowseTab extends StatelessWidget {
 
   final List<String> categories = [
     'action',
@@ -74,17 +73,18 @@ class BrowseTab extends StatelessWidget{
                 itemCount: 20,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisSpacing: 20,
-                  childAspectRatio: 9/12,
+                  childAspectRatio: 9 / 12,
                   mainAxisSpacing: 8,
                   crossAxisCount: 2,
                 ),
                 itemBuilder: (contex, index) {
                   return Container(
                     decoration: BoxDecoration(
-                    color: AppColors.grey,
+                      color: AppColors.grey,
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: CustomMoviePoster(imageString: AppAssets.onBoarding6, rating: "9"),
+                    child: CustomMoviePoster(
+                        imageString: AppAssets.onBoarding6, rating: "9"),
                   );
                 },
               ),

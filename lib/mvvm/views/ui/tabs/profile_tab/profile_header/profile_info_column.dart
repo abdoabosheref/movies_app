@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 
+import '../../../../../../core/utils/app_context.dart';
+
 class ProfileInfoColumn extends StatelessWidget {
   final int counter;
   final String labelText;
@@ -12,10 +14,12 @@ class ProfileInfoColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = context.screenHeight;
     return Column(
+      spacing: screenHeight * 0.01,
       children: [
-        Text('$counter', style: AppStyles.white36BoldRoboto),
-        Text(labelText, style: AppStyles.white24BoldRoboto),
+        Text('$counter', style: AppStyles.white30BoldRoboto),
+        Text(labelText, style: AppStyles.white22BoldRoboto),
       ],
     );
   }

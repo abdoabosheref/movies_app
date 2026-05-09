@@ -12,13 +12,14 @@ import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart
 import 'package:movies_app/mvvm/views/ui/widgets/custom_or_divider.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
-
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
-  static  TextEditingController emailController = TextEditingController();
-  static   TextEditingController passwordController = TextEditingController();
-  static  TextEditingController confirmPasswordController = TextEditingController();
-  static  GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+
+  static TextEditingController emailController = TextEditingController();
+  static TextEditingController passwordController = TextEditingController();
+  static TextEditingController confirmPasswordController =
+      TextEditingController();
+  static GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,16 +41,19 @@ class LoginScreen extends StatelessWidget {
                   Image.asset(AppAssets.appLogo),
                   SizedBox(height: screenHeight * 0.074),
                   CustomTextFormFiled(
-                    keyboardType:TextInputType.emailAddress ,
-                    validator: (email) => AppValidator.validateEmail(email: email),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (email) =>
+                        AppValidator.validateEmail(email: email),
                     controller: emailController,
                     prefixIcon: AppAssets.email,
                     hintText: "email".tr(),
                   ),
                   SizedBox(height: screenHeight * 0.02),
                   CustomTextFormFiled(
-                    obscureText: false, //todo: show password
-                    validator: (password) => AppValidator.validatePassword(password: password),
+                    obscureText: false,
+                    //todo: show password
+                    validator: (password) =>
+                        AppValidator.validatePassword(password: password),
                     controller: passwordController,
                     prefixIcon: AppAssets.password,
                     hintText: "password".tr(),
@@ -62,21 +66,29 @@ class LoginScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CustomTextButton(onPressed: (){
-                        //todo: Navigate to forget password screen
-                        Navigator.pushNamed(context,AppRoutes.forgetPasswordScreen);
-                      }, text: "forget_password".tr(),
-                        textStyle: AppStyles.yellow14BlackRoboto,),
+                      CustomTextButton(
+                        onPressed: () {
+                          //todo: Navigate to forget password screen
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.forgetPasswordScreen,
+                          );
+                        },
+                        text: "forget_password".tr(),
+                        textStyle: AppStyles.yellow14BlackRoboto,
+                      ),
                     ],
                   ),
-                  SizedBox(height:screenHeight * 0.035),
+                  SizedBox(height: screenHeight * 0.035),
                   CustomElevatedButton(
                     onPressed: () {
                       //todo: login with email+ adding validation
                       // if(formKey.currentState!.validate()){}
 
-
-                      Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
+                      Navigator.pushReplacementNamed(
+                        context,
+                        AppRoutes.mainScreen,
+                      );
                     },
                     child: Text(
                       "login".tr(),
@@ -84,15 +96,25 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: context.screenHeight * 0.024),
-                  Row(mainAxisAlignment: .center,spacing: screenWidth*0.004,
+                  Row(
+                    mainAxisAlignment: .center,
+                    spacing: screenWidth * 0.004,
                     children: [
-                      Text("dont_have_account".tr(),style:AppStyles.white14RegularRoboto ,),
-                      CustomTextButton(onPressed: (){
-                        //todo: Navigate to signup screen
-                        Navigator.pushNamed(context,AppRoutes.registerScreen);
-
-                      }, text:"create_one".tr(),
-                        textStyle: AppStyles.yellow14BlackRoboto,),
+                      Text(
+                        "dont_have_account".tr(),
+                        style: AppStyles.white14RegularRoboto,
+                      ),
+                      CustomTextButton(
+                        onPressed: () {
+                          //todo: Navigate to signup screen
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.registerScreen,
+                          );
+                        },
+                        text: "create_one".tr(),
+                        textStyle: AppStyles.yellow14BlackRoboto,
+                      ),
                     ],
                   ),
                   SizedBox(height: context.screenHeight * 0.03),
@@ -116,7 +138,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: context.screenHeight * 0.035),
                   CustomLanguageSelector(),
-
                 ],
               ),
             ),

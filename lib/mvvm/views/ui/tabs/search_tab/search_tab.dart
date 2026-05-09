@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_lists.dart';
-import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
+
 import '../../../../../core/utils/app_context.dart';
-import 'movieGridItem.dart';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
@@ -44,25 +41,26 @@ class _SearchTabState extends State<SearchTab> {
               Expanded(
                 child: _searchController.text.isEmpty
                     ? Center(
-                        child: Image.asset(
-                          AppAssets.popCorn,
-                          width: 200,
-                        ),
-                      )
+                  child: Image.asset(
+                    AppAssets.popCorn,
+                    width: 200,
+                  ),
+                )
                     : GridView.builder(
-                        itemCount: 10, // Placeholder count
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          crossAxisSpacing: 15,
-                          mainAxisSpacing: 15,
-                        ),
-                        itemBuilder: (context, index) {
-                          // Todo : using test data next phase3 imp Api
-                          return CustomMoviePoster(imageString:AppLists.avatarList[index],
-                              rating: '7') ;
-                        },
-                      ),
+                  itemCount: 10, // Placeholder count
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 0.7,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15,
+                  ),
+                  itemBuilder: (context, index) {
+                    // Todo : using test data next phase3 imp Api
+                    return CustomMoviePoster(
+                        imageString: AppLists.avatarList[index],
+                        rating: '7');
+                  },
+                ),
               ),
             ],
           ),

@@ -9,6 +9,9 @@ import '../../data/repository/auth_repository_impl.dart';
 import 'auth_states.dart';
 
 class AuthCubit extends Cubit<AuthState> {
+  // ------------ Update Controllers Section --------------
+  final updateNameController = TextEditingController();
+  final updatePhoneController = TextEditingController();
   // ------------ Login Controllers Section --------------
   final loginEmailController = TextEditingController();
   final loginPasswordController = TextEditingController();
@@ -42,6 +45,12 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   // ------------ Functions Section --------------
+
+  void setupUpdateProfile() {
+    updateNameController.text = currentUser?.name ?? '';
+    updatePhoneController.text = currentUser?.phone ?? '';
+    selectedAvatarIndex = currentUser?.avatarIndex ?? 0;
+  }
 
   void registerClearControllers() {
     // registerFormKey.currentState?.reset();
@@ -128,6 +137,31 @@ class AuthCubit extends Cubit<AuthState> {
         userModel: userModel,
       );
       emit(AuthSuccess());
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> updateUserData({
+    String? newName,
+    String? newPhone,
+    int? newAvatarIndex,
+  }) async {
+    try {
+      emit(AuthLoading());
+      if (currentUser != null) {
+        UserModel updatedUser = currentUser!.copyWith(
+          name: newName ?? currentUser!.name,
+          phone: newPhone ?? currentUser!.phone,
+          avatarIndex: newAvatarIndex ?? currentUser!.avatarIndex,
+        );
+
+        await authRepository.updateUserData(userModel: updatedUser);
+        currentUser = updatedUser;
+        emit(AuthSuccess());
+      } else {
+        emit(AuthFailure(errorMessage: "No user is currently logged in"));
+      }
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }
