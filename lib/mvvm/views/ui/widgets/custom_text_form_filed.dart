@@ -11,6 +11,7 @@ class CustomTextFormFiled extends StatelessWidget {
     this.validator,
     this.hintText,
     required this.prefixIcon,
+    this.onChanged,
     this.isPassword = false,
     this.showPassword,
     this.obscureText = false,
@@ -21,6 +22,7 @@ class CustomTextFormFiled extends StatelessWidget {
   final String? hintText;
   final String prefixIcon;
   final bool isPassword;
+  final Function(String)? onChanged;
 
   final VoidCallback? showPassword;
   bool obscureText = false;
@@ -31,6 +33,7 @@ class CustomTextFormFiled extends StatelessWidget {
       obscureText: obscureText,
       obscuringCharacter: "*",
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
+      onChanged: onChanged,
       cursorRadius: Radius.circular(16),
       controller: controller,
       validator: validator,

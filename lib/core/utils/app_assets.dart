@@ -4,6 +4,7 @@ abstract class AppAssets {
   static final String popCorn = 'assets/images/pop_corn.png';
   static const String resetPassword = 'assets/images/reset_password.png';
   static final String watchNowImage = 'assets/images/watch_now_image.png';
+  static final String playIcon = 'assets/images/play_icon.png';
 
   // ------------ Avatars Section --------------
   static final String avatarImage1 = 'assets/images/avatar_image_1.png';
