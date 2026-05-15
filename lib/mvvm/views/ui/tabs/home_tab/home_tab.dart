@@ -49,7 +49,8 @@ class HomeTab extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                  context,ppRoutes.movieDetailsScreen,
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
                                   arguments: 15,
 
                                   // AppLists.dummyMovies.indexOf(movie),
