@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_lists.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
@@ -35,7 +36,11 @@ class _SearchTabState extends State<SearchTab> {
               const SizedBox(height: 10),
               // Search Bar
               CustomTextFormFiled(
+                controller: _searchController,
                 prefixIcon: AppAssets.searchIconSvg,
+                onChanged: (value) {
+                  setState(() {});
+                },
               ),
               const SizedBox(height: 20),
               Expanded(
@@ -47,7 +52,7 @@ class _SearchTabState extends State<SearchTab> {
                   ),
                 )
                     : GridView.builder(
-                  itemCount: 10, // Placeholder count
+                  itemCount: AppLists.dummyMovies.length,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.7,
@@ -55,10 +60,19 @@ class _SearchTabState extends State<SearchTab> {
                     mainAxisSpacing: 15,
                   ),
                   itemBuilder: (context, index) {
-                    // Todo : using test data next phase3 imp Api
-                    return CustomMoviePoster(
-                        imageString: AppLists.avatarList[index],
-                        rating: '7');
+                    final movie = AppLists.dummyMovies[index];
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.movieDetailsScreen,
+                          arguments: movie,
+                        );
+                      },
+                      child: CustomMoviePoster(
+                          imageString: movie.image,
+                          rating: movie.rating),
+                    );
                   },
                 ),
               ),
