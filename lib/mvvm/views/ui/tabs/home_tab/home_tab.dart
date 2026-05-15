@@ -4,6 +4,8 @@ import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
+import 'package:movies_app/core/utils/app_lists.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_slider.dart';
@@ -12,40 +14,23 @@ import '../../widgets/buttons/see_more_text_button.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTab({super.key});
-  final List<String> currentAvailableNowItem = [
-    AppAssets.onBoarding1,
-    AppAssets.onBoarding2,
-    AppAssets.onBoarding3,
-    AppAssets.onBoarding4,
-    AppAssets.onBoarding5,
-    AppAssets.onBoarding6,
-  ];  //for testing
-  final List<String> currentWatchNowItem = [
-    AppAssets.onBoarding1,
-    AppAssets.onBoarding2,
-    AppAssets.onBoarding3,
-    AppAssets.onBoarding4,
-    AppAssets.onBoarding5,
-    AppAssets.onBoarding6,
-  ];      //for testing
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
 
-    return SafeArea(bottom: false,
+    return SafeArea(
+      bottom: false,
       child: Scaffold(
         body: Stack(
           children: [
             SizedBox(
-              //todo : change background image according to slider using bloc
-              child: Image.asset(AppAssets.homeTabBackGround,),
+              child: Image.asset(AppAssets.homeTabBackGround),
             ),
             Container(
               decoration: linerDecoration(),
             ),
-      
             ListView(
               children: [
                 Column(
@@ -55,21 +40,25 @@ class HomeTab extends StatelessWidget {
                       child: Image.asset(AppAssets.availableNowImage),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                    CustomSlider(//sized box
+                    CustomSlider(
                       viewportFraction: 0.45,
                       height: screenHeight * 0.35,
                       enlargeCenterPage: true,
                       enlargeFactor: 0.28,
-                      list: currentAvailableNowItem.map((availableNow) {
+                      list: AppLists.dummyMovies.map((movie) {
                         return Builder(
                           builder: (BuildContext context) {
                             return GestureDetector(
                               onTap: () {
-                                //Todo: navigate to movie details
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.movieDetailsScreen,
+                                  arguments: movie,
+                                );
                               },
                               child: CustomMoviePoster(
-                                rating: '7.7',
-                                imageString: availableNow,
+                                rating: movie.rating,
+                                imageString: movie.image,
                               ),
                             );
                           },
@@ -79,7 +68,8 @@ class HomeTab extends StatelessWidget {
                     SizedBox(height: screenHeight * 0.02),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.08,),
+                        horizontal: screenWidth * 0.08,
+                      ),
                       child: Image.asset(AppAssets.watchNowImage),
                     ),
                   ],
@@ -92,14 +82,13 @@ class HomeTab extends StatelessWidget {
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment: .spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Action', //Todo: randomly changes every time
-                            //Todo: user go to any screen and back to home tab
+                            'Action',
                             style: AppStyles.white20RegularRoboto,
                           ),
-                          SeeMoreTextButton(onPressed: (){},)
+                          SeeMoreTextButton(onPressed: () {})
                         ],
                       ),
                       CustomSlider(
@@ -107,19 +96,23 @@ class HomeTab extends StatelessWidget {
                         enlargeFactor: 0.0,
                         enlargeCenterPage: false,
                         height: screenHeight * 0.23,
-                        list: currentWatchNowItem.map((watchNow) {
+                        list: AppLists.dummyMovies.map((movie) {
                           return Builder(
                             builder: (BuildContext context) {
                               return GestureDetector(
                                 onTap: () {
-                                  //Todo: navigate to movie details
+                                  Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.movieDetailsScreen,
+                                    arguments: movie,
+                                  );
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal:screenWidth*0.02),
+                                      horizontal: screenWidth * 0.02),
                                   child: CustomMoviePoster(
-                                    rating: '7.7',
-                                    imageString: watchNow,
+                                    rating: movie.rating,
+                                    imageString: movie.image,
                                   ),
                                 ),
                               );
