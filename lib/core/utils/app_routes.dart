@@ -22,6 +22,7 @@ class AppRoutes {
     AppRoutes.forgetPasswordScreen: (_) => ForgetPasswordScreen(),
     AppRoutes.registerScreen: (context) => RegisterScreen(),
     AppRoutes.loginScreen: (context) => LoginScreen(),
+
   };
 
 

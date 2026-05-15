@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_cubit.dart';
 import 'package:movies_app/features/home_tab/presentation/screens/home_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/search_tab/search_tab.dart';
@@ -17,7 +19,15 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 3;
-  List<Widget> tabs = [HomeTab(), SearchTab(), BrowseTab(), ProfileTab()];
+  List<Widget> tabs = [
+    BlocProvider(
+      create: (context) => HomeTabCubit()..loadHomeTabData(),
+      child: HomeTab(),
+    ),
+    SearchTab(),
+    BrowseTab(),
+    ProfileTab(),
+  ];
   List<BottomNavigationBarItem> items = [
     BottomNavigationBarItem(
       icon: ImageIcon(AssetImage(AppAssets.homeTabIcon)),

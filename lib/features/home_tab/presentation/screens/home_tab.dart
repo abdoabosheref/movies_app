@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:movies_app/api_dio/dio_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-import 'package:movies_app/features/home_tab/data/models/movies_genre.dart';
+import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_cubit.dart';
+import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_state.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/see_more_text_button.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_slider.dart';
@@ -16,7 +17,6 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String genreShuffle = MoviesGenre.shuffleGenre();
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
 
@@ -26,160 +26,141 @@ class HomeTab extends StatelessWidget {
         body: Stack(
           children: [
             SizedBox(
-              //todo : change background image according to slider using bloc
-              child: Image.asset(AppAssets.homeTabBackGround),
+              width: screenWidth,
+              height: screenHeight,
+              child: Image.asset(
+                AppAssets.homeTabBackGround,
+                fit: BoxFit.cover,
+              ),
             ),
             Container(decoration: linerDecoration()),
 
-            ListView(
-              children: [
-                Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.19,
-                      ),
-                      child: Image.asset(AppAssets.availableNowImage),
+            BlocConsumer<HomeTabCubit, HomeTabState>(
+              listener: (context, state) {
+                if (state is HomeErrorState) {
+                  CustomToast.showErrorToast(context, state.errorMessage);
+                }
+                if (state is HomeSuccessState) {
+                  CustomToast.showSuccessToast(context, 'Movies Loaded Successfully');
+                }
+              },
+              builder: (context, state) {
+                if (state is HomeLoadingState) {
+                  return const Center(child: MainLoading());
+                }
+
+                if (state is HomeErrorState) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          state.errorMessage,
+                          style: AppStyles.white20RegularRoboto,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () => context.read<HomeTabCubit>().loadHomeTabData(),
+                          child: const Text('Try Again'),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: screenHeight * 0.02),
-                    FutureBuilder(
-                      future: DioManager.getMoviesList(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return MainLoading();
-                        }
-                        if (snapshot.hasError) {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            CustomToast.showErrorToast(
-                              context,
-                              snapshot.error.toString(),
-                            );
-                          });
-                          return Text('something went wrong');
-                        }
-                        if (snapshot.data?.status != 'ok') {
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            CustomToast.showErrorToast(
-                              context,
-                              snapshot.error.toString(),
-                            );
-                          });
-                          return Text('something went wrong');
-                        } else {
-                          final movies = snapshot.data!.data!.movies!;
-                          return CustomSlider(
+                  );
+                }
+
+                if (state is HomeSuccessState) {
+                  if (state.movies.isEmpty) {
+                    return const Center(child: Text('No Movies Available', style: TextStyle(color: Colors.white)));
+                  }
+
+                  return ListView(
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.19,
+                            ),
+                            child: Image.asset(AppAssets.availableNowImage),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
+
+                          CustomSlider(
                             viewportFraction: 0.45,
                             height: screenHeight * 0.35,
                             enlargeCenterPage: true,
                             enlargeFactor: 0.28,
-                            list: movies.map((availableNow) {
-                              return Builder(
-                                builder: (BuildContext context) {
-                                  return GestureDetector(
-                                    child: CustomMoviePoster(
-                                      rating: availableNow.rating.toString(),
-                                      imageString:
-                                          availableNow.mediumCoverImage ??
-                                          'no image',
-                                    ),
-                                    onTap: () {
-                                      //Todo: navigate to movie details},
-                                    },
-                                  );
+                            list: state.movies.map((availableNow) {
+                              return GestureDetector(
+                                onTap: () {
+                                  //Todo: navigate to movie details
                                 },
+                                child: CustomMoviePoster(
+                                  rating: availableNow.rating.toString(),
+                                  imageString: availableNow.mediumCoverImage ?? '',
+                                ),
                               );
                             }).toList(),
-                          );
-                        }
-                      },
-                    ),
-
-                    SizedBox(height: screenHeight * 0.02),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.08,
-                      ),
-                      child: Image.asset(AppAssets.watchNowImage),
-                    ),
-                  ],
-                ),
-                SizedBox(height: screenHeight * 0.03),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: .spaceBetween,
-                        children: [
-                          Text(
-                            genreShuffle, // randomly changes every time
-                            // user go to any screen and back to home tab
-                            style: AppStyles.white20RegularRoboto,
                           ),
-                          SeeMoreTextButton(onPressed: () {}),
+
+                          SizedBox(height: screenHeight * 0.02),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.08,
+                            ),
+                            child: Image.asset(AppAssets.watchNowImage),
+                          ),
                         ],
                       ),
-                      FutureBuilder(
-                        future: DioManager.getMoviesListByGenre(genreShuffle),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return MainLoading();
-                          }
-                          if (snapshot.hasError) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              CustomToast.showErrorToast(
-                                context,
-                                snapshot.error.toString(),
-                              );
-                            });
-                            return Text('something went wrong');
-                          }
-                          if (snapshot.data?.status != 'ok') {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              CustomToast.showErrorToast(
-                                context,
-                                snapshot.error.toString(),
-                              );
-                            });
-                            return Text('something went wrong');
-                          } else {
-                           final  moviesByGenre = snapshot.data!.data!.movies!;
-                            return CustomSlider(
+                      SizedBox(height: screenHeight * 0.03),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  state.genreShuffle,
+                                  style: AppStyles.white20RegularRoboto,
+                                ),
+                                SeeMoreTextButton(onPressed: () {}),
+                              ],
+                            ),
+
+                            CustomSlider(
                               viewportFraction: 0.42,
                               enlargeFactor: 0.0,
                               enlargeCenterPage: false,
                               height: screenHeight * 0.23,
-                              list: moviesByGenre.map((watchNow) {
-                                return Builder(
-                                  builder: (BuildContext context) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        //Todo: navigate to movie details
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: screenWidth * 0.02,
-                                        ),
-                                        child: CustomMoviePoster(
-                                          rating: watchNow.rating.toString(),
-                                          imageString: watchNow.mediumCoverImage ??
-                                          'no image',
-                                        ),
-                                      ),
-                                    );
-                                  },
+                              list: state.moviesByGenre.map((watchNow) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: screenWidth * 0.02,
+                                  ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      //Todo: navigate to movie details
+                                    },
+                                    child: CustomMoviePoster(
+                                      rating: watchNow.rating.toString(),
+                                      imageString: watchNow.mediumCoverImage ?? '',
+                                    ),
+                                  ),
                                 );
                               }).toList(),
-                            );
-                          }
-                        },
+                            ),
+                          ],
+                        ),
                       ),
                     ],
-                  ),
-                ),
-              ],
+                  );
+                }
+
+                return const SizedBox.shrink();
+              },
             ),
           ],
         ),
