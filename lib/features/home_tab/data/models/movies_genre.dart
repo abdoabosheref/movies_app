@@ -44,8 +44,4 @@ abstract class MoviesGenre {
   }
 
 
-
-
-
-
 }
