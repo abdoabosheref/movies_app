@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/features/home_tab/presentation/screens/home_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/search_tab/search_tab.dart';
 
 import '../../tabs/browse_tab/browse_tab.dart';
-import '../../tabs/home_tab/home_tab.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

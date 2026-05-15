@@ -17,8 +17,15 @@ import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
 import '../../../../core/utils/snack_bar_utils.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final loginFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +57,7 @@ class LoginScreen extends StatelessWidget {
         builder: (context, state) {
           return SafeArea(
             child: Form(
-              key: authCubit.loginFormKey,
+              key: loginFormKey,
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.only(
@@ -101,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                       CustomElevatedButton(
                         //todo:login
                         onPressed: () {
-                          if (authCubit.loginFormKey.currentState!.validate()) {
+                          if (loginFormKey.currentState!.validate()) {
                             context.read<AuthCubit>().loginWithEmailAndPassword(
                               authCubit.loginEmailController.text,
                               authCubit.loginPasswordController.text,

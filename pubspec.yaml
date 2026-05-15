@@ -49,6 +49,9 @@ dependencies:
   flutter_bloc: ^9.1.1
   fluttertoast: ^9.0.0
   carousel_slider: ^5.1.2
+  pretty_dio_logger: ^1.4.0
+  dio: ^5.9.2
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:

@@ -11,8 +11,15 @@ import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
 import '../cubit/auth_cubit.dart';
 
-class CustomRegisterForm extends StatelessWidget {
+class CustomRegisterForm extends StatefulWidget {
   const CustomRegisterForm({super.key});
+
+  @override
+  State<CustomRegisterForm> createState() => _CustomRegisterFormState();
+}
+
+class _CustomRegisterFormState extends State<CustomRegisterForm> {
+  final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class CustomRegisterForm extends StatelessWidget {
       builder: (context, state) {
         var authCubit = context.read<AuthCubit>();
         return Form(
-          key: authCubit.registerFormKey,
+          key: registerFormKey,
           child: Column(
             spacing: screenHeight * 0.018,
             children: [
@@ -80,7 +87,7 @@ class CustomRegisterForm extends StatelessWidget {
               CustomElevatedButton(
                 onPressed: () {
                   //todo: create account auth
-                  if (authCubit.registerFormKey.currentState!.validate()) {
+                  if (registerFormKey.currentState!.validate()) {
                     authCubit.registerWithEmailAndPassword(
                       email: authCubit.registerEmailController.text,
                       password: authCubit.registerPasswordController.text,
