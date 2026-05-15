@@ -49,10 +49,11 @@ class HomeTab extends StatelessWidget {
                             return GestureDetector(
                               onTap: () {
                                 Navigator.pushNamed(
-                                  context,
-                                  AppRoutes.movieDetailsScreen,rguments:
-                                      // AppLists.dummyMovies.indexOf(movie),
-                                      15,
+                                  context,ppRoutes.movieDetailsScreen,
+                                  arguments: 15,
+
+                                  // AppLists.dummyMovies.indexOf(movie),
+
                                 );
                               },
                               child: CustomMoviePoster(
