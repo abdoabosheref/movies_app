@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/di/di.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
@@ -9,6 +8,7 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_view_model.dart';
+import 'package:movies_app/features/movie_details/movie_details_screen/widgets/custom_details_header.dart';
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_states.dart';
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_view_model.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
@@ -50,6 +50,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = context.screenHeight;
+    double screenWidth = context.screenWidth;
     return BlocBuilder<MovieDetailsViewModel, MovieDetailsState>(
       bloc: movieDetailsViewModel,
       builder: (context, state) {
@@ -70,60 +72,29 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       Image.network(
                         movie?.mediumCoverImage ?? '',
                         width: double.infinity,
-                        // height: context.screenHeight * 0.7,
                         fit: BoxFit.fill,
                       ),
                       Container(
-                        height: context.screenHeight * 0.72,
+                        height: screenHeight * 0.72,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.transparent,
-                              AppColors.blackOpacity70,
+                              AppColors.black,
                             ],
                           ),
                         ),
+
                       ),
                       SafeArea(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.screenWidth * 0.037,
-                            vertical: context.screenHeight * 0.007,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                onPressed: () => Navigator.pop(context),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  // Action when clicking the bookmark icon
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Bookmarked ${movie?.title}",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: SvgPicture.asset(AppAssets.bookMark),
-                              ),
-                            ],
-                          ),
-                        ),
+                        child: CustomDetailsHeader(movieTitle: movie?.title,),
                       ),
                       Positioned.fill(
                         child: Center(
                           child: GestureDetector(
                             onTap: () {
-                              // Action when clicking the play button
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
@@ -132,37 +103,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 ),
                               );
                             },
-                            child: Container(
-                              width: context.screenWidth * 0.22,
-                              height: context.screenHeight * 0.1,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.yellow,
-                                  width: 6,
-                                ),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.white,
-                                    width: 6,
-                                  ),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.yellow,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.play_arrow,
-                                    color: AppColors.white,
-                                    size: 45,
-                                  ),
-                                ),
-                              ),
-                            ),
+                              child: Image.asset(
+                                  AppAssets.playIcon, width: screenWidth * 0.22)
                           ),
                         ),
                       ),
@@ -226,7 +168,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   // ScreenShots Section
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
+                      horizontal: screenWidth * 0.037,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -276,7 +218,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   buildSectionTitle("summary".tr()),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
+                      horizontal: screenWidth * 0.037,
                     ),
                     child: Text(
                       movie?.descriptionIntro ?? '',
@@ -291,7 +233,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(
-                        horizontal: context.screenWidth * 0.037,
+                        horizontal: screenWidth * 0.037,
                       ),
                       itemCount: movie.cast!.length,
                       itemBuilder: (context, index) {
@@ -307,8 +249,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   buildSectionTitle("genres".tr()),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
-                      vertical: context.screenHeight * 0.01,
+                      horizontal: screenWidth * 0.037,
+                      vertical: screenHeight * 0.01,
                     ),
                     child: Wrap(
                       spacing: 10,
