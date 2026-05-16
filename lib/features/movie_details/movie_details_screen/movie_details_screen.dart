@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,8 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_view_model.dart';
+import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_states.dart';
+import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_view_model.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
 
 import '../../../mvvm/views/ui/widgets/details_screen_widget/buildCastItem.dart';
@@ -25,24 +28,23 @@ class MovieDetailsScreen extends StatefulWidget {
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late MovieDetailsViewModel movieDetailsViewModel;
+  late MovieSuggestionsViewModel movieSuggestionsViewModel;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    movieDetailsViewModel =
-        getIt<MovieDetailsViewModel>();
+    movieDetailsViewModel = getIt<MovieDetailsViewModel>();
+    movieSuggestionsViewModel = getIt<MovieSuggestionsViewModel>();
   }
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    final int movieId = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as int;
+    final int movieId = ModalRoute.of(context)!.settings.arguments as int;
     movieDetailsViewModel.fetchMovieDetails(movieId: movieId);
+    movieSuggestionsViewModel.fetchMovieSuggestions(movieId: movieId);
   }
 
   @override
@@ -229,42 +231,72 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         if (movie?.mediumScreenshotImage1 != null)
-                          _buildNetworkImage(movie!.mediumScreenshotImage1!,
-                              context),
+                          _buildNetworkImage(
+                            movie!.mediumScreenshotImage1!,
+                            context,
+                          ),
                         const SizedBox(height: 12),
                         if (movie?.mediumScreenshotImage2 != null)
-                          _buildNetworkImage(movie!.mediumScreenshotImage2!,
-                              context),
+                          _buildNetworkImage(
+                            movie!.mediumScreenshotImage2!,
+                            context,
+                          ),
                         const SizedBox(height: 12),
                         if (movie?.mediumScreenshotImage3 != null)
-                          _buildNetworkImage(movie!.mediumScreenshotImage3!,
-                              context),
+                          _buildNetworkImage(
+                            movie!.mediumScreenshotImage3!,
+                            context,
+                          ),
                       ],
                     ),
                   ),
                   buildSectionTitle("similar".tr()),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
-                    ),
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 0.7,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: 4,
-                    itemBuilder: (context, index) =>
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            AppAssets.watchNowImage,
-                            fit: BoxFit.cover,
+                  BlocBuilder<
+                    MovieSuggestionsViewModel,
+                    MovieSuggestionsStates
+                  >(
+                    bloc: movieSuggestionsViewModel,
+                    builder: (context, state) {
+                      if (state is MovieSuggestionsLoadingState) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (state is MovieSuggestionsErrorState) {
+                        return Text('error');
+                      } else if (state is MovieSuggestionsSuccessState) {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: context.screenWidth * 0.037,
                           ),
-                        ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.7,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                              ),
+                          itemCount: 4,
+                          itemBuilder: (context, index) => ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  state
+                                      .movieSuggestions
+                                      .data
+                                      ?.movies?[index]
+                                      .mediumCoverImage ??
+                                  '',
+                              placeholder: (context, url) =>
+                                  CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
                   ),
 
                   buildSectionTitle("summary".tr()),
@@ -282,20 +314,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   buildSectionTitle("cast".tr()),
                   if (movie?.cast != null && movie!.cast!.isNotEmpty)
                     ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.screenWidth * 0.037,
-                        ),
-                        itemCount: movie.cast!.length,
-                        itemBuilder: (context, index) {
-                          final actor = movie.cast![index];
-                          return buildCastItem(
-                            actor.urlSmallImage ?? '',
-                            actor.name ?? 'Unknown',
-                            actor.characterName ?? '',
-                          );
-                        }
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.screenWidth * 0.037,
+                      ),
+                      itemCount: movie.cast!.length,
+                      itemBuilder: (context, index) {
+                        final actor = movie.cast![index];
+                        return buildCastItem(
+                          actor.urlSmallImage ?? '',
+                          actor.name ?? 'Unknown',
+                          actor.characterName ?? '',
+                        );
+                      },
                     ),
 
                   buildSectionTitle("genres".tr()),
@@ -307,8 +339,11 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     child: Wrap(
                       spacing: 10,
                       runSpacing: 10,
-                      children: movie?.genres?.map((genre) =>
-                          buildGenreChip(genre)).toList() ?? [],
+                      children:
+                          movie?.genres
+                              ?.map((genre) => buildGenreChip(genre))
+                              .toList() ??
+                          [],
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -329,10 +364,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        image: DecorationImage(
-          image: NetworkImage(url),
-          fit: BoxFit.cover,
-        ),
+        image: DecorationImage(image: NetworkImage(url), fit: BoxFit.cover),
       ),
     );
   }

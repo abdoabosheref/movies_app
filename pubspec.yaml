@@ -53,6 +53,8 @@ dependencies:
   carousel_slider: ^5.1.2
   fluttertoast: ^9.0.0
   cloud_firestore: ^6.4.1
+  cached_network_image: ^3.4.1
+
 
 
 

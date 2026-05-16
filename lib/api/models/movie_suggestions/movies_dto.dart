@@ -1,12 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:movies_app/api/models/common/torrents_dto.dart';
 
-import 'cast_dto.dart';
-
-part 'movie_dto.g.dart';
+part 'movies_dto.g.dart';
 
 @JsonSerializable()
-class MovieDto {
+class MoviesDto {
   @JsonKey(name: "id")
   final int? id;
   @JsonKey(name: "url")
@@ -29,12 +27,12 @@ class MovieDto {
   final int? runtime;
   @JsonKey(name: "genres")
   final List<String>? genres;
-  @JsonKey(name: "like_count")
-  final int? likeCount;
-  @JsonKey(name: "description_intro")
-  final String? descriptionIntro;
+  @JsonKey(name: "summary")
+  final String? summary;
   @JsonKey(name: "description_full")
   final String? descriptionFull;
+  @JsonKey(name: "synopsis")
+  final String? synopsis;
   @JsonKey(name: "yt_trailer_code")
   final String? ytTrailerCode;
   @JsonKey(name: "language")
@@ -49,22 +47,8 @@ class MovieDto {
   final String? smallCoverImage;
   @JsonKey(name: "medium_cover_image")
   final String? mediumCoverImage;
-  @JsonKey(name: "large_cover_image")
-  final String? largeCoverImage;
-  @JsonKey(name: "medium_screenshot_image1")
-  final String? mediumScreenshotImage1;
-  @JsonKey(name: "medium_screenshot_image2")
-  final String? mediumScreenshotImage2;
-  @JsonKey(name: "medium_screenshot_image3")
-  final String? mediumScreenshotImage3;
-  @JsonKey(name: "large_screenshot_image1")
-  final String? largeScreenshotImage1;
-  @JsonKey(name: "large_screenshot_image2")
-  final String? largeScreenshotImage2;
-  @JsonKey(name: "large_screenshot_image3")
-  final String? largeScreenshotImage3;
-  @JsonKey(name: "cast")
-  final List<CastDto>? cast;
+  @JsonKey(name: "state")
+  final String? state;
   @JsonKey(name: "torrents")
   final List<TorrentsDto>? torrents;
   @JsonKey(name: "date_uploaded")
@@ -72,7 +56,7 @@ class MovieDto {
   @JsonKey(name: "date_uploaded_unix")
   final int? dateUploadedUnix;
 
-  MovieDto({
+  MoviesDto({
     this.id,
     this.url,
     this.imdbCode,
@@ -84,9 +68,9 @@ class MovieDto {
     this.rating,
     this.runtime,
     this.genres,
-    this.likeCount,
-    this.descriptionIntro,
+    this.summary,
     this.descriptionFull,
+    this.synopsis,
     this.ytTrailerCode,
     this.language,
     this.mpaRating,
@@ -94,24 +78,17 @@ class MovieDto {
     this.backgroundImageOriginal,
     this.smallCoverImage,
     this.mediumCoverImage,
-    this.largeCoverImage,
-    this.mediumScreenshotImage1,
-    this.mediumScreenshotImage2,
-    this.mediumScreenshotImage3,
-    this.largeScreenshotImage1,
-    this.largeScreenshotImage2,
-    this.largeScreenshotImage3,
-    this.cast,
+    this.state,
     this.torrents,
     this.dateUploaded,
     this.dateUploadedUnix,
   });
 
-  factory MovieDto.fromJson(Map<String, dynamic> json) {
-    return _$MovieDtoFromJson(json);
+  factory MoviesDto.fromJson(Map<String, dynamic> json) {
+    return _$MoviesDtoFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$MovieDtoToJson(this);
+    return _$MoviesDtoToJson(this);
   }
 }

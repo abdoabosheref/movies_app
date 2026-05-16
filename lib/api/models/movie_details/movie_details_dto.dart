@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:movies_app/api/models/common/meta_dto.dart';
 import 'package:movies_app/api/models/movie_details/data_dto.dart';
-import 'package:movies_app/api/models/movie_details/meta_dto.dart';
 
 part 'movie_details_dto.g.dart';
 
