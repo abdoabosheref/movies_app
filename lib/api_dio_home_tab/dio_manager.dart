@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app/api_dio/api_constants.dart';
+import 'package:movies_app/api_dio_home_tab/api_constants.dart';
 import 'package:movies_app/features/home_tab/data/models/movies_list_response.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/api_dio/dio_manager.dart';
+import 'package:movies_app/api_dio_home_tab/dio_manager.dart';
 import 'package:movies_app/features/home_tab/data/models/movies_genre.dart';
 import 'package:movies_app/features/home_tab/data/models/movies_list_response.dart';
 import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_state.dart';

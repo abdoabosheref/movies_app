@@ -18,36 +18,41 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentIndex = 3;
-  List<Widget> tabs = [
-    BlocProvider(
-      create: (context) => HomeTabCubit()..loadHomeTabData(),
-      child: HomeTab(),
-    ),
-    SearchTab(),
-    BrowseTab(),
-    ProfileTab(),
-  ];
-  List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.homeTabIcon)),
-      label: 'homeTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.searchTabIcon)),
-      label: 'searchTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.browseTabIcon)),
-      label: 'browseTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.profileTabIcon)),
-      label: 'profileTab',
-    ),
-  ];
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabs = [
+      BlocProvider(
+        create: (context) => HomeTabCubit()..loadHomeTabData(),
+        child: HomeTab(seeMoreOnPressed: () {
+          setState(() {
+            currentIndex = 2;
+          });
+        },),
+      ),
+      SearchTab(),
+      BrowseTab(),
+      ProfileTab(),
+    ];
+    List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.homeTabIcon)),
+        label: 'homeTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.searchTabIcon)),
+        label: 'searchTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.browseTabIcon)),
+        label: 'browseTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.profileTabIcon)),
+        label: 'profileTab',
+      ),
+    ];
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
     return Scaffold(

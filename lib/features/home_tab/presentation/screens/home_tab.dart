@@ -8,32 +8,41 @@ import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_cubit.dart';
 import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_state.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/see_more_text_button.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/custom_cached_network_image.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_movie_poster.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_slider.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/custom_toast.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/main_loading.dart';
 
 class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
-
+   const HomeTab({super.key,required this.seeMoreOnPressed});
+   final VoidCallback seeMoreOnPressed ;
   @override
   Widget build(BuildContext context) {
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
+
+    final ValueNotifier<String> currentBgImage = ValueNotifier<String>('');
 
     return SafeArea(
       bottom: false,
       child: Scaffold(
         body: Stack(
           children: [
-            SizedBox(
-              width: screenWidth,
-              height: screenHeight,
-              child: Image.asset(
-                //Todo: change background image according to top movie slider
-                AppAssets.homeTabBackGround,
-                fit: BoxFit.cover,
-              ),
+            ValueListenableBuilder<String>(
+              valueListenable: currentBgImage,
+              builder: (context, backGroundUrl, child) {
+                return SizedBox(
+                  width: screenWidth,
+                  height: screenHeight,
+                  child: backGroundUrl.isEmpty
+                      ? Image.asset(
+                    AppAssets.homeTabBackGround,
+                    fit: BoxFit.cover,
+                  )
+                      : CustomCachedNetworkImage(imageString: backGroundUrl, ),
+                );
+              },
             ),
             Container(decoration: linerDecoration()),
 
@@ -44,6 +53,9 @@ class HomeTab extends StatelessWidget {
                 }
                 if (state is HomeSuccessState) {
                   CustomToast.showSuccessToast(context, 'Movies Loaded Successfully');
+                  if (state.movies.isNotEmpty) {
+                    currentBgImage.value = state.movies.first.mediumCoverImage ?? '';
+                  }
                 }
               },
               builder: (context, state) {
@@ -72,10 +84,6 @@ class HomeTab extends StatelessWidget {
                 }
 
                 if (state is HomeSuccessState) {
-                  if (state.movies.isEmpty) {
-                    return const Center(child: Text('No Movies Available', style: TextStyle(color: Colors.white)));
-                  }
-
                   return ListView(
                     physics: const BouncingScrollPhysics(),
                     children: [
@@ -94,11 +102,15 @@ class HomeTab extends StatelessWidget {
                             height: screenHeight * 0.35,
                             enlargeCenterPage: true,
                             enlargeFactor: 0.28,
+                            onPageChanged: (index, pageChange) {
+                              if (index < state.movies.length) {
+                                currentBgImage.value = state.movies[index].mediumCoverImage ?? '';
+                              }
+                            },
                             list: state.movies.map((availableNow) {
                               return GestureDetector(
                                 onTap: () {
-                                  // navigate to movie details
-                                 Navigator.pushNamed(context, AppRoutes.movieDetailsScreen, arguments: availableNow.id);
+                                  Navigator.pushNamed(context, AppRoutes.movieDetailsScreen, arguments: availableNow.id);
                                 },
                                 child: CustomMoviePoster(
                                   rating: availableNow.rating.toString(),
@@ -129,9 +141,9 @@ class HomeTab extends StatelessWidget {
                                   state.genreShuffle,
                                   style: AppStyles.white20RegularRoboto,
                                 ),
-                                SeeMoreTextButton(onPressed: () {
-                                  //Todo:navigate to browse tab
-                                }),
+                                SeeMoreTextButton(onPressed:
+                                //navigate to genre screen
+                                seeMoreOnPressed),
                               ],
                             ),
 
@@ -147,7 +159,6 @@ class HomeTab extends StatelessWidget {
                                   ),
                                   child: GestureDetector(
                                     onTap: () {
-                                      // navigate to movie details
                                       Navigator.pushNamed(context, AppRoutes.movieDetailsScreen, arguments: watchNow.id);
                                     },
                                     child: CustomMoviePoster(

@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 
@@ -13,6 +12,8 @@ class CustomSlider extends StatelessWidget {
  final List<Widget>? list ;
  final double height ;
  final String? underSliderText ;
+ final dynamic Function(int, CarouselPageChangedReason)? onPageChanged ;
+
 
   const CustomSlider({super.key,
     required this.viewportFraction,
@@ -21,6 +22,7 @@ class CustomSlider extends StatelessWidget {
     required this.height,
     required this.list,
     this.underSliderText ,
+    this.onPageChanged,
   });
 
   @override
@@ -32,6 +34,7 @@ class CustomSlider extends StatelessWidget {
       children: [
         CarouselSlider(
           options: CarouselOptions(
+            onPageChanged: onPageChanged,
             height: height,
             aspectRatio: 16 / 9,
             viewportFraction: viewportFraction,
