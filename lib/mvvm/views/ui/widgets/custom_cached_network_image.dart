@@ -12,12 +12,9 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageString,
-      height: double.infinity,
-      width: double.infinity,
-      fit: .fill,
       placeholder: (context, url) => MainLoading(),
       errorWidget: (context, url, error) =>
-          Icon(Icons.broken_image, color: AppColors.yellow),
+          Icon(Icons.broken_image, color: AppColors.yellow, size: 50,),
     );
   }
 }
