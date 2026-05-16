@@ -25,6 +25,7 @@ class _SearchTabState extends State<SearchTab> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = context.screenHeight;
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -48,7 +49,7 @@ class _SearchTabState extends State<SearchTab> {
                     ? Center(
                   child: Image.asset(
                     AppAssets.popCorn,
-                    width: 200,
+                    height: screenHeight * 0.15,
                   ),
                 )
                     : GridView.builder(
