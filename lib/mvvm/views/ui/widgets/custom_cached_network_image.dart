@@ -6,17 +6,16 @@ import 'package:movies_app/mvvm/views/ui/widgets/main_loading.dart';
 class CustomCachedNetworkImage extends StatelessWidget {
   final String imageString;
   final bool isBackground;
+  const CustomCachedNetworkImage({super.key, required this.imageString,this.isBackground = false});
 
-  const CustomCachedNetworkImage({
-    super.key,
-    required this.imageString,
-    this.isBackground = false,
-  })@override
+
+
+  @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageString,
-      width: isBackground ? double.infinity : null,
-      height: isBackground ? double.infinity : null,
+      width: isBackground?double.infinity:null,
+      height: isBackground?double.infinity:null,
       fit: .fill,
       placeholder: (context, url) => MainLoading(),
       errorWidget: (context, url, error) =>
