@@ -125,6 +125,7 @@ class HomeTab extends StatelessWidget {
                                   );
                                 },
                                 child: CustomMoviePoster(
+                                  isBackground: true,
                                   rating: availableNow.rating.toString(),
                                   imageString:
                                       availableNow.mediumCoverImage ?? '',
