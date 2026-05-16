@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/di/di.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
@@ -10,14 +8,16 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_states.dart';
 import 'package:movies_app/features/movie_details/cubit/movie_details_view_model.dart';
+import 'package:movies_app/features/movie_details/movie_details_screen/widgets/custom_details_header.dart';
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_states.dart';
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_view_model.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/custom_grid_view.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/details_screen_widget/movie_info_row.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/main_loading.dart';
 
 import '../../../mvvm/views/ui/widgets/details_screen_widget/buildCastItem.dart';
 import '../../../mvvm/views/ui/widgets/details_screen_widget/buildGenreChip.dart';
-import '../../../mvvm/views/ui/widgets/details_screen_widget/buildSectionTitle.dart';
-import '../../../mvvm/views/ui/widgets/details_screen_widget/buildStatItem.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({super.key});
@@ -49,143 +49,84 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = context.screenHeight;
+    double screenWidth = context.screenWidth;
     return BlocBuilder<MovieDetailsViewModel, MovieDetailsState>(
       bloc: movieDetailsViewModel,
       builder: (context, state) {
         if (state is MovieDetailsLoadingState) {
-          return Center(child: CircularProgressIndicator());
+          return MainLoading();
         } else if (state is MovieDetailsErrorState) {
           return Text('error');
         } else if (state is MovieDetailsSuccessState) {
           var movie = state.movieDetails.data?.movie;
           return Scaffold(
             body: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
                 children: [
-                  // Header: Background + Icons
-                  Stack(
-                    children: [
-                      Image.network(
-                        movie?.mediumCoverImage ?? '',
-                        width: double.infinity,
-                        // height: context.screenHeight * 0.7,
-                        fit: BoxFit.fill,
+                  Image.network(
+                    movie?.mediumCoverImage ?? '',
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
+                  Container(
+                    height: screenHeight * 0.72,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [Colors.transparent, AppColors.black],
                       ),
-                      Container(
-                        height: context.screenHeight * 0.72,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              AppColors.blackOpacity70,
-                            ],
-                          ),
-                        ),
-                      ),
-                      SafeArea(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.screenWidth * 0.037,
-                            vertical: context.screenHeight * 0.007,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                onPressed: () => Navigator.pop(context),
-                                icon: Icon(
-                                  Icons.arrow_back_ios,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  // Action when clicking the bookmark icon
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                        "Bookmarked ${movie?.title}",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                icon: SvgPicture.asset(AppAssets.bookMark),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned.fill(
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              // Action when clicking the play button
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    "Playing ${movie?.title} trailer...",
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              width: context.screenWidth * 0.22,
-                              height: context.screenHeight * 0.1,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.yellow,
-                                  width: 6,
-                                ),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: AppColors.white,
-                                    width: 6,
-                                  ),
-                                ),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.yellow,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Icon(
-                                    Icons.play_arrow,
-                                    color: AppColors.white,
-                                    size: 45,
-                                  ),
-                                ),
+                    ),
+                  ),
+                  SafeArea(
+                    child: CustomDetailsHeader(movieTitle: movie?.title),
+                  ),
+                  SizedBox(
+                    height: screenHeight * 0.77,
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Playing ${movie?.title} trailer...",
                               ),
                             ),
-                          ),
+                          );
+                        },
+                        child: Image.asset(
+                          AppAssets.playIcon,
+                          width: screenWidth * 0.22,
                         ),
                       ),
-                    ],
+                    ),
                   ),
 
-                  //
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                    ),
                     child: Column(
+                      spacing: screenHeight * 0.015,
+                      crossAxisAlignment: .start,
                       children: [
-                        Text(
-                          movie?.title ?? '',
-                          textAlign: TextAlign.center,
-                          style: AppStyles.white20BoldRoboto,
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          '${movie?.year}',
-                          style: AppStyles.white16RegularRoboto.copyWith(
-                            color: Colors.grey,
+                        SizedBox(height: screenHeight * 0.58),
+                        Align(
+                          alignment: .center,
+                          child: Text(
+                            movie?.title ?? '',
+                            style: AppStyles.white24BoldRoboto,
                           ),
                         ),
-                        const SizedBox(height: 16),
+
+                        Align(alignment: .center,
+                          child: Text(
+                              '${movie?.year}',
+                              style: AppStyles.grey20BoldRoboto
+                          ),
+                        ),
+
                         CustomElevatedButton(
                           onPressed: () {},
                           backgroundColor: AppColors.red,
@@ -194,159 +135,96 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             style: AppStyles.white20BoldRoboto,
                           ),
                         ),
-                        const SizedBox(height: 16),
+
                         // Stats Row
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            buildStatItem(
-                              AppAssets.likes,
-                              '${movie?.likeCount}',
-                              onTap: () {},
-                            ),
-                            buildStatItem(
-                              AppAssets.time,
-                              '${movie?.runtime}',
-                              onTap: () {},
-                            ),
-                            buildStatItem(
-                              AppAssets.rating,
-                              '${movie?.rating}',
-                              onTap: () {},
-                            ),
-                          ],
+                        MovieInfoRow(movie: movie),
+
+                        Text(
+                          "screen_shots".tr(),
+                          style: AppStyles.white24BoldRoboto,
                         ),
-                      ],
-                    ),
-                  ),
-
-                  buildSectionTitle("screen_shots".tr()),
-
-                  // ScreenShots Section
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
                         if (movie?.mediumScreenshotImage1 != null)
                           _buildNetworkImage(
                             movie!.mediumScreenshotImage1!,
                             context,
                           ),
-                        const SizedBox(height: 12),
                         if (movie?.mediumScreenshotImage2 != null)
                           _buildNetworkImage(
                             movie!.mediumScreenshotImage2!,
                             context,
                           ),
-                        const SizedBox(height: 12),
                         if (movie?.mediumScreenshotImage3 != null)
                           _buildNetworkImage(
                             movie!.mediumScreenshotImage3!,
                             context,
                           ),
-                      ],
-                    ),
-                  ),
-                  buildSectionTitle("similar".tr()),
-                  BlocBuilder<
-                    MovieSuggestionsViewModel,
-                    MovieSuggestionsStates
-                  >(
-                    bloc: movieSuggestionsViewModel,
-                    builder: (context, state) {
-                      if (state is MovieSuggestionsLoadingState) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (state is MovieSuggestionsErrorState) {
-                        return Text('error');
-                      } else if (state is MovieSuggestionsSuccessState) {
-                        return GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.screenWidth * 0.037,
+                        Text(
+                          "similar".tr(),
+                          style: AppStyles.white24BoldRoboto,
+                        ),
+
+                        BlocBuilder<
+                            MovieSuggestionsViewModel,
+                            MovieSuggestionsStates
+                        >(
+                          bloc: movieSuggestionsViewModel,
+                          builder: (context, state) {
+                            if (state is MovieSuggestionsLoadingState) {
+                              return MainLoading();
+                            } else if (state is MovieSuggestionsErrorState) {
+                              return Text('error');
+                            } else if (state is MovieSuggestionsSuccessState) {
+                              return CustomGridView(
+                                movies: state.movieSuggestions.data?.movies,
+                              );
+                            } else {
+                              return SizedBox();
+                            }
+                          },
+                        ),
+                        Text(
+                          "summary".tr(),
+                          style: AppStyles.white24BoldRoboto,
+                        ),
+
+                        Text(
+                          movie?.descriptionIntro ?? '',
+                          style: AppStyles.white16RegularRoboto,
+                          textAlign: TextAlign.justify,
+                        ),
+                        Text("cast".tr(), style: AppStyles.white24BoldRoboto),
+
+                        if (movie?.cast != null && movie!.cast!.isNotEmpty)
+                          ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.zero,
+                            physics: const NeverScrollableScrollPhysics(),
+
+                            itemCount: movie.cast!.length,
+                            itemBuilder: (context, index) {
+                              final actor = movie.cast![index];
+                              return buildCastItem(
+                                actor.urlSmallImage ?? '',
+                                actor.name ?? 'Unknown',
+                                actor.characterName ?? '',
+                              );
+                            },
                           ),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.7,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              ),
-                          itemCount: 4,
-                          itemBuilder: (context, index) => ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  state
-                                      .movieSuggestions
-                                      .data
-                                      ?.movies?[index]
-                                      .mediumCoverImage ??
-                                  '',
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    },
-                  ),
+                        Text("genres".tr(), style: AppStyles.white24BoldRoboto),
 
-                  buildSectionTitle("summary".tr()),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
-                    ),
-                    child: Text(
-                      movie?.descriptionIntro ?? '',
-                      style: AppStyles.white16RegularRoboto,
-                      textAlign: TextAlign.justify,
-                    ),
-                  ),
-
-                  buildSectionTitle("cast".tr()),
-                  if (movie?.cast != null && movie!.cast!.isNotEmpty)
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.screenWidth * 0.037,
-                      ),
-                      itemCount: movie.cast!.length,
-                      itemBuilder: (context, index) {
-                        final actor = movie.cast![index];
-                        return buildCastItem(
-                          actor.urlSmallImage ?? '',
-                          actor.name ?? 'Unknown',
-                          actor.characterName ?? '',
-                        );
-                      },
-                    ),
-
-                  buildSectionTitle("genres".tr()),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.screenWidth * 0.037,
-                      vertical: context.screenHeight * 0.01,
-                    ),
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children:
+                        Wrap(
+                          spacing: 10,
+                          runSpacing: 10,
+                          children:
                           movie?.genres
                               ?.map((genre) => buildGenreChip(genre))
                               .toList() ??
-                          [],
+                              [],
+                        ),
+                        SizedBox(height: screenHeight * 0.05),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 30),
                 ],
               ),
             ),

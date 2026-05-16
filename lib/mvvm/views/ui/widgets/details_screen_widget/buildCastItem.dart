@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/custom_cached_network_image.dart';
 
 import '../../../../../core/utils/app_colors.dart';
 import '../../../../../core/utils/app_styles.dart';
@@ -15,7 +16,7 @@ Widget buildCastItem(String image, String name, String character) {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.network(image, width: 50, height: 50, fit: BoxFit.cover),
+          child: CustomCachedNetworkImage(imageString: image),
         ),
         const SizedBox(width: 12),
         Expanded(

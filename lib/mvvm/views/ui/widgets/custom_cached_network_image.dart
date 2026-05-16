@@ -4,6 +4,7 @@ import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/main_loading.dart';
 
 class CustomCachedNetworkImage extends StatelessWidget {
+
   const CustomCachedNetworkImage({super.key, required this.imageString});
 
   final String imageString;
@@ -12,12 +13,10 @@ class CustomCachedNetworkImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageString,
-      height: double.infinity,
-      width: double.infinity,
       fit: .fill,
       placeholder: (context, url) => MainLoading(),
       errorWidget: (context, url, error) =>
-          Icon(Icons.broken_image, color: AppColors.yellow),
+          Icon(Icons.broken_image, color: AppColors.yellow, size: 50,),
     );
   }
 }

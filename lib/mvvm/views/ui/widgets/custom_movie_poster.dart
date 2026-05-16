@@ -4,14 +4,15 @@ import 'package:movies_app/mvvm/views/ui/widgets/custom_cached_network_image.dar
 import 'package:movies_app/mvvm/views/ui/widgets/custom_rating_box.dart';
 
 class CustomMoviePoster extends StatelessWidget {
+  final String imageString;
+  final String rating;
+
   const CustomMoviePoster({
     super.key,
     required this.imageString,
     required this.rating,
   });
 
-  final String imageString;
-  final String rating;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class CustomMoviePoster extends StatelessWidget {
 
     return Container(
       clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16)),
       child: Stack(
         children: [
           CustomCachedNetworkImage(imageString: imageString),
