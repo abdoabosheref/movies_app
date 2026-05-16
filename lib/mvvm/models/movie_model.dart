@@ -35,3 +35,4 @@ class Cast {
     required this.image,
   });
 }
+

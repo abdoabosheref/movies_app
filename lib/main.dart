@@ -60,6 +60,8 @@ class MovieApp extends StatelessWidget {
       initialRoute: showOnBoarding
           ? AppRoutes.onBoardingScreen
           : AppRoutes.loginScreen,
+      // : AppRoutes.mainScreen,
+          // : AppRoutes.loginScreen,
       routes: AppRoutes.routes,
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,

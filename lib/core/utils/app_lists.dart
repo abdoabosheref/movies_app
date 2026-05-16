@@ -35,6 +35,7 @@ class AppLists {
       genres: ["Action", "Sci-Fi", "Adventure"],
     ),
     Movie(
+
       title: "Black Widow",
       year: "2021",
       rating: "6.7",
