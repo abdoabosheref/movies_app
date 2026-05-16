@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_cubit.dart';
 import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_state.dart';
@@ -29,6 +30,7 @@ class HomeTab extends StatelessWidget {
               width: screenWidth,
               height: screenHeight,
               child: Image.asset(
+                //Todo: change background image according to top movie slider
                 AppAssets.homeTabBackGround,
                 fit: BoxFit.cover,
               ),
@@ -95,7 +97,8 @@ class HomeTab extends StatelessWidget {
                             list: state.movies.map((availableNow) {
                               return GestureDetector(
                                 onTap: () {
-                                  //Todo: navigate to movie details
+                                  // navigate to movie details
+                                 Navigator.pushNamed(context, AppRoutes.movieDetailsScreen, arguments: availableNow.id);
                                 },
                                 child: CustomMoviePoster(
                                   rating: availableNow.rating.toString(),
@@ -126,7 +129,9 @@ class HomeTab extends StatelessWidget {
                                   state.genreShuffle,
                                   style: AppStyles.white20RegularRoboto,
                                 ),
-                                SeeMoreTextButton(onPressed: () {}),
+                                SeeMoreTextButton(onPressed: () {
+                                  //Todo:navigate to browse tab
+                                }),
                               ],
                             ),
 
@@ -142,7 +147,8 @@ class HomeTab extends StatelessWidget {
                                   ),
                                   child: GestureDetector(
                                     onTap: () {
-                                      //Todo: navigate to movie details
+                                      // navigate to movie details
+                                      Navigator.pushNamed(context, AppRoutes.movieDetailsScreen, arguments: watchNow.id);
                                     },
                                     child: CustomMoviePoster(
                                       rating: watchNow.rating.toString(),
