@@ -14,8 +14,8 @@ class CustomGridView extends StatelessWidget {
     double screenWidth = context.screenWidth;
     return GridView.builder(
       shrinkWrap: true,
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.037),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         childAspectRatio: 0.66,
