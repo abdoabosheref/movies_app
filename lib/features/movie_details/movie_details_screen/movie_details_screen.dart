@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +12,8 @@ import 'package:movies_app/features/movie_details/cubit/movie_details_view_model
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_states.dart';
 import 'package:movies_app/features/movie_suggestions/cubit/movie_suggestions_view_model.dart';
 import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/custom_grid_view.dart';
+import 'package:movies_app/mvvm/views/ui/widgets/main_loading.dart';
 
 import '../../../mvvm/views/ui/widgets/details_screen_widget/buildCastItem.dart';
 import '../../../mvvm/views/ui/widgets/details_screen_widget/buildGenreChip.dart';
@@ -53,7 +54,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
       bloc: movieDetailsViewModel,
       builder: (context, state) {
         if (state is MovieDetailsLoadingState) {
-          return Center(child: CircularProgressIndicator());
+          return MainLoading();
         } else if (state is MovieDetailsErrorState) {
           return Text('error');
         } else if (state is MovieDetailsSuccessState) {
@@ -258,41 +259,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     bloc: movieSuggestionsViewModel,
                     builder: (context, state) {
                       if (state is MovieSuggestionsLoadingState) {
-                        return Center(child: CircularProgressIndicator());
+                        return MainLoading();
                       } else if (state is MovieSuggestionsErrorState) {
                         return Text('error');
                       } else if (state is MovieSuggestionsSuccessState) {
-                        return GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.screenWidth * 0.037,
-                          ),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.7,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              ),
-                          itemCount: 4,
-                          itemBuilder: (context, index) => ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: CachedNetworkImage(
-                              imageUrl:
-                                  state
-                                      .movieSuggestions
-                                      .data
-                                      ?.movies?[index]
-                                      .mediumCoverImage ??
-                                  '',
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
-                              errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
-                            ),
-                          ),
-                        );
+                        return CustomGridView(movies: state
+                            .movieSuggestions
+                            .data
+                            ?.movies);
                       } else {
                         return SizedBox();
                       }

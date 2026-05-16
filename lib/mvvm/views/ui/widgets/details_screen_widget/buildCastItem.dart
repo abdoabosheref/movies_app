@@ -17,7 +17,7 @@ Widget buildCastItem(String image, String name, String character) {
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: CustomCachedNetworkImage(imageString: image),
-        )),
+        ),
         const SizedBox(width: 12),
         Expanded(
           child: Column(
