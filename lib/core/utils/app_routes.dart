@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
+import '../../features/movie_details/movie_details_screen/movie_details_screen.dart';
 import '../../mvvm/views/ui/screens/forget_password_screen/forget_password_screen.dart';
 import '../../mvvm/views/ui/screens/main_screen/main_screen.dart';
-import '../../mvvm/views/ui/screens/movie_details_screen/movie_details_screen.dart';
 import '../../mvvm/views/ui/screens/on_boarding_screen/on_boarding_screen.dart';
 import '../../mvvm/views/ui/screens/update_profile_screen/update_profile_screen.dart';
 

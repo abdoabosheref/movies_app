@@ -15,7 +15,7 @@ Widget buildCastItem(String image, String name, String character) {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: Image.asset(image, width: 50, height: 50, fit: BoxFit.cover),
+          child: Image.network(image, width: 50, height: 50, fit: BoxFit.cover),
         ),
         const SizedBox(width: 12),
         Expanded(
