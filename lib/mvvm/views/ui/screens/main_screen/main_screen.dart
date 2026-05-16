@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/features/home_tab/presentation/cubit/home_tab_cubit.dart';
+import 'package:movies_app/features/home_tab/presentation/screens/home_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/profile_tab/profile_tab.dart';
 import 'package:movies_app/mvvm/views/ui/tabs/search_tab/search_tab.dart';
 
 import '../../tabs/browse_tab/browse_tab.dart';
-import '../../tabs/home_tab/home_tab.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,28 +18,43 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentIndex = 3;
-  List<Widget> tabs = [HomeTab(), SearchTab(), BrowseTab(), ProfileTab()];
-  List<BottomNavigationBarItem> items = [
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.homeTabIcon)),
-      label: 'homeTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.searchTabIcon)),
-      label: 'searchTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.browseTabIcon)),
-      label: 'browseTab',
-    ),
-    BottomNavigationBarItem(
-      icon: ImageIcon(AssetImage(AppAssets.profileTabIcon)),
-      label: 'profileTab',
-    ),
-  ];
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
+    List<Widget> tabs = [
+      BlocProvider(
+        create: (context) => HomeTabCubit()..loadHomeTabData(),
+        child: HomeTab(
+          seeMoreOnPressed: () {
+            setState(() {
+              currentIndex = 2;
+            });
+          },
+        ),
+      ),
+      SearchTab(),
+      BrowseTab(),
+      ProfileTab(),
+    ];
+    List<BottomNavigationBarItem> items = [
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.homeTabIcon)),
+        label: 'homeTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.searchTabIcon)),
+        label: 'searchTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.browseTabIcon)),
+        label: 'browseTab',
+      ),
+      BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AppAssets.profileTabIcon)),
+        label: 'profileTab',
+      ),
+    ];
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
     return Scaffold(
