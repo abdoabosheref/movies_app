@@ -1,4 +1,5 @@
-import 'package:movies_app/mvvm/models/movie_model.dart';
+import 'package:movies_app/api/models/movie_model.dart';
+
 import 'app_assets.dart';
 
 class AppLists {

@@ -36,9 +36,9 @@ import '../../domain/use_cases/movie_details/movie_details_use_case.dart'
     as _i763;
 import '../../domain/use_cases/movie_suggestions/movie_suggestions_use_case.dart'
     as _i541;
-import '../../features/movie_details/cubit/movie_details_view_model.dart'
+import '../../features/screens/movie_details/cubit/movie_details_view_model.dart'
     as _i150;
-import '../../features/movie_suggestions/cubit/movie_suggestions_view_model.dart'
+import '../../features/screens/movie_suggestions/cubit/movie_suggestions_view_model.dart'
     as _i966;
 
 extension GetItInjectableX on _i174.GetIt {

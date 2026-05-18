@@ -2,7 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
+
+import 'buttons/custom_elevated_button.dart';
 
 class CustomErrorColumn extends StatelessWidget {
   final VoidCallback onPressed;

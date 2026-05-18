@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/features/screens/forget_password_screen/forget_password_screen.dart';
+import 'package:movies_app/features/screens/main_screen/main_screen.dart';
+import 'package:movies_app/features/screens/movie_details/movie_details_screen/movie_details_screen.dart';
+import 'package:movies_app/features/screens/on_boarding_screen/on_boarding_screen.dart';
+import 'package:movies_app/features/screens/update_profile_screen/update_profile_screen.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
-import '../../features/movie_details/movie_details_screen/movie_details_screen.dart';
-import '../../mvvm/views/ui/screens/forget_password_screen/forget_password_screen.dart';
-import '../../mvvm/views/ui/screens/main_screen/main_screen.dart';
-import '../../mvvm/views/ui/screens/on_boarding_screen/on_boarding_screen.dart';
-import '../../mvvm/views/ui/screens/update_profile_screen/update_profile_screen.dart';
 
 class AppRoutes {
   static const String onBoardingScreen = '/on_boarding_screen';

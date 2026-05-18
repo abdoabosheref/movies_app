@@ -10,12 +10,12 @@ import 'package:movies_app/core/utils/app_validator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
 import 'package:movies_app/features/localization/presentation/widgets/custom_language_selector.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_text_button.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/custom_or_divider.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
 import '../../../../core/utils/snack_bar_utils.dart';
+import '../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../widgets/buttons/custom_text_button.dart';
+import '../../../widgets/custom_or_divider.dart';
+import '../../../widgets/custom_text_form_filed.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
