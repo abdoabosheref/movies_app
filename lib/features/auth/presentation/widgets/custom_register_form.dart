@@ -6,9 +6,9 @@ import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/app_validator.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/buttons/custom_elevated_button.dart';
-import 'package:movies_app/mvvm/views/ui/widgets/custom_text_form_filed.dart';
 
+import '../../../widgets/buttons/custom_elevated_button.dart';
+import '../../../widgets/custom_text_form_filed.dart';
 import '../cubit/auth_cubit.dart';
 
 class CustomRegisterForm extends StatefulWidget {

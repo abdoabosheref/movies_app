@@ -7,10 +7,10 @@ import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/core/utils/snack_bar_utils.dart';
 
 import '../../../../core/utils/app_lists.dart';
-import '../../../../mvvm/views/ui/widgets/buttons/custom_text_button.dart';
-import '../../../../mvvm/views/ui/widgets/custom_header.dart';
-import '../../../../mvvm/views/ui/widgets/custom_slider.dart';
 import '../../../localization/presentation/widgets/custom_language_selector.dart';
+import '../../../widgets/buttons/custom_text_button.dart';
+import '../../../widgets/custom_header.dart';
+import '../../../widgets/custom_slider.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_states.dart';
 import '../widgets/custom_register_form.dart';
