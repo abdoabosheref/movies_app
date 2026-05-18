@@ -42,7 +42,7 @@ class HomeTab extends StatelessWidget {
                           AppAssets.homeTabBackGround,
                           fit: BoxFit.cover,
                         )
-                      : CustomCachedNetworkImage(imageString: backGroundUrl),
+                      : CustomCachedNetworkImage(imageString: backGroundUrl,isBackground: true),
                 );
               },
             ),
