@@ -4,12 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/core/utils/app_lists.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-
-import '../../../../../core/utils/app_lists.dart';
-import '../../../../../features/auth/presentation/cubit/auth_cubit.dart';
-import '../../../../../features/auth/presentation/cubit/auth_states.dart';
+import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
+import 'package:movies_app/features/widgets/custom_toast.dart';
 import '../../widgets/buttons/custom_elevated_button.dart';
 import '../../widgets/buttons/custom_text_button.dart';
 import '../../widgets/custom_header.dart';
@@ -26,11 +26,24 @@ class UpdateProfileScreen extends StatelessWidget {
     AuthCubit authCubit = context.read<AuthCubit>();
 
 
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocConsumer<AuthCubit, AuthState>(
+        listener:  (context, state) {
+          if (state is AuthDeleteSuccess) {
+            CustomToast.showSuccessToast(context, state.successMessage!);
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              AppRoutes.loginScreen,
+                  (route) => false,
+            );
+          }else if (state is AuthFailure) {
+            CustomToast.showErrorToast(context, state.errorMessage);
+          }
+        },
       builder: (context, state) {
         final user = authCubit.currentUser!;
         String avatarImageName =
             'assets/images/avatar_image_${user.avatarIndex + 1}.png';
+
+
 
         return Scaffold(
 
@@ -45,7 +58,7 @@ class UpdateProfileScreen extends StatelessWidget {
                     CustomHeader(title: 'pick_avatar'.tr()),
                     InkWell(
                       onTap: () {
-                        //Todo: shows bottom sheet to pick avatar
+                        // shows bottom sheet to pick avatar
                         showModalBottomSheet(context: context,
                           backgroundColor: AppColors.transparent,
                           builder: (context) =>
@@ -104,7 +117,12 @@ class UpdateProfileScreen extends StatelessWidget {
                         style: AppStyles.white20RegularRoboto,
                       ),
 
-                      onPressed: () {},
+                      onPressed: () {
+                        //Todo: delete user account
+                        authCubit.deleteAccount(context);
+
+
+                      },
                     ),
                     CustomElevatedButton(
                       child: Text(

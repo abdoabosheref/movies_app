@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/auth/data/models/user_model.dart';
+import 'package:movies_app/features/widgets/custom_toast.dart';
 
 import '../../data/data_sources/auth_remote_data_source.dart';
 import '../../data/data_sources/auth_remote_data_source_impl.dart';
@@ -159,6 +161,83 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess());
       } else {
         emit(AuthFailure(errorMessage: "No user is currently logged in"));
+      }
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> deleteAccount(BuildContext context) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    String? providerId = user.providerData.isNotEmpty
+        ? user.providerData.first.providerId
+        : null;
+    try {
+      emit(AuthLoading());
+      await user.delete();
+      emit(AuthDeleteSuccess(successMessage: 'User deleted successfully'));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login' ) {
+        try {
+          emit(AuthLoading());
+
+          if (providerId == 'password' || providerId == 'emailPassword' ) {
+            String? password = await CustomToast.showPasswordDialog(
+              context,
+              loginPasswordController,
+            );
+
+            if (password != null && password.isNotEmpty) {
+              await user.reauthenticateWithCredential(
+                EmailAuthProvider.credential(
+                  email: user.email!,
+                  password: password,
+                ),
+              );
+              await user.delete();
+
+
+              emit(
+                AuthDeleteSuccess(successMessage: 'User deleted successfully'),
+              );
+            } else {
+              emit(AuthInitial());
+            }
+          } else if (providerId == 'google.com') {
+            final userCredential = await authRepository.loginWithGoogle();
+            final AuthCredential? googleCredential = userCredential.credential;
+
+            if (googleCredential != null) {
+              await user.reauthenticateWithCredential(googleCredential);
+              currentUser =
+                  (await authRepository.getUserData(
+                        uId: userCredential.user!.uid,
+                      ))
+                      as UserModel?;
+              await user.delete();
+              emit(
+                AuthDeleteSuccess(successMessage: 'User deleted successfully'),
+              );
+            } else {
+              emit(AuthInitial());
+            }
+          }
+        } catch (reauthError) {
+          emit(
+            AuthFailure(
+              errorMessage:
+                  "Reauthentication failed: ${reauthError.toString()}",
+            ),
+          );
+        }
+      } else {
+        emit(
+          AuthFailure(
+            errorMessage: e.message ?? "Error deleting user from Firebase",
+          ),
+        );
       }
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
