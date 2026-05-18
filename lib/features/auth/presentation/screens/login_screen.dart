@@ -14,8 +14,8 @@ import 'package:movies_app/features/localization/presentation/widgets/custom_lan
 import '../../../../core/utils/snack_bar_utils.dart';
 import '../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../widgets/buttons/custom_text_button.dart';
-import '../../../widgets/custom_or_divider.dart';
 import '../../../widgets/custom_text_form_filed.dart';
+import '../widgets/custom_or_divider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

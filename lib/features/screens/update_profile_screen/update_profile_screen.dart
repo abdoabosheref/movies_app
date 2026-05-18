@@ -12,9 +12,9 @@ import '../../../../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../../../../features/auth/presentation/cubit/auth_states.dart';
 import '../../widgets/buttons/custom_elevated_button.dart';
 import '../../widgets/buttons/custom_text_button.dart';
-import '../../widgets/custom_bottom_sheet.dart';
 import '../../widgets/custom_header.dart';
 import '../../widgets/custom_text_form_filed.dart';
+import 'widgets/custom_bottom_sheet.dart';
 
 class UpdateProfileScreen extends StatelessWidget {
   const UpdateProfileScreen({super.key});
