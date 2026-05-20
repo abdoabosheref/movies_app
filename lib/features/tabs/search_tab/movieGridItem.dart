@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/core/utils/app_colors.dart';
+import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-
-import '../../../../../core/utils/app_colors.dart';
-import '../../../../../core/utils/app_context.dart';
 
 class MovieGridItem extends StatelessWidget {
   final double rate;
