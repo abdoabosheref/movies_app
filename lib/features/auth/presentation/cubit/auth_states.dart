@@ -11,3 +11,11 @@ class AuthFailure extends AuthState{
   AuthFailure({required this.errorMessage});
 }
 class ChangePasswordVisibilityState extends AuthState{}
+class AuthDeleteSuccess extends AuthState{
+  final String? successMessage;
+  AuthDeleteSuccess({ this.successMessage});
+}
+class AuthDeleteFailure extends AuthState{
+  final String errorMessage;
+  AuthDeleteFailure({required this.errorMessage});
+}

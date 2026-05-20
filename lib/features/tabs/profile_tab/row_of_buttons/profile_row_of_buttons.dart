@@ -7,8 +7,8 @@ import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
-
-import '../../../../../../features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:movies_app/features/auth/presentation/screens/login_screen.dart';
 import '../../../widgets/buttons/custom_elevated_button.dart';
 
 class ProfileRowOfButtons extends StatelessWidget {
@@ -46,7 +46,11 @@ class ProfileRowOfButtons extends StatelessWidget {
             ),
             onPressed: () {
               //todo: logout using firebase auth
-              Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+                (route) => false,
+              );
             },
           ),
         ),

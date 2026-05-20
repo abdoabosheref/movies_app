@@ -53,6 +53,8 @@ class RegisterScreen extends StatelessWidget {
           case AuthInitial():
           case AvatarChangedState():
           case ChangePasswordVisibilityState():
+            case AuthDeleteSuccess():
+              case AuthDeleteFailure():
             break;
         }
       },
