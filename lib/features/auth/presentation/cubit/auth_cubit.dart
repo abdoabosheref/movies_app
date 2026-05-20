@@ -134,7 +134,7 @@ class AuthCubit extends Cubit<AuthState> {
       await authRepository.registerWithEmailAndPassword(
         email: email,
         password: password,
-        userModel: userModel,
+        userModel:userModel,
       );
       emit(AuthSuccess());
     } catch (e) {
@@ -179,11 +179,11 @@ class AuthCubit extends Cubit<AuthState> {
       await user.delete();
       emit(AuthDeleteSuccess(successMessage: 'User deleted successfully'));
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'requires-recent-login' ) {
+      if (e.code == 'requires-recent-login') {
         try {
           emit(AuthLoading());
 
-          if (providerId == 'password' || providerId == 'emailPassword' ) {
+          if (providerId == 'password' || providerId == 'emailPassword') {
             String? password = await CustomToast.showPasswordDialog(
               context,
               loginPasswordController,
@@ -197,7 +197,6 @@ class AuthCubit extends Cubit<AuthState> {
                 ),
               );
               await user.delete();
-
 
               emit(
                 AuthDeleteSuccess(successMessage: 'User deleted successfully'),

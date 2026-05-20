@@ -118,8 +118,9 @@ class UpdateProfileScreen extends StatelessWidget {
                       ),
 
                       onPressed: () {
-                        //Todo: delete user account
-                        authCubit.deleteAccount(context);
+                        // delete user account
+                         CustomToast.showConfirmDialog(context, authCubit);
+
 
 
                       },
