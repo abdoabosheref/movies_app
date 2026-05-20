@@ -1,5 +1,5 @@
-import '../../../../domain/entities/movie_details/movie_details.dart';
+import '../../../../domain/entities/movie_details/movie_details_response.dart';
 
 abstract class MovieDetailsRemoteDataSource {
-  Future<MovieDetails> fetchMovieDetails({required int movieId});
+  Future<MovieDetailsResponse> fetchMovieDetails({required int movieId});
 }

@@ -1,8 +1,8 @@
-class Movies {
+class Movie {
   final int? id;
   final String? url;
   final double? rating;
   final String? mediumCoverImage;
 
-  Movies({this.id, this.url, this.rating, this.mediumCoverImage});
+  Movie({this.id, this.url, this.rating, this.mediumCoverImage});
 }

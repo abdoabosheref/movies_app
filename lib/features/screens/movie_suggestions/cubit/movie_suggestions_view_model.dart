@@ -17,12 +17,12 @@ class MovieSuggestionsViewModel extends Cubit<MovieSuggestionsStates> {
     try {
       emit(MovieSuggestionsLoadingState());
 
-      var movieSuggestionsResponse = await _movieSuggestionsUseCase.invoke(
+      var movieResponse = await _movieSuggestionsUseCase.invoke(
         movieId: movieId,
       );
       emit(
         MovieSuggestionsSuccessState(
-          movieSuggestions: movieSuggestionsResponse,
+          movieResponse: movieResponse,
         ),
       );
     } on DioException catch (e) {

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/core/utils/app_lists.dart';
-import 'package:movies_app/core/utils/app_routes.dart';
 
 import '../../../../../core/utils/app_context.dart';
-import '../../widgets/custom_movie_poster.dart';
 import '../../widgets/custom_text_form_filed.dart';
 
 class SearchTab extends StatefulWidget {
@@ -52,30 +49,31 @@ class _SearchTabState extends State<SearchTab> {
                     height: screenHeight * 0.15,
                   ),
                 )
-                    : GridView.builder(
-                  itemCount: AppLists.dummyMovies.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.7,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15,
-                  ),
-                  itemBuilder: (context, index) {
-                    final movie = AppLists.dummyMovies[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.movieDetailsScreen,
-                          arguments: movie,
-                        );
-                      },
-                      child: CustomMoviePoster(
-                          imageString: movie.image,
-                          rating: movie.rating),
-                    );
-                  },
-                ),
+                    : SizedBox()
+                // GridView.builder(
+                //   itemCount: AppLists.dummyMovies.length,
+                //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 2,
+                //     childAspectRatio: 0.7,
+                //     crossAxisSpacing: 15,
+                //     mainAxisSpacing: 15,
+                //   ),
+                //   itemBuilder: (context, index) {
+                //     final movie = AppLists.dummyMovies[index];
+                //     return GestureDetector(
+                //       onTap: () {
+                //         Navigator.pushNamed(
+                //           context,
+                //           AppRoutes.movieDetailsScreen,
+                //           arguments: movie,
+                //         );
+                //       },
+                //       child: CustomMoviePoster(
+                //           imageString: movie.image,
+                //           rating: movie.rating),
+                //     );
+                //   },
+                // ),
               ),
             ],
           ),

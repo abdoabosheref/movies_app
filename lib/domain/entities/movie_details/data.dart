@@ -1,7 +1,7 @@
-import 'package:movies_app/domain/entities/movie_details/movie.dart';
+import 'package:movies_app/domain/entities/movie_details/movie_details.dart';
 
 class Data {
-  final Movie? movie;
+  final MovieDetails? movie;
 
   Data({this.movie});
 }

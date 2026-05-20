@@ -1,12 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:movies_app/api/models/movie_details/movie_dto.dart';
+import 'package:movies_app/api/models/movie_details/movie_details_dto.dart';
 
 part 'data_dto.g.dart';
 
 @JsonSerializable()
 class DataDto {
   @JsonKey(name: "movie")
-  final MovieDto? movie;
+  final MovieDetailsDto? movie;
 
   DataDto({this.movie});
 

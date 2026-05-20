@@ -24,11 +24,32 @@ class DioManager {
           ),
         );
 
-  static Future<MoviesListResponse> getMoviesList() async {
+  // static Future<MoviesListResponse> getMoviesList() async {
+  //   try {
+  //     var response = await dio.get(
+  //       EndPoints.listMoviesEndPoint,
+  //       queryParameters: {'sort_by': 'date_added','genre' : 'Romance'},
+  //     );
+  //     return MoviesListResponse.fromJson(response.data);
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
+  static Future<MoviesListResponse> getMoviesList({String? genre, String? queryTerm, int page = 1}) async {
     try {
+      final Map<String,dynamic> queryParameters = {
+        'sort_by': 'date_added',
+        'page':page
+      };
+      if(genre != null && genre != 'All' && genre.trim().isNotEmpty){
+        queryParameters['genre'] = 'Romance';
+      }
+      if(queryTerm != null&&queryTerm.trim().isNotEmpty){
+        queryParameters['query_term'] = queryTerm;
+    }
       var response = await dio.get(
         EndPoints.listMoviesEndPoint,
-        queryParameters: {'sort_by': 'date_added'},
+        queryParameters:queryParameters
       );
       return MoviesListResponse.fromJson(response.data);
     } catch (e) {
