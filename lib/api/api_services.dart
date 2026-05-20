@@ -1,15 +1,15 @@
 import 'package:dio/dio.dart';
-import 'package:movies_app/api/models/movie_suggestions/movie_suggestions_dto.dart';
+import 'package:movies_app/api/models/movie_response/movie_response_dto.dart';
 
 import 'end_points.dart';
-import 'models/movie_details/movie_details_dto.dart';
+import 'models/movie_details/movie_details_response_dto.dart';
 
 class ApiServices {
   final Dio _dio;
 
   ApiServices(this._dio);
 
-  Future<MovieDetailsDto> fetchMovieDetails({required int movieId}) async {
+  Future<MovieDetailsResponseDto> fetchMovieDetails({required int movieId}) async {
     try {
       final response = await _dio.get(
         EndPoints.movieDetailsEndPoint,
@@ -19,13 +19,14 @@ class ApiServices {
           'with_cast': true,
         },
       );
-      return MovieDetailsDto.fromJson(response.data);
+      return MovieDetailsResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<MovieSuggestionsDto> fetchMovieSuggestions({
+
+  Future<MovieResponseDto> fetchMovieSuggestions({
     required int movieId,
   }) async {
     try {
@@ -33,7 +34,28 @@ class ApiServices {
         EndPoints.movieSuggestionsEndPoint,
         queryParameters: {'movie_id': movieId},
       );
-      return MovieSuggestionsDto.fromJson(response.data);
+      return MovieResponseDto.fromJson(response.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<MovieResponseDto> getMoviesList({String? genre, String? queryTerm, int page = 1}) async {
+    try {
+      final Map<String,dynamic> queryParameters = {
+        'page':page
+      };
+      if(genre != null && genre != 'All' && genre.trim().isNotEmpty){
+        queryParameters['genre'] = genre;
+      }
+      if(queryTerm != null&&queryTerm.trim().isNotEmpty){
+        queryParameters['query_term'] = queryTerm;
+      }
+      final response = await _dio.get(
+          EndPoints.listMoviesEndPoint,
+          queryParameters:queryParameters
+      );
+      return MovieResponseDto.fromJson(response.data);
     } catch (e) {
       rethrow;
     }

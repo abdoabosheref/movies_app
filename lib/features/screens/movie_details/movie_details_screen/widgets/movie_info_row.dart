@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
-import 'package:movies_app/domain/entities/movie_details/movie.dart';
+import 'package:movies_app/domain/entities/movie_details/movie_details.dart';
 
 import 'movie_info_card.dart';
 
 class MovieInfoRow extends StatelessWidget {
-  final Movie? movie;
+  final MovieDetails? movie;
 
   const MovieInfoRow({super.key, this.movie});
 

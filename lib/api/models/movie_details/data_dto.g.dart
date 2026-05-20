@@ -9,7 +9,7 @@ part of 'data_dto.dart';
 DataDto _$DataDtoFromJson(Map<String, dynamic> json) => DataDto(
   movie: json['movie'] == null
       ? null
-      : MovieDto.fromJson(json['movie'] as Map<String, dynamic>),
+      : MovieDetailsDto.fromJson(json['movie'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$DataDtoToJson(DataDto instance) => <String, dynamic>{

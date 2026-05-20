@@ -145,8 +145,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             } else if (state is MovieSuggestionsErrorState) {
                               return Text('error');
                             } else if (state is MovieSuggestionsSuccessState) {
-                              return CustomGridView(
-                                movies: state.movieSuggestions.data?.movies,
+                              return CustomGridView(isScrollable: false,
+                                movies: state.movieResponse.data?.movies,
                               );
                             } else {
                               return SizedBox();

@@ -1,5 +1,5 @@
 import 'package:movies_app/core/exceptions/app_exceptions.dart';
-import 'package:movies_app/domain/entities/movie_suggestions/movie_suggestions.dart';
+import 'package:movies_app/domain/entities/movie_response/movie_response.dart';
 
 sealed class MovieSuggestionsStates {}
 
@@ -8,9 +8,9 @@ class MovieSuggestionsInitialState extends MovieSuggestionsStates {}
 class MovieSuggestionsLoadingState extends MovieSuggestionsStates {}
 
 class MovieSuggestionsSuccessState extends MovieSuggestionsStates {
-  MovieSuggestions movieSuggestions;
+  MovieResponse movieResponse;
 
-  MovieSuggestionsSuccessState({required this.movieSuggestions});
+  MovieSuggestionsSuccessState({required this.movieResponse});
 }
 
 class MovieSuggestionsErrorState extends MovieSuggestionsStates {

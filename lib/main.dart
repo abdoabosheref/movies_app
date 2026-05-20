@@ -35,9 +35,6 @@ void main() async {
                 create: (_) => LocalCubit(currentLanguageCode: initialLanguage),
               ),
               BlocProvider(create: (context) => AuthCubit()),
-              // BlocProvider(
-              //   create: (context) => SubjectBloc(),
-              // ),
             ],
             child: MovieApp(showOnBoarding: showOnBoarding),
           );

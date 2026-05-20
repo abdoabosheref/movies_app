@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:movies_app/api/models/common/torrents_dto.dart';
 
-part 'movies_dto.g.dart';
+part 'movie_dto.g.dart';
 
 @JsonSerializable()
-class MoviesDto {
+class MovieDto {
   @JsonKey(name: "id")
   final int? id;
   @JsonKey(name: "url")
@@ -56,7 +56,7 @@ class MoviesDto {
   @JsonKey(name: "date_uploaded_unix")
   final int? dateUploadedUnix;
 
-  MoviesDto({
+  MovieDto({
     this.id,
     this.url,
     this.imdbCode,
@@ -84,11 +84,11 @@ class MoviesDto {
     this.dateUploadedUnix,
   });
 
-  factory MoviesDto.fromJson(Map<String, dynamic> json) {
-    return _$MoviesDtoFromJson(json);
+  factory MovieDto.fromJson(Map<String, dynamic> json) {
+    return _$MovieDtoFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$MoviesDtoToJson(this);
+    return _$MovieDtoToJson(this);
   }
 }

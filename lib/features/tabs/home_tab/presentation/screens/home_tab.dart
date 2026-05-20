@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
-import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/tabs/home_tab/presentation/cubit/home_tab_cubit.dart';
 import 'package:movies_app/features/tabs/home_tab/presentation/cubit/home_tab_state.dart';
@@ -118,20 +117,12 @@ class HomeTab extends StatelessWidget {
                               }
                             },
                             list: state.movies.map((availableNow) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    AppRoutes.movieDetailsScreen,
-                                    arguments: availableNow.id,
-                                  );
-                                },
-                                child: CustomMoviePoster(
-                                  isBackground: true,
-                                  rating: availableNow.rating.toString(),
-                                  imageString:
-                                      availableNow.mediumCoverImage ?? '',
-                                ),
+                              return CustomMoviePoster(
+                                isBackground: true,
+                                rating: availableNow.rating.toString(),
+                                imageString:
+                                    availableNow.mediumCoverImage ?? '',
+                                movieId: availableNow.id,
                               );
                             }).toList(),
                           ),
@@ -177,19 +168,11 @@ class HomeTab extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(
                                     horizontal: screenWidth * 0.02,
                                   ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        AppRoutes.movieDetailsScreen,
-                                        arguments: watchNow.id,
-                                      );
-                                    },
-                                    child: CustomMoviePoster(
-                                      rating: watchNow.rating.toString(),
-                                      imageString:
-                                          watchNow.mediumCoverImage ?? '',
-                                    ),
+                                  child: CustomMoviePoster(
+                                    rating: watchNow.rating.toString(),
+                                    imageString:
+                                        watchNow.mediumCoverImage ?? '',
+                                    movieId: watchNow.id,
                                   ),
                                 );
                               }).toList(),
