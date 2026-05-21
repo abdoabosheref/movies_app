@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
+import 'package:movies_app/domain/entities/movie_response/movie.dart';
 import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_states.dart';
 import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_view_model.dart';
-import 'package:movies_app/features/widgets/custom_grid_view.dart';
+import 'package:movies_app/features/widgets/custom_movie_poster.dart';
 import 'package:movies_app/features/widgets/custom_toast.dart';
 import 'package:movies_app/features/widgets/main_loading.dart';
 import '../../widgets/custom_text_form_filed.dart';
+import 'dart:async';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
@@ -18,10 +21,29 @@ class SearchTab extends StatefulWidget {
 
 class _SearchTabState extends State<SearchTab> {
   final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce;
+  late final PagingController<int, Movie> _pagingController = PagingController<int, Movie>(
+    getNextPageKey: (state) {
+      if (state.lastPageIsEmpty) return null;
+      return (state.nextIntPageKey ?? 0) + 1;
+    },
+    fetchPage: (pageKey) async {
+      final cubit = context.read<SearchTabViewModel>();
+
+      await cubit.getMoviesList(
+        page: pageKey,
+        queryTerm: _searchController.text,
+      );
+
+      return cubit.newMovies ?? [];
+    },
+  );
 
   @override
   void dispose() {
     _searchController.dispose();
+    _pagingController.dispose();
+    _debounce?.cancel();
     super.dispose();
   }
 
@@ -36,12 +58,8 @@ class _SearchTabState extends State<SearchTab> {
           ),
           child: BlocConsumer<SearchTabViewModel,SearchTabStates>(
             listener: (context, state) {
-              if(state is SearchTabLoadingState){
-                 MainLoading();
-              }else if(state is SearchTabErrorState){
+            if(state is SearchTabErrorState){
                 return CustomToast.showErrorToast(context, state.appException.message);
-              }else if(state is SearchTabSuccessState){
-                return CustomToast.showSuccessToast(context, 'Movies Loaded Successfully');
               }
             },
             builder: (context, state) {
@@ -54,12 +72,17 @@ class _SearchTabState extends State<SearchTab> {
                   controller: _searchController,
                   prefixIcon: AppAssets.searchIconSvg,
                   onChanged: (value) {
-                    setState(() {
-                      //todo:get list
-                      context.read<SearchTabViewModel>().getMoviesList(queryTerm: value);
+                    setState(() {});
+                    if (_debounce?.isActive ?? false) {
+                      _debounce!.cancel();
+                    }
+                    _debounce = Timer(
+                      const Duration(milliseconds: 1000),
+                          () {
+                        _pagingController.refresh();
 
-
-                    });
+                      },
+                    );
                   },
                 ),
                 const SizedBox(height: 20),
@@ -71,8 +94,47 @@ class _SearchTabState extends State<SearchTab> {
                         height: screenHeight * 0.15,
                       ),
                     )
-                        : CustomGridView(movies:context.read<SearchTabViewModel>().movieList,  )
-
+                        : PagingListener(
+                      controller: _pagingController,
+                      builder: (context, state, fetchNextPage) {
+                        return PagedGridView<int, Movie>(
+                          state: state,
+                          fetchNextPage: fetchNextPage,
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          builderDelegate:
+                          PagedChildBuilderDelegate<Movie>(
+                            itemBuilder: (context, movie, index) {
+                              return CustomMoviePoster(
+                                 imageString: movie.mediumCoverImage??'',
+                                rating: movie.rating.toString(),
+                              );
+                            },
+                            firstPageProgressIndicatorBuilder: (_) =>
+                            const MainLoading(),
+                            newPageProgressIndicatorBuilder: (_) =>
+                            const MainLoading(),
+                            noItemsFoundIndicatorBuilder: (_) =>
+                            const Center(
+                              child: Text('No Movies Found'),
+                            ),
+                            firstPageErrorIndicatorBuilder: (_) =>
+                            const Center(
+                              child: Text('Something went wrong'),
+                            ),
+                            newPageErrorIndicatorBuilder: (_) =>
+                            const Center(
+                              child: Text('Error Loading More Movies'),
+                            ),
+                          ),
+                        );
+                      },
+                    )
                 ),
               ],
             );
@@ -84,4 +146,4 @@ class _SearchTabState extends State<SearchTab> {
       ),
     );
   }
-}
+}//CustomGridView(movies:context.read<SearchTabViewModel>().movieList,  )
