@@ -21,6 +21,8 @@ import '../../api/data_sources/remote/movie_details/movie_details_remote_data_so
     as _i140;
 import '../../api/data_sources/remote/movie_suggestions/movie_suggestions_remote_data_source_impl.dart'
     as _i383;
+import '../../api/data_sources/remote/search_tab/search_tab_remote_data_source_impl.dart'
+    as _i114;
 import '../../api/dio/get_it_module.dart' as _i814;
 import '../../data/data_sources/remote/browse_tab/browse_tab_remote_data_source.dart'
     as _i989;
@@ -28,29 +30,38 @@ import '../../data/data_sources/remote/movie_details/movie_details_remote_data_s
     as _i321;
 import '../../data/data_sources/remote/movie_suggestions/movie_suggestions_remote_data_source.dart'
     as _i294;
+import '../../data/data_sources/remote/search_tab/search_tab_remote_data_source.dart'
+    as _i1021;
 import '../../data/repositories/browse_tab/browse_tab_repository_impl.dart'
     as _i596;
 import '../../data/repositories/movie_details/movie_details_repository_impl.dart'
     as _i239;
 import '../../data/repositories/movie_suggestions/movie_suggestions_repository_impl.dart'
     as _i975;
+import '../../data/repositories/search_tab/search_tab_repository_impl.dart'
+    as _i1023;
 import '../../domain/repositories/browse_tab/browse_tab_repository.dart'
     as _i700;
 import '../../domain/repositories/movie_details/movie_details_repository.dart'
     as _i846;
 import '../../domain/repositories/movie_suggestions/movie_suggestions_repository.dart'
     as _i725;
+import '../../domain/repositories/search_tab/search_tab_repository.dart'
+    as _i591;
 import '../../domain/use_cases/browse_tab/browse_tab_use_case.dart' as _i951;
 import '../../domain/use_cases/movie_details/movie_details_use_case.dart'
     as _i763;
 import '../../domain/use_cases/movie_suggestions/movie_suggestions_use_case.dart'
     as _i541;
+import '../../domain/use_cases/search_tab/search_tab_use_case.dart' as _i934;
 import '../../features/screens/movie_details/cubit/movie_details_view_model.dart'
     as _i40;
 import '../../features/screens/movie_suggestions/cubit/movie_suggestions_view_model.dart'
     as _i505;
 import '../../features/tabs/browse_tab/cubit/browse_tab_view_model.dart'
     as _i780;
+import '../../features/tabs/search_tab/cubit/search_tab_view_model.dart'
+    as _i1048;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -76,6 +87,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i321.MovieDetailsRemoteDataSource>(
       () => _i140.MovieDetailsRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
+    gh.factory<_i1021.SearchTabRemoteDataSource>(
+      () => _i114.SearchTabRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
     gh.factory<_i989.BrowseTabRemoteDataSource>(
       () => _i315.BrowseTabRemoteDataSourceImpl(gh<_i394.ApiServices>()),
     );
@@ -85,6 +99,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i846.MovieDetailsRepository>(
       () => _i239.MovieDetailsRepositoryImpl(
         gh<_i321.MovieDetailsRemoteDataSource>(),
+      ),
+    );
+    gh.factory<_i591.SearchTabRepository>(
+      () => _i1023.SearchTabRepositoryImpl(
+        gh<_i1021.SearchTabRemoteDataSource>(),
       ),
     );
     gh.factory<_i700.BrowseTabRepository>(
@@ -101,6 +120,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i951.BrowseTabUseCase>(
       () => _i951.BrowseTabUseCase(gh<_i700.BrowseTabRepository>()),
+    );
+    gh.factory<_i934.SearchTabUseCase>(
+      () => _i934.SearchTabUseCase(gh<_i591.SearchTabRepository>()),
+    );
+    gh.factory<_i1048.SearchTabViewModel>(
+      () => _i1048.SearchTabViewModel(gh<_i934.SearchTabUseCase>()),
     );
     gh.factory<_i40.MovieDetailsViewModel>(
       () => _i40.MovieDetailsViewModel(gh<_i763.MovieDetailsUseCase>()),

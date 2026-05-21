@@ -4,12 +4,12 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/exceptions/app_exceptions.dart';
 import 'package:movies_app/domain/entities/movie_response/movie.dart';
 import 'package:movies_app/domain/use_cases/search_tab/search_tab_use_case.dart';
-
 import 'search_tab_states.dart';
 
 @injectable
 class SearchTabViewModel extends Cubit<SearchTabStates> {
   List<Movie>? movieList;
+  List<Movie>? newMovies;
 
   final SearchTabUseCase _searchTabUseCase;
 
@@ -26,9 +26,10 @@ Future<void> getMoviesList({String? genre, String? queryTerm, int page = 1})asyn
         page: page,
       );
       movieList = movieResponse.data?.movies;
+      newMovies = movieResponse.data?.movies ?? [];
+
       emit(
-        SearchTabSuccessState(
-        ),
+        SearchTabSuccessState(newMovies: newMovies!,),
       );
     } on DioException catch (e) {
       String message = (e.error is AppException)

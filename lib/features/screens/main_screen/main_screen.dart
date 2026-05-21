@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/di/di.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
-import 'package:movies_app/domain/use_cases/search_tab/search_tab_use_case.dart';
 import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_view_model.dart';
-
 import '../../tabs/browse_tab/browse_tab.dart';
 import '../../tabs/home_tab/presentation/cubit/home_tab_cubit.dart';
 import '../../tabs/home_tab/presentation/screens/home_tab.dart';
@@ -35,9 +34,10 @@ class _MainScreenState extends State<MainScreen> {
           },
         ),
       ),
-      BlocProvider(
-        create: (context) => SearchTabViewModel(context.read<SearchTabUseCase>()),
-          child: SearchTab()),
+    BlocProvider(
+    create: (context) => getIt<SearchTabViewModel>(),
+    child: const SearchTab(),
+    ),
       BrowseTab(),
       ProfileTab(),
     ];

@@ -7,7 +7,6 @@ import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_view_model.
 import 'package:movies_app/features/widgets/custom_grid_view.dart';
 import 'package:movies_app/features/widgets/custom_toast.dart';
 import 'package:movies_app/features/widgets/main_loading.dart';
-
 import '../../widgets/custom_text_form_filed.dart';
 
 class SearchTab extends StatefulWidget {
@@ -73,30 +72,7 @@ class _SearchTabState extends State<SearchTab> {
                       ),
                     )
                         : CustomGridView(movies:context.read<SearchTabViewModel>().movieList,  )
-                  // GridView.builder(
-                  //   itemCount: AppLists.dummyMovies.length,
-                  //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 2,
-                  //     childAspectRatio: 0.7,
-                  //     crossAxisSpacing: 15,
-                  //     mainAxisSpacing: 15,
-                  //   ),
-                  //   itemBuilder: (context, index) {
-                  //     final movie = AppLists.dummyMovies[index];
-                  //     return GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.pushNamed(
-                  //           context,
-                  //           AppRoutes.movieDetailsScreen,
-                  //           arguments: movie,
-                  //         );
-                  //       },
-                  //       child: CustomMoviePoster(
-                  //           imageString: movie.image,
-                  //           rating: movie.rating),
-                  //     );
-                  //   },
-                  // ),
+
                 ),
               ],
             );
