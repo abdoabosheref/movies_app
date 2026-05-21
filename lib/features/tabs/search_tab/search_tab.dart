@@ -14,7 +14,6 @@ import 'dart:async';
 
 class SearchTab extends StatefulWidget {
   const SearchTab({super.key});
-
   @override
   State<SearchTab> createState() => _SearchTabState();
 }
@@ -29,12 +28,10 @@ class _SearchTabState extends State<SearchTab> {
     },
     fetchPage: (pageKey) async {
       final cubit = context.read<SearchTabViewModel>();
-
       await cubit.getMoviesList(
         page: pageKey,
         queryTerm: _searchController.text,
       );
-
       return cubit.newMovies ?? [];
     },
   );
@@ -56,94 +53,97 @@ class _SearchTabState extends State<SearchTab> {
           padding: EdgeInsets.symmetric(
             horizontal: context.screenWidth * 0.04,
           ),
-          child: BlocConsumer<SearchTabViewModel,SearchTabStates>(
-            listener: (context, state) {
-            if(state is SearchTabErrorState){
-                return CustomToast.showErrorToast(context, state.appException.message);
-              }
-            },
-            builder: (context, state) {
-              if(state is SearchTabSuccessState){
-              }
-            return Column(
-              children: [
-                const SizedBox(height: 10),
-                CustomTextFormFiled(
-                  controller: _searchController,
-                  prefixIcon: AppAssets.searchIconSvg,
-                  onChanged: (value) {
-                    setState(() {});
-                    if (_debounce?.isActive ?? false) {
-                      _debounce!.cancel();
-                    }
-                    _debounce = Timer(
-                      const Duration(milliseconds: 1000),
-                          () {
-                        _pagingController.refresh();
+          child: BlocListener<SearchTabViewModel, SearchTabStates>
+            (listener: (context, state) {
+            if (state is SearchTabErrorState) {
+              CustomToast.showErrorToast(context, state.appException.message);
 
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(height: 20),
-                Expanded(
-                    child: _searchController.text.isEmpty
-                        ? Center(
-                      child: Image.asset(
-                        AppAssets.popCorn,
-                        height: screenHeight * 0.15,
-                      ),
-                    )
-                        : PagingListener(
-                      controller: _pagingController,
-                      builder: (context, state, fetchNextPage) {
-                        return PagedGridView<int, Movie>(
-                          state: state,
-                          fetchNextPage: fetchNextPage,
-                          gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.7,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
-                          builderDelegate:
-                          PagedChildBuilderDelegate<Movie>(
-                            itemBuilder: (context, movie, index) {
-                              return CustomMoviePoster(
-                                 imageString: movie.mediumCoverImage??'',
-                                rating: movie.rating.toString(),
-                              );
-                            },
-                            firstPageProgressIndicatorBuilder: (_) =>
-                            const MainLoading(),
-                            newPageProgressIndicatorBuilder: (_) =>
-                            const MainLoading(),
-                            noItemsFoundIndicatorBuilder: (_) =>
-                            const Center(
-                              child: Text('No Movies Found'),
-                            ),
-                            firstPageErrorIndicatorBuilder: (_) =>
-                            const Center(
-                              child: Text('Something went wrong'),
-                            ),
-                            newPageErrorIndicatorBuilder: (_) =>
-                            const Center(
-                              child: Text('Error Loading More Movies'),
-                            ),
-                          ),
-                        );
-                      },
-                    )
-                ),
-              ],
-            );
             }
-
-
+          },
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              CustomTextFormFiled(
+                controller: _searchController,
+                prefixIcon: AppAssets.searchIconSvg,
+                onChanged: (value) {
+                  setState(() {});
+                  if (_debounce?.isActive ?? false) {
+                    _debounce!.cancel();
+                  }
+                  _debounce = Timer(
+                    const Duration(milliseconds: 1000),
+                        () {
+                      _pagingController.refresh();
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 20),
+              Expanded(
+                  child: _searchController.text.isEmpty
+                      ? Center(
+                    child: Image.asset(
+                      AppAssets.popCorn,
+                      height: screenHeight * 0.15,
+                    ),
+                  )
+                      : PagingListener(
+                    controller: _pagingController,
+                    builder: (context, state, fetchNextPage) {
+                      return PagedGridView<int, Movie>(
+                        state: state,
+                        fetchNextPage: fetchNextPage,
+                        gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.7,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        builderDelegate:
+                        PagedChildBuilderDelegate<Movie>(
+                          itemBuilder: (context, movie, index) {
+                            return CustomMoviePoster(
+                              imageString: movie.mediumCoverImage??'',
+                              rating: movie.rating.toString(),
+                            );
+                          },
+                          firstPageProgressIndicatorBuilder: (_) =>
+                          const MainLoading(),
+                          newPageProgressIndicatorBuilder: (_) =>
+                          const MainLoading(),
+                          noItemsFoundIndicatorBuilder: (_) =>
+                           Center(
+                            child: Image.asset(
+                              AppAssets.popCorn,
+                              height: screenHeight * 0.15,
+                            ),
+                          ),
+                          firstPageErrorIndicatorBuilder: (_) =>
+                           Center(
+                            child: Image.asset(
+                              AppAssets.popCorn,
+                              height: screenHeight * 0.15,
+                            ),
+                          ),
+                          newPageErrorIndicatorBuilder: (_) =>
+                           Center(
+                            child:Image.asset(
+                              AppAssets.popCorn,
+                              height: screenHeight * 0.15,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  )
+              ),
+            ],
+          ),
+          )
           ),
         ),
-      ),
-    );
+      );
   }
-}//CustomGridView(movies:context.read<SearchTabViewModel>().movieList,  )
+}
