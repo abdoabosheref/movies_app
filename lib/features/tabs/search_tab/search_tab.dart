@@ -24,7 +24,7 @@ class _SearchTabState extends State<SearchTab> {
   late final PagingController<int, Movie> _pagingController = PagingController<int, Movie>(
     getNextPageKey: (state) {
       if (state.lastPageIsEmpty) return null;
-      return (state.nextIntPageKey ?? 0) + 1;
+      return (state.nextIntPageKey ) + 1;
     },
     fetchPage: (pageKey) async {
       final cubit = context.read<SearchTabViewModel>();
@@ -91,51 +91,60 @@ class _SearchTabState extends State<SearchTab> {
                       : PagingListener(
                     controller: _pagingController,
                     builder: (context, state, fetchNextPage) {
-                      return PagedGridView<int, Movie>(
-                        state: state,
-                        fetchNextPage: fetchNextPage,
-                        gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        builderDelegate:
-                        PagedChildBuilderDelegate<Movie>(
-                          itemBuilder: (context, movie, index) {
-                            return CustomMoviePoster(
-                              imageString: movie.mediumCoverImage??'',
-                              rating: movie.rating.toString(),
-                            );
-                          },
-                          firstPageProgressIndicatorBuilder: (_) =>
-                          const MainLoading(),
-                          newPageProgressIndicatorBuilder: (_) =>
-                          const MainLoading(),
-                          noItemsFoundIndicatorBuilder: (_) =>
-                           Center(
-                            child: Image.asset(
-                              AppAssets.popCorn,
-                              height: screenHeight * 0.15,
+                      return
+                        RefreshIndicator(
+                          onRefresh: () => Future.sync(
+                                () => _pagingController.refresh(),
+                          ),
+                          child: PagedGridView<int, Movie>(
+                            showNewPageProgressIndicatorAsGridChild: false,
+                            showNewPageErrorIndicatorAsGridChild: false,
+                            showNoMoreItemsIndicatorAsGridChild: false,
+                          state: state,
+                          fetchNextPage: fetchNextPage,
+                          gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          builderDelegate:
+                          PagedChildBuilderDelegate<Movie>(
+                            itemBuilder: (context, movie, index) {
+                              return CustomMoviePoster(
+                                imageString: movie.mediumCoverImage??'',
+                                rating: movie.rating.toString(),
+                              );
+                            },
+                            firstPageProgressIndicatorBuilder: (_) =>
+                            const MainLoading(),
+                            newPageProgressIndicatorBuilder: (_) =>
+                            const MainLoading(),
+                            noItemsFoundIndicatorBuilder: (_) =>
+                             Center(
+                              child: Image.asset(
+                                AppAssets.popCorn,
+                                height: screenHeight * 0.15,
+                              ),
+                            ),
+                            firstPageErrorIndicatorBuilder: (_) =>
+                             Center(
+                              child: Image.asset(
+                                AppAssets.popCorn,
+                                height: screenHeight * 0.15,
+                              ),
+                            ),
+                            newPageErrorIndicatorBuilder: (_) =>
+                             Center(
+                              child:Image.asset(
+                                AppAssets.popCorn,
+                                height: screenHeight * 0.15,
+                              ),
                             ),
                           ),
-                          firstPageErrorIndicatorBuilder: (_) =>
-                           Center(
-                            child: Image.asset(
-                              AppAssets.popCorn,
-                              height: screenHeight * 0.15,
-                            ),
-                          ),
-                          newPageErrorIndicatorBuilder: (_) =>
-                           Center(
-                            child:Image.asset(
-                              AppAssets.popCorn,
-                              height: screenHeight * 0.15,
-                            ),
-                          ),
-                        ),
-                      );
+                                                ),
+                        );
                     },
                   )
               ),
