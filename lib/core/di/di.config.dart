@@ -47,10 +47,14 @@ import '../../domain/use_cases/movie_suggestions/movie_suggestions_use_case.dart
     as _i541;
 import '../../features/screens/movie_details/cubit/movie_details_view_model.dart'
     as _i40;
+import '../../features/screens/movie_details/firebase/watchlist_firebase_service.dart'
+    as _i1026;
 import '../../features/screens/movie_suggestions/cubit/movie_suggestions_view_model.dart'
     as _i505;
 import '../../features/tabs/browse_tab/cubit/browse_tab_view_model.dart'
     as _i780;
+import '../../features/tabs/profile_tab/cubit/watchlist_view_model.dart'
+    as _i300;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -64,11 +68,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i528.PrettyDioLogger>(
       () => getItModule.providePrettyDioLogger,
     );
+    gh.lazySingleton<_i1026.WatchlistFirebaseService>(
+      () => _i1026.WatchlistFirebaseService(),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => getItModule.provideDio(
         gh<_i361.BaseOptions>(),
         gh<_i528.PrettyDioLogger>(),
       ),
+    );
+    gh.factory<_i300.WatchlistViewModel>(
+      () => _i300.WatchlistViewModel(gh<_i1026.WatchlistFirebaseService>()),
     );
     gh.lazySingleton<_i394.ApiServices>(
       () => getItModule.provideApiServices(gh<_i361.Dio>()),

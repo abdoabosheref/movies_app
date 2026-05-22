@@ -9,9 +9,10 @@ import 'package:movies_app/features/screens/movie_details/movie_details_screen/w
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_details_header.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_linear_gradient.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_play_button.dart';
-import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/genre_chip.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/movie_info_row.dart';
+import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/genre_chip.dart';
 
+import '../../../tabs/profile_tab/cubit/watchlist_view_model.dart';
 import '../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../widgets/custom_cached_network_image.dart';
 import '../../../widgets/custom_error_column.dart';
@@ -33,18 +34,18 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late int movieId;
   late MovieDetailsViewModel movieDetailsViewModel;
   late MovieSuggestionsViewModel movieSuggestionsViewModel;
+  late WatchlistViewModel watchlistViewModel;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     movieDetailsViewModel = getIt<MovieDetailsViewModel>();
     movieSuggestionsViewModel = getIt<MovieSuggestionsViewModel>();
+    watchlistViewModel = getIt<WatchlistViewModel>();
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     movieId = ModalRoute.of(context)!.settings.arguments as int;
     callMovieDetails();
@@ -76,7 +77,13 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   ),
                   CustomLinearGradient(),
                   SafeArea(
-                    child: CustomDetailsHeader(movieTitle: movie?.title),
+                    child: CustomDetailsHeader(
+                      movieId: movie?.id,
+                      movieImage: movie?.mediumCoverImage,
+                      movieTitle: movie?.title,
+                      movieRating: movie?.rating,
+                      watchlistViewModel: watchlistViewModel,
+                    ),
                   ),
                   CustomPlayButton(movieTitle: movie?.title ?? ''),
                   Padding(
@@ -85,31 +92,49 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                     ),
                     child: Column(
                       spacing: screenHeight * 0.015,
-                      crossAxisAlignment: .start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: screenHeight * 0.58),
                         Align(
-                          alignment: .center,
+                          alignment: Alignment.center,
                           child: Text(
                             movie?.title ?? '',
                             style: AppStyles.white24BoldRoboto,
                           ),
                         ),
                         Align(
-                          alignment: .center,
+                          alignment: Alignment.center,
                           child: Text(
                             '${movie?.year}',
                             style: AppStyles.grey20BoldRoboto,
                           ),
                         ),
                         CustomElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (movie != null) {
+                              watchlistViewModel.addMovieToWatchlist(
+                                movieId: movie.id!,
+                                title: movie.title ?? '',
+                                imageUrl: movie.mediumCoverImage ?? '',
+                                rating: movie.rating ?? 0.0,
+                              );
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    "${movie.title} added to Watchlist!",
+                                  ),
+                                ),
+                              );
+                            }
+                          },
                           backgroundColor: AppColors.red,
                           child: Text(
                             "Watch",
                             style: AppStyles.white20BoldRoboto,
                           ),
                         ),
+
                         MovieInfoRow(movie: movie),
 
                         Text(
@@ -135,8 +160,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         ),
 
                         BlocBuilder<
-                          MovieSuggestionsViewModel,
-                          MovieSuggestionsStates
+                            MovieSuggestionsViewModel,
+                            MovieSuggestionsStates
                         >(
                           bloc: movieSuggestionsViewModel,
                           builder: (context, state) {
@@ -145,7 +170,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                             } else if (state is MovieSuggestionsErrorState) {
                               return Text('error');
                             } else if (state is MovieSuggestionsSuccessState) {
-                              return CustomGridView(isScrollable: false,
+                              return CustomGridView(
+                                isScrollable: false,
                                 movies: state.movieResponse.data?.movies,
                               );
                             } else {
@@ -165,20 +191,20 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         (movie?.cast != null && movie!.cast!.isNotEmpty)
                             ? CastListView(castList: movie.cast!)
                             : Text(
-                                'No Cast available',
-                                style: AppStyles.white16RegularRoboto,
-                              ),
+                          'No Cast available',
+                          style: AppStyles.white16RegularRoboto,
+                        ),
                         Text("genres".tr(), style: AppStyles.white24BoldRoboto),
                         Wrap(
                           spacing: 10,
                           runSpacing: 10,
                           children:
-                              movie?.genres
-                                  ?.map(
-                                    (genreLabel) =>
-                                        GenreChip(genreLabel: genreLabel),
-                                  )
-                                  .toList() ??
+                          movie?.genres
+                              ?.map(
+                                (genreLabel) =>
+                                GenreChip(genreLabel: genreLabel),
+                          )
+                              .toList() ??
                               [],
                         ),
                         SizedBox(height: screenHeight * 0.05),
@@ -199,5 +225,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   void callMovieDetails() {
     movieDetailsViewModel.fetchMovieDetails(movieId: movieId);
     movieSuggestionsViewModel.fetchMovieSuggestions(movieId: movieId);
+    watchlistViewModel.checkMovieWatchlistStatus(movieId);
   }
 }

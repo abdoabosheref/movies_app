@@ -5,9 +5,7 @@ import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/screens/update_profile_screen/widgets/custom_action_button_alert_dialog.dart';
 
-//  how to use this class
-//  CustomToast.showSuccessToast(context, "Login Successfully");
-//  CustomToast.showErrorToast(context, "Something went wrong");
+
 
 
 class CustomToast {
