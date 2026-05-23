@@ -1,6 +1,14 @@
 sealed class AuthState{}
 class AuthInitial extends AuthState{}
 class AuthLoading extends AuthState{}
+class RegisterSuccess extends AuthState{
+  final String? successMessage;
+  RegisterSuccess({ this.successMessage});
+}
+class LoginSuccess extends AuthState{
+  final String? successMessage;
+  LoginSuccess({ this.successMessage});
+}
 class AuthSuccess extends AuthState{
   final String? successMessage;
   AuthSuccess({ this.successMessage});

@@ -95,7 +95,7 @@ class AuthCubit extends Cubit<AuthState> {
       );
       currentUser = await authRepository.getUserData(uId: credential.user!.uid);
       if (currentUser != null) {
-        emit(AuthSuccess());
+        emit(LoginSuccess());
       } else {
         emit(AuthFailure(errorMessage: "User data not found"));
       }
@@ -110,7 +110,7 @@ class AuthCubit extends Cubit<AuthState> {
       final credential = await authRepository.loginWithGoogle();
       currentUser = await authRepository.getUserData(uId: credential.user!.uid);
       if (currentUser != null ) {
-        emit(AuthSuccess());
+        emit(LoginSuccess());
       } else {
         emit(AuthFailure(errorMessage: "User data not found"));
       }
@@ -151,7 +151,7 @@ class AuthCubit extends Cubit<AuthState> {
         password: password,
         userModel:userModel,
       );
-      emit(AuthSuccess());
+      emit(RegisterSuccess());
     } catch (e) {
       emit(AuthFailure(errorMessage: e.toString()));
     }

@@ -23,96 +23,88 @@ class RegisterScreen extends StatelessWidget {
     AuthCubit authCubit = context.read<AuthCubit>();
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
-    return BlocListener<AuthCubit, AuthState>(
+
+    return BlocConsumer<AuthCubit, AuthState>(
       bloc: authCubit,
       listenWhen: (previous, current) =>
-          current is AuthSuccess ||
+      current is RegisterSuccess ||
           current is AuthFailure ||
           current is AuthLoading,
+
       listener: (context, state) {
-        if (state is! AuthLoading) {
+        if (state is AuthLoading) {
+          SnackBarUtils.showLoading(context: context);
+        } else if (state is RegisterSuccess) {
           SnackBarUtils.hideLoading(context: context);
-        }
-        switch (state) {
-          case AuthSuccess():
-            SnackBarUtils.showSuccessMessage(
-              context: context,
-              message: 'Registered successfully',
-            );
-            Navigator.of(context).pushReplacementNamed(AppRoutes.loginScreen);
-            break;
-          case AuthLoading():
-            SnackBarUtils.showLoading(context: context);
-            break;
-          case AuthFailure():
-            SnackBarUtils.showErrorMessage(
-              context: context,
-              errorMessage: state.errorMessage,
-            );
-            break;
-          case AuthInitial():
-          case AvatarChangedState():
-          case ChangePasswordVisibilityState():
-            case AuthDeleteSuccess():
-              case AuthDeleteFailure():
-            break;
+          SnackBarUtils.showSuccessMessage(
+            context: context,
+            message: 'Registered successfully'.tr(),
+          );
+          Navigator.pushReplacementNamed(context, AppRoutes.loginScreen);
+        } else if (state is AuthFailure) {
+          SnackBarUtils.hideLoading(context: context);
+          SnackBarUtils.showErrorMessage(
+            context: context,
+            errorMessage: state.errorMessage,
+          );
         }
       },
-      child: Scaffold(
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-            child: SingleChildScrollView(
-              child: Column(
-                spacing: screenHeight * 0.0035,
-                children: [
-                  CustomHeader(title: 'register'.tr()),
-                  CustomSlider(
-                    viewportFraction: 0.380,
-                    underSliderText: 'avatar'.tr(),
-                    height: screenHeight * 0.17,
-                    enlargeCenterPage: true,
-                    enlargeFactor: 0.4,
-                    list: AppLists.avatarList.map((avatar) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return InkWell(
-                            onTap: () => authCubit.selectAvatar(
-                              AppLists.avatarList.indexOf(avatar),
-                            ),
-                            child: Image.asset(avatar, fit: BoxFit.cover),
-                          );
-                        },
-                      );
-                    }).toList(),
-                  ),
-                  CustomRegisterForm(),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(
-                        'already_have_account'.tr(),
-                        style: AppStyles.white14RegularRoboto,
-                      ),
-                      CustomTextButton(
-                        onPressed: () {
-                          authCubit.registerClearControllers();
-                          Navigator.of(
-                            context,
-                          ).pushReplacementNamed(AppRoutes.loginScreen);
-                        },
-                        text: 'login'.tr(),
-                        textStyle: AppStyles.yellow14BlackRoboto,
-                      ),
-                    ],
-                  ),
-                  CustomLanguageSelector(),
-                ],
+      builder: (context, state) {
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+              child: SingleChildScrollView(
+                child: Column(
+                  spacing: screenHeight * 0.0035,
+                  children: [
+                    CustomHeader(title: 'register'.tr()),
+                    CustomSlider(
+                      viewportFraction: 0.380,
+                      underSliderText: 'avatar'.tr(),
+                      height: screenHeight * 0.17,
+                      enlargeCenterPage: true,
+                      enlargeFactor: 0.4,
+                      list: AppLists.avatarList.map((avatar) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return InkWell(
+                              onTap: () => authCubit.selectAvatar(
+                                AppLists.avatarList.indexOf(avatar),
+                              ),
+                              child: Image.asset(avatar, fit: BoxFit.cover),
+                            );
+                          },
+                        );
+                      }).toList(),
+                    ),
+                    CustomRegisterForm(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'already_have_account'.tr(),
+                          style: AppStyles.white14RegularRoboto,
+                        ),
+                        CustomTextButton(
+                          onPressed: () {
+                            authCubit.registerClearControllers();
+                            Navigator.of(context)
+                                .pushReplacementNamed(AppRoutes.loginScreen);
+                          },
+                          text: 'login'.tr(),
+                          textStyle: AppStyles.yellow14BlackRoboto,
+                        ),
+                      ],
+                    ),
+                    CustomLanguageSelector(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
