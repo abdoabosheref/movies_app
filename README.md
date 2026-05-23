@@ -1,6 +1,8 @@
 
-https://github.com/user-attachments/assets/f77eda22-0f0b-4e1f-ac43-d1d33fca19ac
-Uploading phase 4 (1).mp4…
+
+
+https://github.com/user-attachments/assets/eeebc9d1-9c6a-4239-9622-82afae04ea06
+
 
 Movies App
 A modern Flutter application for discovering and managing movies, built with Clean Architecture, BLoC/Cubit for state management, and Firebase for authentication and data storage.
