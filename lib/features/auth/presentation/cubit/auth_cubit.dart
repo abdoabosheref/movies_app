@@ -243,6 +243,19 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
+
+  Future<void> logout() async {
+    try {
+      emit(AuthLoading());
+      await FirebaseAuth.instance.signOut();
+      emit(AuthSuccess(successMessage: 'User logged out successfully'));
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
+
   @override
   Future<void> close() {
     // ------------ Register Controllers Section --------------

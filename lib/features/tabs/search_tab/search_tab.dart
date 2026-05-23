@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
+import 'package:movies_app/core/utils/app_context.dart';
 
-import '../../../../../core/utils/app_context.dart';
 import '../../widgets/custom_text_form_filed.dart';
 
 class SearchTab extends StatefulWidget {
