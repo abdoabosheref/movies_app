@@ -50,6 +50,6 @@ class SnackBarUtils {
     );
   }
   static void hideLoading({required BuildContext context}) {
-    Navigator.of(context).pop();
+    Navigator.of(context).canPop();
   }
 }

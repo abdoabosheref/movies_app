@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
-import 'package:movies_app/domain/entities/movie_response/movie.dart';
 import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_states.dart';
 import 'package:movies_app/features/tabs/search_tab/cubit/search_tab_view_model.dart';
-import 'package:movies_app/features/widgets/custom_movie_poster.dart';
 import 'package:movies_app/features/widgets/custom_toast.dart';
 import 'package:movies_app/features/widgets/main_loading.dart';
+import 'package:movies_app/domain/entities/movie_response/movie.dart';
+import 'package:movies_app/features/widgets/custom_movie_poster.dart';
 import '../../widgets/custom_text_form_filed.dart';
 import 'dart:async';
 

@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'core/di/di.dart';
 import 'core/utils/app_routes.dart';
 import 'core/utils/app_theme.dart';
@@ -51,6 +50,7 @@ class MovieApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
@@ -59,10 +59,10 @@ class MovieApp extends StatelessWidget {
       title: 'Movie App',
       initialRoute: showOnBoarding
           ? AppRoutes.onBoardingScreen
-          : AppRoutes.loginScreen,
+          : AppRoutes.authScreenPicker,
       routes: AppRoutes.routes,
       themeMode: ThemeMode.dark,
       darkTheme: AppTheme.darkTheme,
     );
-  }
-}
+  }}
+

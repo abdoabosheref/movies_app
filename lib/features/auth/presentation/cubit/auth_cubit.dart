@@ -39,9 +39,22 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit() : super(AuthInitial()) {
     authRemoteDataSource = AuthRemoteDataSourceImpl();
-    authRepository = AuthRepositoryImpl(
-      authRemoteDataSource: authRemoteDataSource,
-    );
+    authRepository = AuthRepositoryImpl(authRemoteDataSource: authRemoteDataSource);
+  }
+
+  Future<void> checkCurrentUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      currentUser = await authRepository.getUserData(uId: user.uid);
+      if (currentUser != null) {
+        emit(AuthSuccess());
+      } else {
+        await FirebaseAuth.instance.signOut();
+        emit(AuthInitial());
+      }
+    } else {
+      emit(AuthInitial());
+    }
   }
 
   // ------------ Functions Section --------------
@@ -242,6 +255,19 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(errorMessage: e.toString()));
     }
   }
+
+
+  Future<void> logout() async {
+    try {
+      emit(AuthLoading());
+      await FirebaseAuth.instance.signOut();
+      emit(AuthSuccess(successMessage: 'User logged out successfully'));
+      emit(AuthInitial());
+    } catch (e) {
+      emit(AuthFailure(errorMessage: e.toString()));
+    }
+  }
+
 
   @override
   Future<void> close() {

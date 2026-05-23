@@ -54,7 +54,7 @@ Future<void> getMoviesList({String? genre, String? queryTerm, int page = 1})asyn
       );
     }
   }
-  void changeSelectedIndex({required currentIndex}) {
+  void changeSelectedIndex({required int currentIndex}) {
   if (selectedIndex == currentIndex) return;
     selectedIndex = currentIndex;
     emit(BrowseTabChangeSelectedIndexState());
