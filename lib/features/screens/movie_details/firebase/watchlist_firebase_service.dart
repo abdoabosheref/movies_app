@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../auth/data/models/user_model.dart';
-
+import 'package:movies_app/api/models/firebase_auth/user_model.dart';
 @lazySingleton
 class WatchlistFirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

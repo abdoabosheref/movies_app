@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/di/di.dart';
-import 'package:movies_app/features/tabs/profile_tab/profile_header/profile_info_column.dart';
-import 'package:movies_app/features/tabs/profile_tab/profile_header/user_avatar_with_user_name.dart';
-import '../cubit/watchlist_view_model.dart';
-
+import 'package:movies_app/features/tabs/profile_tab/cubit/watchlist_view_model.dart';
+import 'package:movies_app/features/tabs/profile_tab/widgets/profile_header/profile_info_column.dart' ;
+import 'package:movies_app/features/tabs/profile_tab/widgets/profile_header/user_avatar_with_user_name.dart' ;
 class UserProfileHeader extends StatelessWidget {
-  const UserProfileHeader({super.key});
+  final int historyCount;
+  const UserProfileHeader({super.key,required this.historyCount});
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,12 @@ class UserProfileHeader extends StatelessWidget {
             );
           },
         ),
-
         ProfileInfoColumn(
-          counter: 10,
+          counter:historyCount,
           labelText: 'history'.tr(),
-        ),
+        )
       ],
     );
+
   }
 }

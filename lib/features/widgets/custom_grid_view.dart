@@ -5,11 +5,12 @@ import 'package:movies_app/domain/entities/movie_response/movie.dart';
 import 'custom_movie_poster.dart';
 typedef OntTap = void Function(int index);
 class CustomGridView extends StatelessWidget {
+  final int crossAxisCount;
 
   final bool isScrollable;
   final List<Movie>? movies;
 
-  const CustomGridView({super.key, required this.movies,this.isScrollable = true});
+  const CustomGridView({super.key, required this.movies,this.isScrollable = true, this.crossAxisCount = 2});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,10 @@ class CustomGridView extends StatelessWidget {
       shrinkWrap: !isScrollable,
       padding: EdgeInsets.zero,
        physics: isScrollable?
-           const AlwaysScrollableScrollPhysics()
+           const ClampingScrollPhysics()
            :const NeverScrollableScrollPhysics(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+        crossAxisCount: crossAxisCount,
         childAspectRatio: 0.66,
         crossAxisSpacing: screenWidth * 0.04,
         mainAxisSpacing: screenHeight * 0.015,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:movies_app/api/models/profile_tab/firebase_movie_model.dart';
 
 class UserModel {
   static const String collectionName = "user";
@@ -24,6 +25,18 @@ class UserModel {
           fromFirestore: (snapshot, _) =>
               UserModel.fromFireStore(snapshot.data()!),
           toFirestore: (user, _) => user.toFireStore(),
+        );
+  }
+
+  static CollectionReference<FirebaseMovieModel>historyCollection(String uId) {
+    return FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(uId)
+        .collection('history')
+        .withConverter(
+          fromFirestore: (snapshot, options) =>
+              FirebaseMovieModel.fromFirestore(snapshot.data()!),
+          toFirestore: (movie, options) => movie.toFirestore(),
         );
   }
 
