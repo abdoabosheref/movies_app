@@ -10,16 +10,28 @@ import 'package:movies_app/features/tabs/profile_tab/watch_list_tab_bar.dart';
 import 'package:movies_app/features/tabs/profile_tab/widgets/profile_default_tab_controller/profile_tabs_section.dart';
 import 'package:movies_app/features/tabs/profile_tab/widgets/profile_header/user_profile_header.dart';
 import 'package:movies_app/features/tabs/profile_tab/widgets/row_of_buttons/profile_row_of_buttons.dart';
+import 'package:movies_app/features/widgets/main_loading.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
 
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  final HistoryViewModel historyViewModel = getIt<HistoryViewModel>();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    historyViewModel.getMovieHistory();
+  }
   @override
   Widget build(BuildContext context) {
     double screenWidth = context.screenWidth;
     double screenHeight = context.screenHeight;
-    HistoryViewModel historyViewModel = getIt<HistoryViewModel>()
-      ..getMovieHistory();
+
 
     return DefaultTabController(
       length: 2,
@@ -40,7 +52,11 @@ class ProfileTab extends StatelessWidget {
                       children: [
                         BlocBuilder<HistoryViewModel, HistoryStates>(
                           bloc: historyViewModel,
+
                           builder: (context, state) {
+                            if (state is HistoryLoadingState ) {
+                              return  MainLoading();
+                            }
                             return UserProfileHeader(
                               historyCount: historyViewModel.getHistoryCount,
                             );
