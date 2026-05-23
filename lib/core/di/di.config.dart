@@ -55,6 +55,8 @@ import '../../domain/use_cases/movie_suggestions/movie_suggestions_use_case.dart
     as _i541;
 import '../../domain/use_cases/profile_tab/history/add_movie_to_history_use_case.dart'
     as _i670;
+import '../../domain/use_cases/profile_tab/history/get_movie_from_history_use_case.dart'
+    as _i716;
 import '../../features/screens/movie_details/cubit/movie_details_view_model.dart'
     as _i40;
 import '../../features/screens/movie_suggestions/cubit/movie_suggestions_view_model.dart'
@@ -91,14 +93,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i670.AddMovieToHistoryUseCase>(
       () => _i670.AddMovieToHistoryUseCase(gh<_i13.HistoryRepository>()),
     );
+    gh.factory<_i716.GetMovieFromHistoryUseCase>(
+      () => _i716.GetMovieFromHistoryUseCase(gh<_i13.HistoryRepository>()),
+    );
     gh.lazySingleton<_i394.ApiServices>(
       () => getItModule.provideApiServices(gh<_i361.Dio>()),
     );
+    gh.factory<_i117.HistoryViewModel>(
+      () => _i117.HistoryViewModel(
+        gh<_i670.AddMovieToHistoryUseCase>(),
+        gh<_i716.GetMovieFromHistoryUseCase>(),
+      ),
+    );
     gh.factory<_i321.MovieDetailsRemoteDataSource>(
       () => _i140.MovieDetailsRemoteDataSourceImpl(gh<_i394.ApiServices>()),
-    );
-    gh.factory<_i117.HistoryViewModel>(
-      () => _i117.HistoryViewModel(gh<_i670.AddMovieToHistoryUseCase>()),
     );
     gh.factory<_i989.BrowseTabRemoteDataSource>(
       () => _i315.BrowseTabRemoteDataSourceImpl(gh<_i394.ApiServices>()),

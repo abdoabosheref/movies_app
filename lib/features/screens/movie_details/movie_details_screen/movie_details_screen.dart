@@ -74,14 +74,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             if (!isMovieAddedToHistory && movie != null) {
               isMovieAddedToHistory = true;
 
-              final movieEntity = Movie(
+              final currentMovie = Movie(
                 id: movie.id,
                 mediumCoverImage: movie.mediumCoverImage,
                 rating: (movie.rating as num?)?.toDouble(),
               );
 
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                context.read<HistoryViewModel>().addMovieToHistory(movie: movieEntity);
+                getIt<HistoryViewModel>().addMovieToHistory(movie: currentMovie);
               });
             }
             return SingleChildScrollView(

@@ -13,9 +13,8 @@ class HistoryRepositoryImpl implements HistoryRepository {
     return _historyRemoteDataSource.addMovieToHistory(movie: movie);
   }
 
-  // @override
-  // Future<List<Movie>> getMovieHistory() async {
-  //   final firebaseMovies = await historyRemoteDataSource.getMovieHistory();
-  //   return firebaseMovies.map((model) => FirebaseMovieMapper.toEntity(model)).toList();
-  // }
+  @override
+  Future<List<Movie>> getMovieHistory() async {
+    return _historyRemoteDataSource.getMovieHistory();
+  }
 }
