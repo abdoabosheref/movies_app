@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is AuthLoading) {
             SnackBarUtils.showLoading(context: context);
-          } else if (state is LoginSuccess) {
+          } else if (state is AuthSuccess) {
             SnackBarUtils.hideLoading(context: context);
             SnackBarUtils.showSuccessMessage(
               context: context,
