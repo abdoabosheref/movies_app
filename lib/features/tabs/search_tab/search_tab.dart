@@ -113,6 +113,7 @@ class _SearchTabState extends State<SearchTab> {
                           PagedChildBuilderDelegate<Movie>(
                             itemBuilder: (context, movie, index) {
                               return CustomMoviePoster(
+                                movieId: movie.id,
                                 imageString: movie.mediumCoverImage??'',
                                 rating: movie.rating.toString(),
                               );
