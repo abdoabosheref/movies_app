@@ -29,7 +29,8 @@ class MovieInfoCard extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(iconPath, width: 25, color: AppColors.yellow),
+            SvgPicture.asset(iconPath, width: 25,
+                colorFilter:ColorFilter.mode( AppColors.yellow, .srcIn)),
             const SizedBox(width: 8),
             Text(value, style: AppStyles.white22BoldRoboto),
           ],

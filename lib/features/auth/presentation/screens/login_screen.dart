@@ -44,8 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
               context: context,
               message: 'Registered successfully',
             );
-
             Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
+
           } else if (state is AuthFailure) {
             SnackBarUtils.hideLoading(context: context);
             SnackBarUtils.showErrorMessage(
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: screenHeight * 0.02),
                       CustomTextFormFiled(
                         obscureText: authCubit.isPasswordHidden,
-                        //todo: show password
+                        // show password
                         validator: (password) =>
                             AppValidator.validatePassword(password: password),
                         controller: authCubit.loginPasswordController,
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: .centerRight,
                         child: CustomTextButton(
                           onPressed: () {
-                            //todo: Navigate to forget password screen
+                            // Navigate to forget password screen
                             Navigator.pushNamed(
                               context,
                               AppRoutes.forgetPasswordScreen,

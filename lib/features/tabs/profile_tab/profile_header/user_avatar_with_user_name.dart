@@ -3,9 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
+import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
-
-import '../../../../../../features/auth/presentation/cubit/auth_cubit.dart';
 
 class UserAvatarWithUserName extends StatelessWidget {
   const UserAvatarWithUserName({super.key});

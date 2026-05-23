@@ -3,9 +3,9 @@ import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 
 class CustomBottomSheet extends StatelessWidget {
-  CustomBottomSheet({super.key, required this.builder});
+  const CustomBottomSheet({super.key, required this.builder});
 
-  Widget? Function(BuildContext, int) builder;
+final  Widget? Function(BuildContext, int) builder;
 
   @override
   Widget build(BuildContext context) {

@@ -9,7 +9,6 @@ import 'package:movies_app/core/utils/app_routes.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:movies_app/features/auth/presentation/cubit/auth_states.dart';
-import 'package:movies_app/features/auth/presentation/screens/login_screen.dart';
 import 'package:movies_app/features/widgets/custom_toast.dart';
 import '../../../widgets/buttons/custom_elevated_button.dart';
 
@@ -18,7 +17,6 @@ class ProfileRowOfButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authCubit = context.read<AuthCubit>();
     double screenWidth = context.screenWidth;
 
     return BlocListener<AuthCubit ,AuthState>(
