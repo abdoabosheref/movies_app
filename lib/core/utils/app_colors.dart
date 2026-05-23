@@ -1,0 +1,21 @@
+
+import 'package:flutter/material.dart';
+
+class AppColors {
+  static const Color transparent = Colors.transparent;
+  static const Color black = Color(0XFF121312);
+  static const Color darkGrey = Color(0XFF282A28);
+  static const Color mediumGrey = Color(0XFF212121);
+  static const Color red = Color(0XFFE82626);
+  static Color yellow = Color(0XFFF6BD00);
+  static Color white = Color(0XFFFFFFFF);
+  static Color grey = Color(0XFFADADAD);
+  static Color darkBlack = Color(0XFF000000);
+  static Color whiteOpacity60 = Colors.white60;
+  static Color green = Color(0xFF57AA53);
+  static Color blackOpacity71 = Color(0xFF121312).withValues(alpha: 0.71);
+  static Color greyOpacity20 = Colors.grey.withValues(alpha: 0.2);
+  static Color blackOpacity50 = Color(0xFF121312).withValues(alpha: 0.5);
+  static Color blackOpacity70 = Color(0xFF121312).withValues(alpha: 0.7);
+
+}
