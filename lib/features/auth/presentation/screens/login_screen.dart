@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SnackBarUtils.hideLoading(context: context);
             SnackBarUtils.showSuccessMessage(
               context: context,
-              message: 'Registered successfully',
+              message: 'Login Success',
             );
             Navigator.pushReplacementNamed(context, AppRoutes.mainScreen);
 
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           CustomTextButton(
                             onPressed: () {
-                              //todo: Navigate to signup screen
+                              // Navigate to signup screen
                               authCubit.loginClearControllers();
                               Navigator.pushNamed(
                                 context,
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: context.screenHeight * 0.03),
                       CustomElevatedButton(
                         onPressed: () {
-                          //todo: login with google
+                          // login with google
                           context.read<AuthCubit>().loginWithGoogle();
                         },
                         child: Row(

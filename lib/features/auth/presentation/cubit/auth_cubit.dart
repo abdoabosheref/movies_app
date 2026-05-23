@@ -105,19 +105,21 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> loginWithGoogle() async {
-    // await Future.delayed(Duration(seconds: 3));
     try {
       emit(AuthLoading());
       final credential = await authRepository.loginWithGoogle();
       currentUser = await authRepository.getUserData(uId: credential.user!.uid);
-      if (currentUser != null) {
+      if (currentUser != null ) {
         emit(AuthSuccess());
       } else {
         emit(AuthFailure(errorMessage: "User data not found"));
       }
-    } catch (e) {
+    }catch (e) {
+      if (e.toString().contains('Canceled by user') || e.toString().contains('canceled')) {
+        emit(AuthFailure(errorMessage: 'User cancelled the operation'));
+      } else {
       emit(AuthFailure(errorMessage: e.toString()));
-    }
+    }}
   }
 
   void togglePasswordVisibility() {
