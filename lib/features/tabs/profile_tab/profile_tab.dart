@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movies_app/core/utils/app_assets.dart';
 import 'package:movies_app/core/utils/app_context.dart';
-import 'package:movies_app/features/tabs/profile_tab/profile_default_tab_controller/profile_tabs_section.dart';
-import 'package:movies_app/features/tabs/profile_tab/profile_header/user_profile_header.dart';
-import 'package:movies_app/features/tabs/profile_tab/row_of_buttons/profile_row_of_buttons.dart';
+import 'package:movies_app/features/tabs/profile_tab/widgets/profile_default_tab_controller/profile_tabs_section.dart';
+import 'package:movies_app/features/tabs/profile_tab/widgets/profile_header/user_profile_header.dart';
+import 'package:movies_app/features/tabs/profile_tab/widgets/row_of_buttons/profile_row_of_buttons.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});

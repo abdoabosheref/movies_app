@@ -1,13 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movies_app/features/auth/data/models/user_model.dart';
+import 'package:movies_app/api/models/firebase_auth/user_model.dart';
 import 'package:movies_app/features/widgets/custom_toast.dart';
 
-import '../../data/data_sources/auth_remote_data_source.dart';
-import '../../data/data_sources/auth_remote_data_source_impl.dart';
-import '../../data/repository/auth_repository.dart';
-import '../../data/repository/auth_repository_impl.dart';
+import '../../../../api/data_sources/remote/firebase_auth/auth_remote_data_source_impl.dart';
+import '../../../../data/data_sources/remote/firebase_auth/auth_remote_data_source.dart';
+import '../../../../data/repositories/firebase_auth/auth_repository_impl.dart';
+import '../../../../domain/repositories/firebase_auth/auth_repository.dart';
 import 'auth_states.dart';
 
 class AuthCubit extends Cubit<AuthState> {

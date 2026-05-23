@@ -5,12 +5,14 @@ import 'package:movies_app/core/di/di.dart';
 import 'package:movies_app/core/utils/app_colors.dart';
 import 'package:movies_app/core/utils/app_context.dart';
 import 'package:movies_app/core/utils/app_styles.dart';
+import 'package:movies_app/domain/entities/movie_response/movie.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/cast_list_view.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_details_header.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_linear_gradient.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/custom_play_button.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/genre_chip.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/movie_info_row.dart';
+import 'package:movies_app/features/tabs/profile_tab/cubit/history/history_view_model.dart';
 
 import '../../../widgets/buttons/custom_elevated_button.dart';
 import '../../../widgets/custom_cached_network_image.dart';
@@ -33,6 +35,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   late int movieId;
   late MovieDetailsViewModel movieDetailsViewModel;
   late MovieSuggestionsViewModel movieSuggestionsViewModel;
+  bool isMovieAddedToHistory = false;
 
   @override
   void initState() {
@@ -40,6 +43,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     super.initState();
     movieDetailsViewModel = getIt<MovieDetailsViewModel>();
     movieSuggestionsViewModel = getIt<MovieSuggestionsViewModel>();
+
   }
 
   @override
@@ -67,6 +71,19 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             );
           } else if (state is MovieDetailsSuccessState) {
             var movie = state.movieDetails.data?.movie;
+            if (!isMovieAddedToHistory && movie != null) {
+              isMovieAddedToHistory = true;
+
+              final movieEntity = Movie(
+                id: movie.id,
+                mediumCoverImage: movie.mediumCoverImage,
+                rating: (movie.rating as num?)?.toDouble(),
+              );
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                context.read<HistoryViewModel>().addMovieToHistory(movie: movieEntity);
+              });
+            }
             return SingleChildScrollView(
               child: Stack(
                 children: [

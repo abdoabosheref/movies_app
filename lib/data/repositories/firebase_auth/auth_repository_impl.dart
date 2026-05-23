@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../data_sources/auth_remote_data_source.dart';
-import '../models/user_model.dart';
-import 'auth_repository.dart';
+import '../../../api/models/firebase_auth/user_model.dart';
+import '../../../domain/repositories/firebase_auth/auth_repository.dart';
+import '../../data_sources/remote/firebase_auth/auth_remote_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository{
   AuthRemoteDataSource authRemoteDataSource;

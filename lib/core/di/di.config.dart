@@ -21,6 +21,8 @@ import '../../api/data_sources/remote/movie_details/movie_details_remote_data_so
     as _i140;
 import '../../api/data_sources/remote/movie_suggestions/movie_suggestions_remote_data_source_impl.dart'
     as _i383;
+import '../../api/data_sources/remote/profile_tab/history/history_remote_data_source_impl.dart'
+    as _i582;
 import '../../api/dio/get_it_module.dart' as _i814;
 import '../../data/data_sources/remote/browse_tab/browse_tab_remote_data_source.dart'
     as _i989;
@@ -28,29 +30,39 @@ import '../../data/data_sources/remote/movie_details/movie_details_remote_data_s
     as _i321;
 import '../../data/data_sources/remote/movie_suggestions/movie_suggestions_remote_data_source.dart'
     as _i294;
+import '../../data/data_sources/remote/profile_tab/history/history_remote_data_source.dart'
+    as _i967;
 import '../../data/repositories/browse_tab/browse_tab_repository_impl.dart'
     as _i596;
 import '../../data/repositories/movie_details/movie_details_repository_impl.dart'
     as _i239;
 import '../../data/repositories/movie_suggestions/movie_suggestions_repository_impl.dart'
     as _i975;
+import '../../data/repositories/profile_tab/history/history_repository.dart'
+    as _i13;
 import '../../domain/repositories/browse_tab/browse_tab_repository.dart'
     as _i700;
 import '../../domain/repositories/movie_details/movie_details_repository.dart'
     as _i846;
 import '../../domain/repositories/movie_suggestions/movie_suggestions_repository.dart'
     as _i725;
+import '../../domain/repositories/profile_tab/history/history_repository_impl.dart'
+    as _i530;
 import '../../domain/use_cases/browse_tab/browse_tab_use_case.dart' as _i951;
 import '../../domain/use_cases/movie_details/movie_details_use_case.dart'
     as _i763;
 import '../../domain/use_cases/movie_suggestions/movie_suggestions_use_case.dart'
     as _i541;
+import '../../domain/use_cases/profile_tab/history/add_movie_to_history_use_case.dart'
+    as _i670;
 import '../../features/screens/movie_details/cubit/movie_details_view_model.dart'
     as _i40;
 import '../../features/screens/movie_suggestions/cubit/movie_suggestions_view_model.dart'
     as _i505;
 import '../../features/tabs/browse_tab/cubit/browse_tab_view_model.dart'
     as _i780;
+import '../../features/tabs/profile_tab/cubit/history/history_view_model.dart'
+    as _i117;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -64,17 +76,29 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i528.PrettyDioLogger>(
       () => getItModule.providePrettyDioLogger,
     );
+    gh.factory<_i967.HistoryRemoteDataSource>(
+      () => _i582.HistoryRemoteDataSourceImpl(),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => getItModule.provideDio(
         gh<_i361.BaseOptions>(),
         gh<_i528.PrettyDioLogger>(),
       ),
     );
+    gh.factory<_i13.HistoryRepository>(
+      () => _i530.HistoryRepositoryImpl(gh<_i967.HistoryRemoteDataSource>()),
+    );
+    gh.factory<_i670.AddMovieToHistoryUseCase>(
+      () => _i670.AddMovieToHistoryUseCase(gh<_i13.HistoryRepository>()),
+    );
     gh.lazySingleton<_i394.ApiServices>(
       () => getItModule.provideApiServices(gh<_i361.Dio>()),
     );
     gh.factory<_i321.MovieDetailsRemoteDataSource>(
       () => _i140.MovieDetailsRemoteDataSourceImpl(gh<_i394.ApiServices>()),
+    );
+    gh.factory<_i117.HistoryViewModel>(
+      () => _i117.HistoryViewModel(gh<_i670.AddMovieToHistoryUseCase>()),
     );
     gh.factory<_i989.BrowseTabRemoteDataSource>(
       () => _i315.BrowseTabRemoteDataSourceImpl(gh<_i394.ApiServices>()),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movies_app/core/di/di.dart';
 import 'package:movies_app/features/screens/forget_password_screen/forget_password_screen.dart';
 import 'package:movies_app/features/screens/main_screen/main_screen.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/movie_details_screen.dart';
 import 'package:movies_app/features/screens/on_boarding_screen/on_boarding_screen.dart';
 import 'package:movies_app/features/screens/update_profile_screen/update_profile_screen.dart';
+import 'package:movies_app/features/tabs/profile_tab/cubit/history/history_view_model.dart';
 
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/register_screen.dart';
@@ -20,7 +23,8 @@ class AppRoutes {
   static Map<String, Widget Function(BuildContext)> routes = {
     AppRoutes.onBoardingScreen: (_) => OnBoardingScreen(),
     AppRoutes.mainScreen: (_) => MainScreen(),
-    AppRoutes.movieDetailsScreen: (_) => const MovieDetailsScreen(),
+    AppRoutes.movieDetailsScreen: (_) => BlocProvider(create: (BuildContext context)=>getIt<HistoryViewModel>(),
+    child: const MovieDetailsScreen()),
     AppRoutes.updateProfileScreen: (_) => UpdateProfileScreen(),
     AppRoutes.forgetPasswordScreen: (_) => ForgetPasswordScreen(),
     AppRoutes.registerScreen: (context) => RegisterScreen(),
