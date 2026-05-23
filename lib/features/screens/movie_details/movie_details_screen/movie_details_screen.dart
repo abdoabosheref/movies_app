@@ -13,6 +13,7 @@ import 'package:movies_app/features/screens/movie_details/movie_details_screen/w
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/genre_chip.dart';
 import 'package:movies_app/features/screens/movie_details/movie_details_screen/widgets/movie_info_row.dart';
 import 'package:movies_app/features/tabs/profile_tab/cubit/history/history_view_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../tabs/profile_tab/cubit/watchlist_view_model.dart';
 import '../../../widgets/buttons/custom_elevated_button.dart';
@@ -127,7 +128,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                           ),
                         ),
                         CustomElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
                             if (movie != null) {
                               watchlistViewModel.addMovieToWatchlist(
                                 movieId: movie.id!,
@@ -135,6 +136,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                 imageUrl: movie.mediumCoverImage ?? '',
                                 rating: movie.rating ?? 0.0,
                               );
+                              final Uri url = Uri.parse(movie.url??'');
+                              await launchUrl(url,mode: LaunchMode.inAppBrowserView);
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
