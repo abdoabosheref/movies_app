@@ -1,5 +1,7 @@
 Movies App
 A modern Flutter application for discovering and managing movies, built with Clean Architecture, BLoC/Cubit for state management, and Firebase for authentication and data storage.
+
+
 🏗 Project Architecture
 The project follows a modular Clean Architecture approach to ensure scalability, testability, and maintainability:
 •
