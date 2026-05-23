@@ -9,13 +9,24 @@ import 'package:movies_app/features/widgets/custom_error_column.dart';
 import 'package:movies_app/features/widgets/custom_grid_view.dart';
 import 'package:movies_app/features/widgets/main_loading.dart';
 
-class HistoryTabBar extends StatelessWidget {
+class HistoryTabBar extends StatefulWidget {
   const HistoryTabBar({super.key});
 
   @override
+  State<HistoryTabBar> createState() => _HistoryTabBarState();
+}
+
+class _HistoryTabBarState extends State<HistoryTabBar> {
+  late HistoryViewModel historyViewModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    historyViewModel = getIt<HistoryViewModel>()..getMovieHistory();
+  }
+  @override
   Widget build(BuildContext context) {
     double screenHeight = context.screenHeight;
-    final historyViewModel = getIt<HistoryViewModel>();
     return BlocBuilder<HistoryViewModel, HistoryStates>(
       bloc: historyViewModel,
       builder: (context, state) {
