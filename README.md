@@ -1,7 +1,7 @@
 
 
 
-https://github.com/user-attachments/assets/eeebc9d1-9c6a-4239-9622-82afae04ea06
+https://github.com/user-attachments/assets/5462a5b0-25db-4b50-a1e4-9c796eb92ca4
 
 
 Movies App
